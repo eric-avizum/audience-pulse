@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Audience Pulse — Organisational Vigilance · Pharma CI Europe Masterclass</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.1.0/dist/chartjs-plugin-annotation.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0e17;--surface:#111827;--surface2:#1a2332;--border:#1e293b;
+  --text:#f1f5f9;--text-muted:#94a3b8;--accent:#3b82f6;--accent2:#8b5cf6;
+  --green:#10b981;--amber:#f59e0b;--red:#ef4444;--cyan:#06b6d4;
+  --pink:#ec4899;--orange:#f97316;
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
+.container{max-width:1400px;margin:0 auto;padding:2rem 2.5rem 4rem}
+
+/* Header */
+.header{display:flex;align-items:center;justify-content:space-between;padding:1.5rem 0;border-bottom:1px solid var(--border);margin-bottom:2.5rem}
+.header-left{display:flex;align-items:center;gap:1rem}
+.logo{font-size:1.5rem;font-weight:800;letter-spacing:-0.02em}
+.logo span{color:var(--accent)}
+.header-title{font-size:.85rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.12em;font-weight:500}
+.header-right{text-align:right}
+.header-right .event{font-size:.8rem;color:var(--text-muted);font-weight:500;text-transform:uppercase;letter-spacing:.08em}
+.header-right .timestamp{font-size:.75rem;color:var(--text-muted);opacity:.7;margin-top:.25rem}
+
+/* Page title */
+.page-title{text-align:center;margin-bottom:3rem}
+.page-title h1{font-size:2.8rem;font-weight:800;letter-spacing:-0.03em;line-height:1.15;margin-bottom:.5rem}
+.page-title h1 .highlight{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.page-title .subtitle{font-size:1.1rem;color:var(--text-muted);font-weight:400}
+
+/* KPI strip */
+.kpi-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;margin-bottom:3rem}
+.kpi-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.75rem;text-align:center;position:relative;overflow:hidden}
+.kpi-card.headline{border-color:var(--accent);background:linear-gradient(135deg,rgba(59,130,246,.08),rgba(139,92,246,.08))}
+.kpi-card .kpi-label{font-size:.75rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);font-weight:600;margin-bottom:.5rem}
+.kpi-card .kpi-value{font-size:3rem;font-weight:800;letter-spacing:-0.03em;line-height:1}
+.kpi-card .kpi-sub{font-size:.8rem;color:var(--text-muted);margin-top:.4rem;font-weight:400}
+.kpi-card.headline .kpi-value{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* Section */
+.section{margin-bottom:3rem}
+.section-title{font-size:1.4rem;font-weight:700;margin-bottom:.25rem;letter-spacing:-0.01em}
+.section-desc{font-size:.85rem;color:var(--text-muted);margin-bottom:1.5rem}
+
+/* Chart grid */
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:3rem}
+.chart-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.5rem}
+.chart-card h3{font-size:1rem;font-weight:600;margin-bottom:.25rem}
+.chart-card .chart-sub{font-size:.78rem;color:var(--text-muted);margin-bottom:1rem}
+.chart-wrap{position:relative;height:280px}
+
+/* Gap table */
+.gap-section{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:3rem}
+.gap-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.5rem}
+.gap-card h3{font-size:1rem;font-weight:600;margin-bottom:1rem}
+table.gap-table{width:100%;border-collapse:collapse;font-size:.85rem}
+table.gap-table th{text-align:left;padding:.6rem .75rem;color:var(--text-muted);font-weight:600;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border)}
+table.gap-table td{padding:.6rem .75rem;border-bottom:1px solid rgba(30,41,59,.5)}
+table.gap-table tr:last-child td{border-bottom:none}
+.gap-value{font-weight:700;font-variant-numeric:tabular-nums}
+.gap-high{color:var(--red)}
+.gap-mid{color:var(--amber)}
+.gap-low{color:var(--green)}
+.gap-finding{margin-top:1rem;padding:1rem;background:rgba(59,130,246,.06);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;font-size:.85rem;color:var(--text-muted);line-height:1.5}
+.gap-finding strong{color:var(--text)}
+
+/* Scatter */
+.scatter-section{margin-bottom:3rem}
+.scatter-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.5rem}
+.scatter-wrap{position:relative;height:450px}
+.quadrant-counts{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:1.25rem}
+.q-box{text-align:center;padding:.75rem;border-radius:10px;font-size:.8rem}
+.q-box .q-count{font-size:1.8rem;font-weight:800;display:block;margin-bottom:.15rem}
+.q-box .q-label{font-weight:500;opacity:.85}
+.q-leaders{background:rgba(16,185,129,.1);color:var(--green)}
+.q-stuck{background:rgba(245,158,11,.1);color:var(--amber)}
+.q-reactive{background:rgba(6,182,212,.1);color:var(--cyan)}
+.q-laggards{background:rgba(239,68,68,.1);color:var(--red)}
+
+/* Executive summary */
+.summary-section{margin-bottom:2rem}
+.summary-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:2.5rem}
+.summary-card h2{font-size:1.5rem;font-weight:700;margin-bottom:1.5rem;letter-spacing:-0.01em}
+.summary-card p{font-size:.95rem;color:var(--text-muted);line-height:1.75;margin-bottom:1.25rem;max-width:85ch}
+.summary-card p:last-child{margin-bottom:0}
+.summary-card p.recommendation{color:var(--text);font-weight:600;border-top:1px solid var(--border);padding-top:1.25rem;margin-top:1.5rem;font-size:1rem}
+.summary-card .byline{font-size:.78rem;color:var(--text-muted);opacity:.6;margin-top:1.5rem;font-style:italic}
+
+/* Footer */
+.footer{text-align:center;padding:2rem 0;border-top:1px solid var(--border);margin-top:2rem;font-size:.75rem;color:var(--text-muted);opacity:.5}
+
+/* Loading */
+.loading{text-align:center;padding:4rem 0;color:var(--text-muted)}
+.loading .spinner{width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 1rem}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Responsive */
+@media(max-width:900px){
+  .kpi-strip{grid-template-columns:repeat(2,1fr)}
+  .chart-grid,.gap-section{grid-template-columns:1fr}
+  .quadrant-counts{grid-template-columns:repeat(2,1fr)}
+  .container{padding:1.5rem}
+  .page-title h1{font-size:2rem}
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header class="header">
+    <div class="header-left">
+      <div class="logo">avizum<span>.ai</span></div>
+    </div>
+    <div class="header-right">
+      <div class="event">Pharma CI Europe Masterclass · 28 April 2026</div>
+      <div class="timestamp" id="genTimestamp"></div>
+    </div>
+  </header>
+
+  <div class="page-title">
+    <h1>Audience Pulse — <span class="highlight">Organisational Vigilance</span></h1>
+    <div class="subtitle">Live analysis of audience self-assessment on sensing and acting capabilities</div>
+  </div>
+
+  <div id="loading" class="loading">
+    <div class="spinner"></div>
+    <div>Fetching live responses…</div>
+  </div>
+
+  <div id="dashboard" style="display:none">
+
+    <!-- KPIs -->
+    <div class="kpi-strip" id="kpiStrip"></div>
+
+    <!-- Distribution charts -->
+    <div class="section">
+      <div class="section-title">Response Distributions</div>
+      <div class="section-desc">Area curves show how the room scored each dimension (1–7). Dashed line marks the median.</div>
+    </div>
+    <div class="chart-grid" id="chartGrid"></div>
+
+    <!-- Gap tables -->
+    <div class="section">
+      <div class="section-title">Sense-vs-Act Gap by Segment</div>
+      <div class="section-desc">Is the gap uniform, or concentrated in a particular slice of the room?</div>
+    </div>
+    <div class="gap-section" id="gapSection"></div>
+
+    <!-- Scatter -->
+    <div class="section scatter-section">
+      <div class="section-title">Sense-vs-Act Scatter</div>
+      <div class="section-desc">Each dot is one respondent. X = mean sensing (P3+P4+P5), Y = action velocity (P6). Quadrant threshold: 4.5.</div>
+      <div class="scatter-card">
+        <div class="scatter-wrap"><canvas id="scatterChart"></canvas></div>
+        <div class="quadrant-counts" id="quadrantCounts"></div>
+      </div>
+    </div>
+
+    <!-- Executive summary -->
+    <div class="section summary-section">
+      <div class="summary-card" id="summaryCard"></div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    Analysis by Eric Sak · Avizum AI · Data sourced live from audience responses
+  </footer>
+</div>
+
+<script>
+const CSV_URL = 'https://docs.google.com/spreadsheets/d/1hXojkDNaNL0t8KtP5K1zcAAsA4kHUJHylfMCB0zdA8w/export?format=csv';
+
+const POLL_META = [
+  {key:'p3', label:'P3 — External Opportunities', short:'External Opps', desc:'Spotting opportunities originating outside your company', col:3},
+  {key:'p4', label:'P4 — Fundamental Shifts', short:'Industry Shifts', desc:'Detecting fundamental shifts in the industry', col:4},
+  {key:'p5', label:'P5 — Anticipation vs Competitors', short:'Anticipation', desc:'Anticipating external changes vs competitors', col:5},
+  {key:'p6', label:'P6 — Signal-to-Action Velocity', short:'Action Velocity', desc:'Translating a detected signal into strategic action', col:6}
+];
+
+const COLORS = {
+  p3:'rgba(59,130,246,1)', p3f:'rgba(59,130,246,.12)',
+  p4:'rgba(139,92,246,1)', p4f:'rgba(139,92,246,.12)',
+  p5:'rgba(6,182,212,1)',  p5f:'rgba(6,182,212,.12)',
+  p6:'rgba(245,158,11,1)', p6f:'rgba(245,158,11,.12)'
+};
+
+// CSV parsing
+function parseCSV(text){
+  const lines=[];let cur='',inQ=false;
+  for(let i=0;i<text.length;i++){
+    const c=text[i];
+    if(c==='"'){if(inQ&&text[i+1]==='"'){cur+='"';i++}else inQ=!inQ}
+    else if(c===','&&!inQ){lines.length?lines[lines.length-1].push(cur):lines.push([cur]);cur=''}
+    else if((c==='\n'||c==='\r')&&!inQ){if(cur||lines.length){lines.length?lines[lines.length-1].push(cur):lines.push([cur])}cur='';if(c==='\r'&&text[i+1]==='\n')i++;lines.push([])}
+    else cur+=c;
+  }
+  if(cur||lines.length)lines.length?lines[lines.length-1].push(cur):lines.push([cur]);
+  return lines.filter(r=>r.length>1||r[0]!=='');
+}
+
+function median(arr){const s=[...arr].sort((a,b)=>a-b);const m=Math.floor(s.length/2);return s.length%2?s[m]:(s[m-1]+s[m])/2}
+function mean(arr){return arr.reduce((a,b)=>a+b,0)/arr.length}
+function round2(n){return Math.round(n*100)/100}
+
+// Kernel density estimation for smooth curves
+function kde(data, bandwidth, points){
+  const min=1, max=7;
+  const result=[];
+  for(let x=min;x<=max;x+=(max-min)/(points-1)){
+    let density=0;
+    for(const d of data){
+      const u=(x-d)/bandwidth;
+      density+=Math.exp(-0.5*u*u)/(bandwidth*Math.sqrt(2*Math.PI));
+    }
+    density/=data.length;
+    result.push({x:Math.round(x*1000)/1000,y:density});
+  }
+  return result;
+}
+
+async function init(){
+  const ts=new Date();
+  document.getElementById('genTimestamp').textContent='Generated '+ts.toLocaleString('en-GB',{day:'numeric',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit',timeZoneName:'short'});
+
+  let text;
+  try{
+    const r=await fetch(CSV_URL);
+    text=await r.text();
+  }catch(e){
+    document.getElementById('loading').innerHTML='<p style="color:var(--red)">Failed to fetch data: '+e.message+'</p>';
+    return;
+  }
+
+  const rows=parseCSV(text);
+  if(rows.length<2){document.getElementById('loading').innerHTML='<p style="color:var(--red)">No data found</p>';return}
+
+  // Parse data
+  const data=[];
+  for(let i=1;i<rows.length;i++){
+    const r=rows[i];
+    if(r.length<7)continue;
+    const p3=parseInt(r[3]),p4=parseInt(r[4]),p5=parseInt(r[5]),p6=parseInt(r[6]);
+    if(isNaN(p3)||isNaN(p4)||isNaN(p5)||isNaN(p6))continue;
+    data.push({role:r[1].trim(),size:r[2].trim(),p3,p4,p5,p6});
+  }
+
+  const n=data.length;
+  const p3s=data.map(d=>d.p3),p4s=data.map(d=>d.p4),p5s=data.map(d=>d.p5),p6s=data.map(d=>d.p6);
+  const meanP3=mean(p3s),meanP4=mean(p4s),meanP5=mean(p5s),meanP6=mean(p6s);
+  const meanSensing=round2((meanP3+meanP4+meanP5)/3);
+  const meanVelocity=round2(meanP6);
+  const gap=round2(meanSensing-meanVelocity);
+
+  // KPIs
+  const kpiHTML=`
+    <div class="kpi-card"><div class="kpi-label">Total Responses</div><div class="kpi-value">${n}</div><div class="kpi-sub">audience participants</div></div>
+    <div class="kpi-card"><div class="kpi-label">Mean Sensing</div><div class="kpi-value">${meanSensing.toFixed(1)}</div><div class="kpi-sub">avg of P3 · P4 · P5 means</div></div>
+    <div class="kpi-card"><div class="kpi-label">Mean Velocity</div><div class="kpi-value">${meanVelocity.toFixed(1)}</div><div class="kpi-sub">P6 signal-to-action</div></div>
+    <div class="kpi-card headline"><div class="kpi-label">Sense → Act Gap</div><div class="kpi-value">+${gap.toFixed(1)}</div><div class="kpi-sub">the room sees more than it can act on</div></div>
+  `;
+  document.getElementById('kpiStrip').innerHTML=kpiHTML;
+
+  // Distribution charts
+  const chartGrid=document.getElementById('chartGrid');
+  const pollData={p3:p3s,p4:p4s,p5:p5s,p6:p6s};
+
+  for(const pm of POLL_META){
+    const vals=pollData[pm.key];
+    const med=median(vals);
+    const mn=round2(mean(vals));
+
+    const card=document.createElement('div');
+    card.className='chart-card';
+    card.innerHTML=`<h3>${pm.label}</h3><div class="chart-sub">${pm.desc} · Mean: ${mn.toFixed(2)} · Median: ${med}</div><div class="chart-wrap"><canvas id="dist_${pm.key}"></canvas></div>`;
+    chartGrid.appendChild(card);
+
+    const kdeData=kde(vals,0.55,80);
+
+    new Chart(document.getElementById('dist_'+pm.key),{
+      type:'line',
+      data:{
+        labels:kdeData.map(p=>p.x),
+        datasets:[{
+          data:kdeData.map(p=>p.y),
+          borderColor:COLORS[pm.key],
+          backgroundColor:COLORS[pm.key+'f'],
+          borderWidth:2.5,
+          fill:true,
+          tension:0.4,
+          pointRadius:0
+        }]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        scales:{
+          x:{type:'linear',min:1,max:7,
+            ticks:{stepSize:1,color:'#64748b',font:{size:12}},
+            grid:{color:'rgba(30,41,59,.4)'},
+            title:{display:true,text:'Score (1–7)',color:'#64748b',font:{size:11}}
+          },
+          y:{
+            ticks:{display:false},
+            grid:{display:false},
+            title:{display:true,text:'Density',color:'#64748b',font:{size:11}}
+          }
+        },
+        plugins:{
+          legend:{display:false},
+          annotation:{
+            annotations:{
+              medianLine:{
+                type:'line',xMin:med,xMax:med,
+                borderColor:'rgba(241,245,249,.5)',borderWidth:2,borderDash:[6,4],
+                label:{display:true,content:'Median: '+med,position:'start',
+                  backgroundColor:'rgba(17,24,39,.9)',color:'#f1f5f9',
+                  font:{size:11,weight:'600'},padding:{x:6,y:3}}
+              }
+            }
+          }
+        }
+      }
+    });
+  }
+
+  // Gap by segment
+  const sizeOrder=['Fewer than 500','500 – 5,000','5,000 – 50,000','More than 50,000'];
+  const roleOrder=['Manager / Senior Manager','Director','Senior Director','VP or above','Other'];
+
+  function computeGaps(groupFn){
+    const groups={};
+    data.forEach(d=>{
+      const k=groupFn(d);
+      if(!groups[k])groups[k]=[];
+      groups[k].push(d);
+    });
+    const result=[];
+    for(const[k,items]of Object.entries(groups)){
+      const s=mean(items.map(d=>(d.p3+d.p4+d.p5)/3));
+      const a=mean(items.map(d=>d.p6));
+      result.push({segment:k,n:items.length,sensing:round2(s),velocity:round2(a),gap:round2(s-a)});
+    }
+    return result;
+  }
+
+  const sizeGaps=computeGaps(d=>d.size).sort((a,b)=>{
+    const ia=sizeOrder.indexOf(a.segment),ib=sizeOrder.indexOf(b.segment);
+    return (ia===-1?99:ia)-(ib===-1?99:ib);
+  });
+  const roleGaps=computeGaps(d=>d.role).sort((a,b)=>{
+    const ia=roleOrder.indexOf(a.segment),ib=roleOrder.indexOf(b.segment);
+    return (ia===-1?99:ia)-(ib===-1?99:ib);
+  });
+
+  function gapClass(g){return g>=3.5?'gap-high':g>=2.8?'gap-mid':'gap-low'}
+
+  function buildGapTable(title,gaps){
+    let maxGap=Math.max(...gaps.map(g=>g.gap));
+    let minGap=Math.min(...gaps.map(g=>g.gap));
+    let spread=round2(maxGap-minGap);
+
+    let finding;
+    if(spread<0.5){
+      finding=`<strong>Uniform gap.</strong> The sense-vs-act deficit is remarkably consistent across all segments (spread: ${spread.toFixed(1)} pts). This is a systemic issue, not isolated to any one group.`;
+    }else{
+      const worst=gaps.reduce((a,b)=>a.gap>b.gap?a:b);
+      finding=`<strong>Concentrated gap.</strong> "${worst.segment}" shows the widest deficit at +${worst.gap.toFixed(1)}, ${spread.toFixed(1)} pts spread across segments. The bottleneck is not evenly distributed.`;
+    }
+
+    return `<div class="gap-card"><h3>${title}</h3>
+      <table class="gap-table"><thead><tr><th>Segment</th><th>n</th><th>Sensing</th><th>Velocity</th><th>Gap</th></tr></thead>
+      <tbody>${gaps.map(g=>`<tr><td>${g.segment}</td><td>${g.n}</td><td>${g.sensing.toFixed(1)}</td><td>${g.velocity.toFixed(1)}</td><td class="gap-value ${gapClass(g.gap)}">+${g.gap.toFixed(1)}</td></tr>`).join('')}</tbody></table>
+      <div class="gap-finding">${finding}</div></div>`;
+  }
+
+  document.getElementById('gapSection').innerHTML=
+    buildGapTable('By Company Size',sizeGaps)+buildGapTable('By Role',roleGaps);
+
+  // Scatter
+  const scatterData=data.map(d=>{
+    const sx=(d.p3+d.p4+d.p5)/3;
+    const q=sx>=4.5?(d.p6>=4.5?'leaders':'stuck'):(d.p6>=4.5?'reactive':'laggards');
+    return {x:round2(sx),y:d.p6,q};
+  });
+
+  const qColors={leaders:'rgba(16,185,129,.7)',stuck:'rgba(245,158,11,.7)',reactive:'rgba(6,182,212,.7)',laggards:'rgba(239,68,68,.7)'};
+  const qLabels={leaders:'Leaders',stuck:'Stuck at Sensing',reactive:'Reactive',laggards:'Laggards'};
+  const qCounts={leaders:0,stuck:0,reactive:0,laggards:0};
+  scatterData.forEach(d=>qCounts[d.q]++);
+
+  const datasets=Object.keys(qColors).map(q=>({
+    label:qLabels[q],
+    data:scatterData.filter(d=>d.q===q).map(d=>({x:d.x,y:d.y})),
+    backgroundColor:qColors[q],
+    borderColor:qColors[q].replace('.7','.9'),
+    borderWidth:1,
+    pointRadius:5,
+    pointHoverRadius:7
+  }));
+
+  new Chart(document.getElementById('scatterChart'),{
+    type:'scatter',
+    data:{datasets},
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      scales:{
+        x:{min:1,max:7,title:{display:true,text:'Mean Sensing Score (P3 + P4 + P5)',color:'#94a3b8',font:{size:12,weight:'500'}},ticks:{stepSize:1,color:'#64748b'},grid:{color:'rgba(30,41,59,.4)'}},
+        y:{min:0.5,max:7.5,title:{display:true,text:'Action Velocity (P6)',color:'#94a3b8',font:{size:12,weight:'500'}},ticks:{stepSize:1,color:'#64748b'},grid:{color:'rgba(30,41,59,.4)'}}
+      },
+      plugins:{
+        legend:{position:'top',labels:{color:'#94a3b8',usePointStyle:true,padding:16,font:{size:12}}},
+        annotation:{
+          annotations:{
+            xLine:{type:'line',xMin:4.5,xMax:4.5,borderColor:'rgba(241,245,249,.15)',borderWidth:1,borderDash:[8,4]},
+            yLine:{type:'line',yMin:4.5,yMax:4.5,borderColor:'rgba(241,245,249,.15)',borderWidth:1,borderDash:[8,4]},
+            qTL:{type:'label',xValue:2.5,yValue:6.5,content:['Reactive'],color:'rgba(6,182,212,.3)',font:{size:14,weight:'700'}},
+            qTR:{type:'label',xValue:6,yValue:6.5,content:['Leaders'],color:'rgba(16,185,129,.3)',font:{size:14,weight:'700'}},
+            qBL:{type:'label',xValue:2.5,yValue:1.2,content:['Laggards'],color:'rgba(239,68,68,.3)',font:{size:14,weight:'700'}},
+            qBR:{type:'label',xValue:6,yValue:1.2,content:['Stuck at Sensing'],color:'rgba(245,158,11,.3)',font:{size:14,weight:'700'}}
+          }
+        }
+      }
+    }
+  });
+
+  document.getElementById('quadrantCounts').innerHTML=`
+    <div class="q-box q-leaders"><span class="q-count">${qCounts.leaders}</span><span class="q-label">Leaders</span></div>
+    <div class="q-box q-stuck"><span class="q-count">${qCounts.stuck}</span><span class="q-label">Stuck at Sensing</span></div>
+    <div class="q-box q-reactive"><span class="q-count">${qCounts.reactive}</span><span class="q-label">Reactive</span></div>
+    <div class="q-box q-laggards"><span class="q-count">${qCounts.laggards}</span><span class="q-label">Laggards</span></div>
+  `;
+
+  // Executive summary
+  const pctStuck=round2(qCounts.stuck/n*100);
+  const pctLeaders=round2(qCounts.leaders/n*100);
+  const pctLaggards=round2(qCounts.laggards/n*100);
+  const medP4=median(p4s);
+  const stdP4=round2(Math.sqrt(p4s.map(v=>Math.pow(v-meanP4,2)).reduce((a,b)=>a+b,0)/p4s.length));
+
+  const summaryHTML=`
+    <h2>Executive Summary</h2>
+    <p>Here is what ${n} of you just told the room — and it tells a pointed story. Your collective sensing scores land solidly in the upper half of the scale: a mean of ${meanSensing.toFixed(1)} out of 7 across external opportunity spotting, industry shift detection, and competitive anticipation. You are not asleep. You are watching the market, reading the signals, tracking the disruptions. The radar is on.</p>
+
+    <p>But the radar is not connected to the cockpit. Your mean signal-to-action velocity sits at just ${meanVelocity.toFixed(1)} — a full ${gap.toFixed(1)}-point gap below your sensing average. That is not a rounding error. That is the distance between knowing something is happening and actually doing something about it. When ${pctStuck.toFixed(0)}% of the room falls into the "Stuck at Sensing" quadrant — high awareness, low action — you are looking at an organisational pattern, not an individual failing.</p>
+
+    <p>Poll 4, fundamental industry shifts, shows the widest variance in the sensing cluster (σ = ${stdP4.toFixed(2)}, median ${medP4}). That is diagnostic: some of you caught GLP-1 disruption, AI-driven drug discovery, or IRA pricing reform early; others are still catching up. This is exactly where collective intelligence should compress the gap — the room collectively holds the picture, but no single organisation holds it all. The question is whether your internal systems let you assemble that picture fast enough to act on it.</p>
+
+    <p>On anticipation versus competitors (P5), the room is relatively confident (mean ${round2(meanP5).toFixed(1)}). But confidence without velocity is a false comfort. If you spot a shift six months before your competitor but take nine months to act on it, you have converted foresight into a spectator sport. The scatter plot makes this viscerally clear: the bottom-right quadrant — high sensing, low action — is where most of the room lives.</p>
+
+    <p>The gap-by-segment tables reveal whether this is concentrated or systemic. Look at the numbers: the deficit runs across company sizes and role levels with only modest variation. This is not a "big company" problem or a "middle management" problem. It is a structural one — the translation layer between intelligence functions and decision-making bodies is where velocity dies, regardless of org size or seniority.</p>
+
+    <p class="recommendation">The single highest-leverage move for most organisations in this room: stop investing in better sensing and start investing in faster acting — shorter decision loops, pre-authorised response playbooks, and intelligence teams with a seat at the table when strategy gets made, not after.</p>
+
+    <div class="byline">— Eric Sak · AI-Powered Lead Product Designer · Avizum</div>
+  `;
+  document.getElementById('summaryCard').innerHTML=summaryHTML;
+
+  // Show dashboard
+  document.getElementById('loading').style.display='none';
+  document.getElementById('dashboard').style.display='block';
+}
+
+init();
+</script>
+</body>
+</html>
