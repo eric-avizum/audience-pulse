@@ -140,13 +140,6 @@ table.gap-table tr:last-child td{border-bottom:none}
     <!-- KPIs -->
     <div class="kpi-strip" id="kpiStrip"></div>
 
-    <!-- Segmentation bar charts -->
-    <div class="section">
-      <div class="section-title">Audience Profile</div>
-      <div class="section-desc">Who is in the room — segmentation by role and company size.</div>
-    </div>
-    <div class="chart-grid" id="segChartGrid"></div>
-
     <!-- Distribution charts -->
     <div class="section">
       <div class="section-title">Response Distributions</div>
@@ -183,13 +176,7 @@ table.gap-table tr:last-child td{border-bottom:none}
 </div>
 
 <script>
-const SHEET_ID = '1hXojkDNaNL0t8KtP5K1zcAAsA4kHUJHylfMCB0zdA8w';
-const CSV_URLS = [
-  `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv`,
-  `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`
-];
-// Embedded snapshot — used immediately, then overwritten if live fetch succeeds
-const EMBEDDED_DATA = [["Senior Director", "500 \u2013 5,000", "7", "6", "7", "4"], ["Director", "More than 50,000", "5", "7", "5", "2"], ["Other", "5,000 \u2013 50,000", "6", "4", "5", "1"], ["Other", "500 \u2013 5,000", "5", "7", "6", "1"], ["VP or above", "500 \u2013 5,000", "5", "5", "6", "3"], ["Director", "500 \u2013 5,000", "6", "4", "4", "1"], ["Director", "500 \u2013 5,000", "4", "5", "7", "2"], ["VP or above", "500 \u2013 5,000", "5", "6", "4", "2"], ["Director", "5,000 \u2013 50,000", "4", "6", "6", "2"], ["Manager / Senior Manager", "5,000 \u2013 50,000", "4", "6", "6", "1"], ["Senior Director", "500 \u2013 5,000", "7", "6", "7", "2"], ["VP or above", "More than 50,000", "5", "6", "6", "1"], ["Senior Director", "Fewer than 500", "6", "6", "7", "3"], ["Senior Director", "500 \u2013 5,000", "5", "5", "5", "2"], ["Manager / Senior Manager", "More than 50,000", "6", "5", "7", "2"], ["Senior Director", "Fewer than 500", "6", "5", "4", "3"], ["Other", "500 \u2013 5,000", "6", "7", "7", "3"], ["Manager / Senior Manager", "500 \u2013 5,000", "5", "7", "6", "2"], ["Director", "5,000 \u2013 50,000", "5", "4", "7", "2"], ["VP or above", "Fewer than 500", "5", "6", "6", "2"], ["Senior Director", "Fewer than 500", "7", "7", "6", "3"], ["Senior Director", "More than 50,000", "6", "4", "6", "4"], ["Senior Director", "5,000 \u2013 50,000", "7", "5", "6", "3"], ["Director", "5,000 \u2013 50,000", "4", "7", "4", "2"], ["Director", "5,000 \u2013 50,000", "6", "4", "4", "3"], ["VP or above", "5,000 \u2013 50,000", "7", "6", "5", "2"], ["VP or above", "Fewer than 500", "5", "5", "5", "1"], ["VP or above", "Fewer than 500", "4", "7", "7", "2"], ["VP or above", "500 \u2013 5,000", "6", "7", "5", "4"], ["Director", "500 \u2013 5,000", "6", "7", "7", "1"], ["Director", "5,000 \u2013 50,000", "6", "5", "5", "3"], ["Senior Director", "5,000 \u2013 50,000", "4", "6", "5", "2"], ["Senior Director", "5,000 \u2013 50,000", "6", "6", "6", "2"], ["Senior Director", "500 \u2013 5,000", "5", "5", "6", "1"], ["Senior Director", "More than 50,000", "5", "6", "6", "2"], ["VP or above", "More than 50,000", "5", "4", "6", "3"], ["Director", "500 \u2013 5,000", "6", "5", "6", "2"], ["Director", "500 \u2013 5,000", "6", "5", "5", "3"], ["Manager / Senior Manager", "500 \u2013 5,000", "6", "4", "7", "3"], ["Senior Director", "500 \u2013 5,000", "5", "4", "7", "4"], ["Manager / Senior Manager", "500 \u2013 5,000", "7", "6", "6", "2"], ["Director", "500 \u2013 5,000", "5", "5", "5", "2"], ["Director", "5,000 \u2013 50,000", "6", "6", "6", "1"], ["Director", "5,000 \u2013 50,000", "5", "4", "4", "4"], ["Senior Director", "5,000 \u2013 50,000", "5", "5", "4", "4"], ["Manager / Senior Manager", "5,000 \u2013 50,000", "5", "5", "5", "2"], ["Manager / Senior Manager", "500 \u2013 5,000", "5", "6", "6", "3"], ["VP or above", "More than 50,000", "6", "5", "7", "2"], ["Director", "Fewer than 500", "6", "6", "6", "3"], ["Manager / Senior Manager", "500 \u2013 5,000", "5", "6", "6", "1"], ["Director", "Fewer than 500", "7", "6", "6", "3"], ["Senior Director", "More than 50,000", "5", "5", "5", "1"], ["Manager / Senior Manager", "5,000 \u2013 50,000", "6", "4", "5", "3"], ["Senior Director", "More than 50,000", "7", "6", "7", "3"], ["Manager / Senior Manager", "500 \u2013 5,000", "6", "4", "4", "3"], ["Manager / Senior Manager", "5,000 \u2013 50,000", "4", "6", "7", "1"], ["Director", "500 \u2013 5,000", "7", "5", "6", "2"], ["Director", "5,000 \u2013 50,000", "6", "7", "6", "2"], ["Senior Director", "Fewer than 500", "5", "6", "6", "2"], ["Senior Director", "Fewer than 500", "4", "7", "6", "1"], ["Other", "Fewer than 500", "6", "5", "7", "4"], ["Director", "More than 50,000", "6", "6", "7", "2"], ["Director", "500 \u2013 5,000", "6", "5", "6", "2"], ["Senior Director", "More than 50,000", "7", "5", "5", "2"], ["Director", "Fewer than 500", "6", "6", "6", "2"], ["Director", "500 \u2013 5,000", "5", "6", "7", "3"], ["Manager / Senior Manager", "Fewer than 500", "5", "7", "5", "2"], ["Manager / Senior Manager", "More than 50,000", "5", "6", "6", "4"], ["Other", "More than 50,000", "6", "5", "6", "2"], ["VP or above", "More than 50,000", "4", "5", "6", "4"], ["Senior Director", "Fewer than 500", "6", "6", "5", "3"], ["Director", "500 \u2013 5,000", "6", "5", "6", "2"], ["Manager / Senior Manager", "500 \u2013 5,000", "7", "4", "7", "4"], ["Manager / Senior Manager", "Fewer than 500", "5", "5", "5", "1"], ["Director", "500 \u2013 5,000", "6", "5", "5", "3"], ["Director", "Fewer than 500", "4", "5", "7", "2"], ["Senior Director", "500 \u2013 5,000", "6", "5", "5", "3"], ["Senior Director", "5,000 \u2013 50,000", "4", "4", "7", "3"], ["Director", "5,000 \u2013 50,000", "5", "4", "6", "3"], ["Other", "More than 50,000", "6", "7", "5", "3"], ["Senior Director", "5,000 \u2013 50,000", "4", "5", "7", "2"], ["Senior Director", "5,000 \u2013 50,000", "5", "5", "6", "1"], ["Senior Director", "5,000 \u2013 50,000", "6", "6", "6", "2"], ["Director", "Fewer than 500", "6", "5", "5", "1"], ["Manager / Senior Manager", "5,000 \u2013 50,000", "6", "7", "6", "3"], ["Director", "5,000 \u2013 50,000", "6", "6", "5", "2"], ["Senior Director", "More than 50,000", "6", "4", "5", "4"], ["Manager / Senior Manager", "5,000 \u2013 50,000", "5", "5", "7", "3"], ["Manager / Senior Manager", "5,000 \u2013 50,000", "5", "6", "5", "3"], ["Manager / Senior Manager", "500 \u2013 5,000", "5", "7", "6", "1"], ["Manager / Senior Manager", "More than 50,000", "7", "5", "5", "3"], ["VP or above", "More than 50,000", "6", "6", "6", "4"], ["Senior Director", "More than 50,000", "5", "4", "5", "2"], ["Director", "More than 50,000", "5", "7", "7", "3"], ["Manager / Senior Manager", "More than 50,000", "7", "5", "6", "3"], ["Director", "More than 50,000", "5", "7", "5", "1"], ["Director", "Fewer than 500", "6", "6", "4", "2"], ["Manager / Senior Manager", "5,000 \u2013 50,000", "6", "6", "5", "2"], ["Director", "More than 50,000", "6", "5", "6", "1"], ["Director", "5,000 \u2013 50,000", "4", "5", "5", "2"], ["Senior Director", "5,000 \u2013 50,000", "7", "4", "7", "1"], ["Senior Director", "Fewer than 500", "7", "5", "6", "1"], ["Manager / Senior Manager", "More than 50,000", "6", "4", "5", "1"], ["Director", "500 \u2013 5,000", "6", "6", "6", "4"], ["Senior Director", "Fewer than 500", "7", "5", "6", "2"], ["Director", "500 \u2013 5,000", "6", "4", "5", "4"], ["VP or above", "5,000 \u2013 50,000", "5", "7", "5", "2"], ["Senior Director", "5,000 \u2013 50,000", "6", "6", "4", "2"], ["Manager / Senior Manager", "Fewer than 500", "6", "7", "6", "2"], ["Manager / Senior Manager", "Fewer than 500", "5", "7", "6", "2"], ["Senior Director", "500 \u2013 5,000", "6", "4", "6", "1"], ["Manager / Senior Manager", "More than 50,000", "7", "5", "7", "3"], ["Senior Director", "500 \u2013 5,000", "7", "6", "7", "2"], ["VP or above", "Fewer than 500", "5", "6", "6", "3"], ["Senior Director", "500 \u2013 5,000", "4", "4", "7", "3"], ["Director", "Fewer than 500", "7", "6", "5", "1"], ["Senior Director", "500 \u2013 5,000", "6", "5", "5", "1"], ["Director", "Fewer than 500", "4", "5", "5", "3"], ["Director", "Fewer than 500", "7", "5", "4", "2"], ["VP or above", "Fewer than 500", "7", "5", "6", "1"], ["Director", "More than 50,000", "6", "5", "7", "4"], ["Other", "500 \u2013 5,000", "6", "4", "4", "1"], ["VP or above", "500 \u2013 5,000", "5", "6", "5", "3"], ["Manager / Senior Manager", "500 \u2013 5,000", "4", "5", "6", "4"], ["Manager / Senior Manager", "Fewer than 500", "5", "4", "7", "2"], ["Manager / Senior Manager", "500 \u2013 5,000", "6", "6", "5", "1"], ["Manager / Senior Manager", "500 \u2013 5,000", "4", "7", "6", "1"], ["Manager / Senior Manager", "Fewer than 500", "5", "6", "4", "2"], ["Senior Director", "5,000 \u2013 50,000", "5", "6", "5", "1"], ["Manager / Senior Manager", "Fewer than 500", "6", "6", "7", "3"], ["Director", "500 \u2013 5,000", "7", "5", "7", "1"], ["VP or above", "Fewer than 500", "5", "4", "4", "2"], ["Manager / Senior Manager", "5,000 \u2013 50,000", "5", "5", "7", "4"], ["VP or above", "Fewer than 500", "6", "5", "6", "3"], ["Director", "500 \u2013 5,000", "5", "5", "7", "3"], ["Manager / Senior Manager", "5,000 \u2013 50,000", "5", "6", "6", "2"], ["Senior Director", "More than 50,000", "5", "5", "6", "3"], ["Senior Director", "500 \u2013 5,000", "4", "4", "6", "2"], ["VP or above", "5,000 \u2013 50,000", "5", "5", "6", "2"], ["Senior Director", "5,000 \u2013 50,000", "5", "6", "5", "1"], ["VP or above", "More than 50,000", "5", "4", "4", "3"], ["Director", "Fewer than 500", "7", "6", "5", "2"], ["Manager / Senior Manager", "Fewer than 500", "5", "5", "6", "1"], ["Senior Director", "500 \u2013 5,000", "6", "5", "5", "2"], ["VP or above", "More than 50,000", "6", "5", "6", "2"], ["Other", "Fewer than 500", "4", "6", "7", "3"], ["Director", "More than 50,000", "6", "5", "4", "3"], ["Director", "Fewer than 500", "5", "6", "6", "3"], ["Senior Director", "5,000 \u2013 50,000", "7", "5", "6", "1"], ["Director", "Fewer than 500", "4", "5", "7", "2"], ["VP or above", "More than 50,000", "5", "6", "5", "2"], ["VP or above", "5,000 \u2013 50,000", "4", "6", "6", "1"], ["Director", "5,000 \u2013 50,000", "7", "6", "7", "2"], ["Senior Director", "5,000 \u2013 50,000", "6", "6", "7", "3"], ["Senior Director", "More than 50,000", "6", "6", "6", "1"], ["Manager / Senior Manager", "500 \u2013 5,000", "4", "6", "6", "2"], ["VP or above", "500 \u2013 5,000", "6", "6", "6", "2"], ["Director", "500 \u2013 5,000", "5", "6", "7", "1"], ["VP or above", "More than 50,000", "7", "6", "6", "2"], ["Director", "5,000 \u2013 50,000", "5", "6", "4", "4"], ["VP or above", "500 \u2013 5,000", "5", "6", "7", "3"], ["Director", "More than 50,000", "4", "4", "6", "4"], ["Manager / Senior Manager", "500 \u2013 5,000", "5", "6", "6", "2"], ["VP or above", "Fewer than 500", "6", "6", "5", "1"], ["Manager / Senior Manager", "500 \u2013 5,000", "4", "4", "6", "2"], ["Director", "500 \u2013 5,000", "6", "6", "5", "2"], ["Other", "5,000 \u2013 50,000", "5", "4", "6", "3"], ["Other", "More than 50,000", "6", "5", "5", "1"], ["Senior Director", "5,000 \u2013 50,000", "5", "6", "6", "2"], ["Senior Director", "5,000 \u2013 50,000", "5", "4", "7", "1"], ["Director", "5,000 \u2013 50,000", "6", "6", "4", "2"], ["Director", "5,000 \u2013 50,000", "5", "6", "7", "3"], ["Director", "5,000 \u2013 50,000", "5", "5", "6", "2"], ["Senior Director", "500 \u2013 5,000", "7", "4", "7", "2"], ["Senior Director", "5,000 \u2013 50,000", "7", "5", "6", "2"], ["Senior Director", "5,000 \u2013 50,000", "5", "6", "6", "2"], ["Senior Director", "More than 50,000", "5", "7", "6", "3"], ["Manager / Senior Manager", "Fewer than 500", "6", "6", "7", "3"], ["Director", "500 \u2013 5,000", "5", "5", "6", "4"], ["Manager / Senior Manager", "500 \u2013 5,000", "4", "6", "5", "3"], ["Director", "500 \u2013 5,000", "5", "5", "6", "2"], ["Director", "5,000 \u2013 50,000", "6", "6", "7", "3"], ["VP or above", "5,000 \u2013 50,000", "6", "4", "6", "2"], ["Director", "5,000 \u2013 50,000", "4", "6", "6", "2"], ["Manager / Senior Manager", "More than 50,000", "5", "5", "6", "3"], ["Manager / Senior Manager", "Fewer than 500", "5", "7", "7", "1"], ["Senior Director", "5,000 \u2013 50,000", "6", "5", "5", "4"], ["Senior Director", "Fewer than 500", "4", "6", "6", "2"], ["Manager / Senior Manager", "More than 50,000", "4", "7", "4", "3"], ["Manager / Senior Manager", "500 \u2013 5,000", "6", "4", "5", "3"], ["Senior Director", "5,000 \u2013 50,000", "5", "7", "5", "3"], ["Manager / Senior Manager", "Fewer than 500", "6", "6", "5", "3"], ["VP or above", "Fewer than 500", "5", "4", "6", "3"], ["Senior Director", "5,000 \u2013 50,000", "4", "5", "5", "1"], ["Manager / Senior Manager", "500 \u2013 5,000", "5", "6", "6", "2"], ["Manager / Senior Manager", "500 \u2013 5,000", "6", "4", "5", "1"], ["Other", "500 \u2013 5,000", "7", "5", "5", "3"], ["Director", "More than 50,000", "6", "5", "5", "2"], ["Director", "Fewer than 500", "5", "6", "4", "3"], ["VP or above", "Fewer than 500", "6", "4", "6", "1"], ["VP or above", "Fewer than 500", "5", "6", "6", "1"], ["Other", "More than 50,000", "5", "7", "6", "3"], ["Senior Director", "Fewer than 500", "7", "7", "6", "1"], ["Director", "More than 50,000", "4", "6", "5", "1"], ["Manager / Senior Manager", "500 \u2013 5,000", "4", "4", "7", "1"], ["Senior Director", "5,000 \u2013 50,000", "5", "6", "6", "4"], ["Senior Director", "Fewer than 500", "4", "4", "6", "3"], ["Director", "Fewer than 500", "5", "4", "4", "2"], ["VP or above", "500 \u2013 5,000", "6", "5", "5", "2"], ["Manager / Senior Manager", "5,000 \u2013 50,000", "5", "5", "5", "2"], ["Director", "More than 50,000", "7", "6", "5", "3"], ["Manager / Senior Manager", "5,000 \u2013 50,000", "6", "6", "6", "3"], ["Director", "500 \u2013 5,000", "5", "5", "6", "1"], ["Manager / Senior Manager", "500 \u2013 5,000", "5", "5", "6", "1"], ["Manager / Senior Manager", "5,000 \u2013 50,000", "5", "7", "6", "1"], ["Manager / Senior Manager", "More than 50,000", "6", "5", "7", "3"], ["Senior Director", "More than 50,000", "5", "5", "6", "3"], ["Senior Director", "Fewer than 500", "6", "4", "7", "2"], ["Senior Director", "More than 50,000", "5", "6", "4", "1"], ["Other", "5,000 \u2013 50,000", "6", "6", "5", "1"], ["Director", "500 \u2013 5,000", "5", "5", "4", "4"], ["Director", "Fewer than 500", "5", "4", "6", "2"], ["VP or above", "Fewer than 500", "7", "6", "7", "3"], ["Manager / Senior Manager", "500 \u2013 5,000", "6", "6", "5", "3"], ["Other", "More than 50,000", "4", "5", "7", "2"], ["Manager / Senior Manager", "500 \u2013 5,000", "7", "7", "4", "2"], ["Other", "More than 50,000", "5", "4", "7", "1"], ["Manager / Senior Manager", "500 \u2013 5,000", "7", "5", "5", "3"], ["VP or above", "5,000 \u2013 50,000", "6", "7", "5", "3"], ["Director", "More than 50,000", "5", "5", "6", "3"], ["Other", "5,000 \u2013 50,000", "4", "6", "5", "2"], ["Manager / Senior Manager", "Fewer than 500", "5", "5", "5", "1"], ["Senior Director", "500 \u2013 5,000", "6", "5", "5", "4"], ["Other", "Fewer than 500", "6", "7", "7", "3"], ["Director", "Fewer than 500", "5", "5", "6", "2"], ["Senior Director", "Fewer than 500", "4", "6", "5", "4"], ["Senior Director", "Fewer than 500", "6", "5", "6", "3"], ["Director", "500 \u2013 5,000", "7", "5", "6", "2"], ["Senior Director", "Fewer than 500", "6", "4", "5", "3"], ["Senior Director", "500 \u2013 5,000", "5", "6", "6", "3"], ["VP or above", "500 \u2013 5,000", "5", "5", "5", "3"], ["Manager / Senior Manager", "5,000 \u2013 50,000", "4", "6", "5", "1"], ["Director", "More than 50,000", "7", "5", "6", "2"], ["Other", "More than 50,000", "4", "7", "5", "4"], ["VP or above", "500 \u2013 5,000", "6", "4", "6", "2"], ["Director", "5,000 \u2013 50,000", "5", "6", "6", "2"], ["Senior Director", "500 \u2013 5,000", "6", "6", "5", "2"], ["Director", "500 \u2013 5,000", "6", "6", "6", "2"], ["Manager / Senior Manager", "500 \u2013 5,000", "6", "6", "5", "3"], ["Director", "5,000 \u2013 50,000", "5", "6", "7", "4"], ["Director", "More than 50,000", "4", "6", "6", "2"], ["Senior Director", "5,000 \u2013 50,000", "4", "4", "7", "1"], ["Manager / Senior Manager", "Fewer than 500", "7", "4", "6", "1"], ["Other", "5,000 \u2013 50,000", "7", "7", "4", "3"], ["Other", "5,000 \u2013 50,000", "6", "6", "6", "3"], ["Senior Director", "5,000 \u2013 50,000", "6", "6", "7", "2"], ["Director", "5,000 \u2013 50,000", "6", "5", "6", "3"], ["Director", "More than 50,000", "5", "4", "7", "3"], ["VP or above", "Fewer than 500", "7", "4", "7", "3"], ["Senior Director", "More than 50,000", "5", "6", "5", "4"], ["Manager / Senior Manager", "More than 50,000", "5", "5", "5", "2"], ["VP or above", "5,000 \u2013 50,000", "6", "5", "6", "3"], ["VP or above", "500 \u2013 5,000", "4", "5", "6", "2"], ["VP or above", "500 \u2013 5,000", "5", "4", "7", "3"], ["Senior Director", "More than 50,000", "6", "5", "7", "3"], ["Senior Director", "More than 50,000", "4", "5", "5", "3"], ["Director", "5,000 \u2013 50,000", "6", "6", "5", "3"], ["VP or above", "More than 50,000", "5", "5", "6", "1"], ["VP or above", "5,000 \u2013 50,000", "5", "5", "5", "2"], ["Manager / Senior Manager", "500 \u2013 5,000", "5", "4", "7", "4"], ["Manager / Senior Manager", "500 \u2013 5,000", "5", "4", "6", "4"], ["Director", "Fewer than 500", "6", "5", "6", "1"], ["VP or above", "500 \u2013 5,000", "5", "5", "4", "1"], ["Other", "More than 50,000", "6", "6", "6", "1"], ["Manager / Senior Manager", "500 \u2013 5,000", "5", "5", "6", "3"], ["Senior Director", "5,000 \u2013 50,000", "6", "6", "6", "3"], ["Director", "500 \u2013 5,000", "7", "6", "5", "2"], ["Other", "Fewer than 500", "6", "6", "6", "2"], ["VP or above", "500 \u2013 5,000", "5", "4", "7", "3"], ["VP or above", "5,000 \u2013 50,000", "4", "5", "5", "3"], ["Director", "5,000 \u2013 50,000", "5", "4", "4", "2"], ["Director", "More than 50,000", "6", "5", "4", "2"], ["Director", "500 \u2013 5,000", "4", "7", "6", "2"], ["Manager / Senior Manager", "5,000 \u2013 50,000", "5", "4", "6", "2"], ["VP or above", "Fewer than 500", "6", "5", "6", "2"], ["VP or above", "More than 50,000", "5", "6", "5", "3"], ["Other", "Fewer than 500", "6", "6", "5", "3"], ["Other", "500 \u2013 5,000", "4", "5", "6", "3"], ["Senior Director", "500 \u2013 5,000", "4", "4", "6", "3"], ["Senior Director", "500 \u2013 5,000", "6", "5", "7", "1"], ["VP or above", "More than 50,000", "5", "5", "5", "2"], ["VP or above", "5,000 \u2013 50,000", "6", "4", "6", "1"], ["Manager / Senior Manager", "More than 50,000", "5", "5", "6", "2"], ["Director", "Fewer than 500", "5", "4", "6", "3"], ["Manager / Senior Manager", "More than 50,000", "6", "4", "6", "4"], ["Other", "Fewer than 500", "6", "5", "6", "1"], ["Senior Director", "More than 50,000", "6", "4", "7", "2"], ["Manager / Senior Manager", "5,000 \u2013 50,000", "5", "5", "5", "3"], ["Senior Director", "Fewer than 500", "6", "6", "5", "2"], ["Senior Director", "500 \u2013 5,000", "5", "6", "6", "2"], ["Director", "500 \u2013 5,000", "4", "5", "6", "3"]];
+const CSV_URL = 'https://docs.google.com/spreadsheets/d/1hXojkDNaNL0t8KtP5K1zcAAsA4kHUJHylfMCB0zdA8w/export?format=csv';
 
 const POLL_META = [
   {key:'p3', label:'P3 — External Opportunities', short:'External Opps', desc:'Spotting opportunities originating outside your company', col:3},
@@ -243,26 +230,27 @@ async function init(){
   const ts=new Date();
   document.getElementById('genTimestamp').textContent='Generated '+ts.toLocaleString('en-GB',{day:'numeric',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit',timeZoneName:'short'});
 
-  // Use embedded data immediately
-  let data = EMBEDDED_DATA.map(r => ({role:r[0], size:r[1], p3:parseInt(r[2]), p4:parseInt(r[3]), p5:parseInt(r[4]), p6:parseInt(r[5])})).filter(d=>!isNaN(d.p3)&&!isNaN(d.p4)&&!isNaN(d.p5)&&!isNaN(d.p6));
+  let text;
+  try{
+    const r=await fetch(CSV_URL);
+    text=await r.text();
+  }catch(e){
+    document.getElementById('loading').innerHTML='<p style="color:var(--red)">Failed to fetch data: '+e.message+'</p>';
+    return;
+  }
 
-  // Try live fetch in background — if it works, reload with fresh data
-  (async function tryLive(){
-    for(const url of CSV_URLS){
-      try{
-        const ctrl=new AbortController();
-        const t=setTimeout(()=>ctrl.abort(),6000);
-        const r=await fetch(url,{signal:ctrl.signal});
-        clearTimeout(t);
-        if(r.ok){
-          const text=await r.text();
-          const rows=parseCSV(text);
-          if(rows.length>data.length+1){location.reload()} // new responses arrived
-          return;
-        }
-      }catch(e){continue}
-    }
-  })();
+  const rows=parseCSV(text);
+  if(rows.length<2){document.getElementById('loading').innerHTML='<p style="color:var(--red)">No data found</p>';return}
+
+  // Parse data
+  const data=[];
+  for(let i=1;i<rows.length;i++){
+    const r=rows[i];
+    if(r.length<7)continue;
+    const p3=parseInt(r[3]),p4=parseInt(r[4]),p5=parseInt(r[5]),p6=parseInt(r[6]);
+    if(isNaN(p3)||isNaN(p4)||isNaN(p5)||isNaN(p6))continue;
+    data.push({role:r[1].trim(),size:r[2].trim(),p3,p4,p5,p6});
+  }
 
   const n=data.length;
   const p3s=data.map(d=>d.p3),p4s=data.map(d=>d.p4),p5s=data.map(d=>d.p5),p6s=data.map(d=>d.p6);
@@ -279,45 +267,6 @@ async function init(){
     <div class="kpi-card headline"><div class="kpi-label">Sense → Act Gap</div><div class="kpi-value">+${gap.toFixed(1)}</div><div class="kpi-sub">the room sees more than it can act on</div></div>
   `;
   document.getElementById('kpiStrip').innerHTML=kpiHTML;
-
-  // Segmentation bar charts
-  const segGrid=document.getElementById('segChartGrid');
-  const roleOrder=['VP or above','Senior Director','Director','Manager / Senior Manager','Other'];
-  const sizeOrderLabels=['Fewer than 500','500 – 5,000','5,000 – 50,000','More than 50,000'];
-
-  function countBy(arr,fn,order){
-    const counts={};
-    arr.forEach(d=>{const k=fn(d);counts[k]=(counts[k]||0)+1});
-    return order.map(k=>({label:k,count:counts[k]||0}));
-  }
-
-  const roleCounts=countBy(data,d=>d.role,roleOrder);
-  const sizeCounts=countBy(data,d=>d.size,sizeOrderLabels);
-
-  function buildBarChart(containerId,title,subtitle,items,color){
-    const card=document.createElement('div');
-    card.className='chart-card';
-    card.innerHTML=`<h3>${title}</h3><div class="chart-sub">${subtitle}</div><div class="chart-wrap"><canvas id="${containerId}"></canvas></div>`;
-    segGrid.appendChild(card);
-    new Chart(document.getElementById(containerId),{
-      type:'bar',
-      data:{
-        labels:items.map(i=>i.label),
-        datasets:[{data:items.map(i=>i.count),backgroundColor:color,borderRadius:6,maxBarThickness:48}]
-      },
-      options:{
-        indexAxis:'y',responsive:true,maintainAspectRatio:false,
-        scales:{
-          x:{grid:{color:'rgba(0,0,0,.06)'},ticks:{color:'#6b7280',font:{size:11}},title:{display:true,text:'Responses',color:'#6b7280',font:{size:11}}},
-          y:{grid:{display:false},ticks:{color:'#374151',font:{size:12,weight:'500'}}}
-        },
-        plugins:{legend:{display:false}}
-      }
-    });
-  }
-
-  buildBarChart('segRole','Poll 1 · Role','Current role distribution across the audience',roleCounts,'rgba(220,38,38,.75)');
-  buildBarChart('segSize','Poll 2 · Company Size','Global headcount bands',sizeCounts,'rgba(185,28,28,.70)');
 
   // Distribution charts
   const chartGrid=document.getElementById('chartGrid');
