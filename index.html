@@ -140,6 +140,13 @@ table.gap-table tr:last-child td{border-bottom:none}
     <!-- KPIs -->
     <div class="kpi-strip" id="kpiStrip"></div>
 
+    <!-- Segmentation bar charts -->
+    <div class="section">
+      <div class="section-title">Audience Profile</div>
+      <div class="section-desc">Who is in the room — segmentation by role and company size.</div>
+    </div>
+    <div class="chart-grid" id="segChartGrid"></div>
+
     <!-- Distribution charts -->
     <div class="section">
       <div class="section-title">Response Distributions</div>
@@ -267,6 +274,45 @@ async function init(){
     <div class="kpi-card headline"><div class="kpi-label">Sense → Act Gap</div><div class="kpi-value">+${gap.toFixed(1)}</div><div class="kpi-sub">the room sees more than it can act on</div></div>
   `;
   document.getElementById('kpiStrip').innerHTML=kpiHTML;
+
+  // Segmentation bar charts
+  const segGrid=document.getElementById('segChartGrid');
+  const roleOrder=['VP or above','Senior Director','Director','Manager / Senior Manager','Other'];
+  const sizeOrderLabels=['Fewer than 500','500 – 5,000','5,000 – 50,000','More than 50,000'];
+
+  function countBy(arr,fn,order){
+    const counts={};
+    arr.forEach(d=>{const k=fn(d);counts[k]=(counts[k]||0)+1});
+    return order.map(k=>({label:k,count:counts[k]||0}));
+  }
+
+  const roleCounts=countBy(data,d=>d.role,roleOrder);
+  const sizeCounts=countBy(data,d=>d.size,sizeOrderLabels);
+
+  function buildBarChart(containerId,title,subtitle,items,color){
+    const card=document.createElement('div');
+    card.className='chart-card';
+    card.innerHTML=`<h3>${title}</h3><div class="chart-sub">${subtitle}</div><div class="chart-wrap"><canvas id="${containerId}"></canvas></div>`;
+    segGrid.appendChild(card);
+    new Chart(document.getElementById(containerId),{
+      type:'bar',
+      data:{
+        labels:items.map(i=>i.label),
+        datasets:[{data:items.map(i=>i.count),backgroundColor:color,borderRadius:6,maxBarThickness:48}]
+      },
+      options:{
+        indexAxis:'y',responsive:true,maintainAspectRatio:false,
+        scales:{
+          x:{grid:{color:'rgba(0,0,0,.06)'},ticks:{color:'#6b7280',font:{size:11}},title:{display:true,text:'Responses',color:'#6b7280',font:{size:11}}},
+          y:{grid:{display:false},ticks:{color:'#374151',font:{size:12,weight:'500'}}}
+        },
+        plugins:{legend:{display:false}}
+      }
+    });
+  }
+
+  buildBarChart('segRole','Poll 1 · Role','Current role distribution across the audience',roleCounts,'rgba(220,38,38,.75)');
+  buildBarChart('segSize','Poll 2 · Company Size','Global headcount bands',sizeCounts,'rgba(185,28,28,.70)');
 
   // Distribution charts
   const chartGrid=document.getElementById('chartGrid');
