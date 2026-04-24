@@ -183,7 +183,11 @@ table.gap-table tr:last-child td{border-bottom:none}
 </div>
 
 <script>
-const CSV_URL = 'https://docs.google.com/spreadsheets/d/1hXojkDNaNL0t8KtP5K1zcAAsA4kHUJHylfMCB0zdA8w/export?format=csv';
+const SHEET_ID = '1hXojkDNaNL0t8KtP5K1zcAAsA4kHUJHylfMCB0zdA8w';
+const CSV_URLS = [
+  `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv`,
+  `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`
+];
 
 const POLL_META = [
   {key:'p3', label:'P3 — External Opportunities', short:'External Opps', desc:'Spotting opportunities originating outside your company', col:3},
@@ -238,11 +242,17 @@ async function init(){
   document.getElementById('genTimestamp').textContent='Generated '+ts.toLocaleString('en-GB',{day:'numeric',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit',timeZoneName:'short'});
 
   let text;
-  try{
-    const r=await fetch(CSV_URL);
-    text=await r.text();
-  }catch(e){
-    document.getElementById('loading').innerHTML='<p style="color:var(--red)">Failed to fetch data: '+e.message+'</p>';
+  for(const url of CSV_URLS){
+    try{
+      const controller=new AbortController();
+      const timer=setTimeout(()=>controller.abort(),8000);
+      const r=await fetch(url,{signal:controller.signal});
+      clearTimeout(timer);
+      if(r.ok){text=await r.text();break}
+    }catch(e){continue}
+  }
+  if(!text){
+    document.getElementById('loading').innerHTML='<p style="color:var(--red)">Could not load the Google Sheet. Check that it is shared publicly and try refreshing.</p>';
     return;
   }
 
