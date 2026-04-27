@@ -4,447 +4,652 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Audience Pulse — Organizational Vigilance</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <style>
-:root {
-  --red: #C8102E;
-  --red-light: #E8384F;
-  --red-pale: #FDE8EB;
-  --red-bg: #FFF5F6;
-  --slate: #2D3748;
-  --slate-light: #4A5568;
-  --grey: #718096;
-  --grey-light: #A0AEC0;
-  --grey-bg: #F7FAFC;
-  --white: #FFFFFF;
-  --border: #E2E8F0;
-  --charcoal: #4A5568;
-  --velocity-color: #5A6577;
-}
-* { margin:0; padding:0; box-sizing:border-box; }
-body { font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--grey-bg); color: var(--slate); line-height:1.6; }
-.container { max-width:1200px; margin:0 auto; padding:24px 20px; }
+  :root {
+    --red: #C62828;
+    --red-light: #EF5350;
+    --red-bg: #FFEBEE;
+    --slate: #37474F;
+    --slate-light: #546E7A;
+    --grey-bg: #F5F5F5;
+    --white: #FFFFFF;
+    --border: #E0E0E0;
+    --green: #2E7D32;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--white);
+    color: var(--slate);
+    line-height: 1.6;
+  }
+  .container { max-width: 1200px; margin: 0 auto; padding: 24px; }
 
-/* Header */
-.header { text-align:center; margin-bottom:32px; padding-bottom:24px; border-bottom:2px solid var(--border); }
-.header .brand { font-size:13px; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--red); margin-bottom:4px; }
-.header h1 { font-size:28px; font-weight:700; color:var(--slate); margin-bottom:6px; }
-.header .subtitle { font-size:15px; color:var(--grey); }
-.live-badge { display:inline-flex; align-items:center; gap:6px; font-size:13px; color:var(--grey); margin-top:10px; }
-.live-dot { width:8px; height:8px; border-radius:50%; background:#38A169; animation:pulse 2s ease-in-out infinite; }
-@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+  /* Header */
+  .header {
+    text-align: center;
+    padding: 32px 0 24px;
+    border-bottom: 3px solid var(--red);
+    margin-bottom: 32px;
+  }
+  .header .brand {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 8px;
+  }
+  .header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--slate);
+    margin-bottom: 4px;
+  }
+  .header .subtitle {
+    font-size: 16px;
+    color: var(--slate-light);
+    font-weight: 400;
+  }
+  .live-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+    font-size: 13px;
+    color: var(--green);
+    font-weight: 500;
+  }
+  .live-dot {
+    width: 10px; height: 10px;
+    background: var(--green);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.3); }
+  }
 
-/* KPI cards */
-.kpi-row { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:32px; }
-.kpi-card { background:var(--white); border-radius:12px; padding:20px; text-align:center; box-shadow:0 1px 3px rgba(0,0,0,0.08); border:1px solid var(--border); }
-.kpi-card.highlight { border:2px solid var(--red); background:var(--red-bg); }
-.kpi-value { font-size:36px; font-weight:800; color:var(--red); }
-.kpi-card.highlight .kpi-value { font-size:42px; }
-.kpi-card.neutral .kpi-value { color:var(--slate); }
-.kpi-card.velocity .kpi-value { color:var(--velocity-color); }
-.kpi-label { font-size:12px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:var(--grey); margin-top:4px; }
+  /* KPI cards */
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .kpi-card {
+    background: var(--grey-bg);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .kpi-card.highlight {
+    background: var(--red-bg);
+    border-color: var(--red-light);
+  }
+  .kpi-label {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--slate-light);
+    margin-bottom: 4px;
+  }
+  .kpi-value {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--slate);
+  }
+  .kpi-card.highlight .kpi-value { color: var(--red); }
 
-/* Sections */
-.section { background:var(--white); border-radius:12px; padding:28px; margin-bottom:24px; box-shadow:0 1px 3px rgba(0,0,0,0.08); border:1px solid var(--border); }
-.section h2 { font-size:18px; font-weight:700; color:var(--slate); margin-bottom:4px; }
-.section .section-sub { font-size:13px; color:var(--grey); margin-bottom:20px; }
-.chart-row { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
-.chart-box { position:relative; }
-.chart-box h3 { font-size:14px; font-weight:600; color:var(--slate); margin-bottom:8px; }
-canvas { max-width:100%; }
+  /* Section */
+  .section {
+    margin-bottom: 40px;
+  }
+  .section h2 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--slate);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border);
+  }
 
-/* Scatter */
-.scatter-note { font-size:12px; color:var(--grey); margin-top:12px; font-style:italic; line-height:1.5; }
+  /* Chart containers */
+  .chart-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+  .chart-box {
+    background: var(--grey-bg);
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid var(--border);
+  }
+  .chart-box h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--slate);
+    margin-bottom: 12px;
+  }
+  .chart-box canvas { width: 100% !important; }
 
-/* Segment tables */
-.seg-tables { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
-.seg-table-wrap h3 { font-size:14px; font-weight:600; color:var(--slate); margin-bottom:10px; }
-table { width:100%; border-collapse:collapse; font-size:13px; }
-th { text-align:left; padding:8px 10px; background:var(--grey-bg); color:var(--grey); font-weight:600; text-transform:uppercase; font-size:11px; letter-spacing:0.5px; border-bottom:2px solid var(--border); }
-td { padding:8px 10px; border-bottom:1px solid var(--border); }
-td.gap-val { font-weight:700; color:var(--red); }
-.seg-commentary { font-size:13px; color:var(--slate-light); margin-top:12px; line-height:1.6; }
+  .chart-full {
+    background: var(--grey-bg);
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid var(--border);
+    margin-bottom: 24px;
+  }
+  .chart-full h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--slate);
+    margin-bottom: 12px;
+  }
 
-/* Executive summary */
-.exec-summary { font-size:15px; line-height:1.8; color:var(--slate); }
-.exec-summary p { margin-bottom:16px; }
-.exec-summary .rec { font-weight:600; color:var(--red); border-left:3px solid var(--red); padding-left:14px; margin-top:8px; }
+  /* Tables */
+  .gap-tables {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  th {
+    background: var(--slate);
+    color: var(--white);
+    padding: 10px 12px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  tr:nth-child(even) td { background: var(--grey-bg); }
+  .table-comment {
+    font-size: 13px;
+    color: var(--slate-light);
+    margin-top: 10px;
+    line-height: 1.5;
+    font-style: italic;
+  }
 
-/* Discussion */
-.discussion ol { padding-left:20px; }
-.discussion li { margin-bottom:10px; font-size:14px; color:var(--slate-light); line-height:1.6; }
+  /* Executive summary */
+  .summary {
+    background: var(--grey-bg);
+    border-left: 4px solid var(--red);
+    border-radius: 0 12px 12px 0;
+    padding: 24px 28px;
+    margin-bottom: 32px;
+  }
+  .summary h2 {
+    border: none;
+    padding: 0;
+    margin-bottom: 16px;
+  }
+  .summary p {
+    margin-bottom: 14px;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  .summary p:last-child { margin-bottom: 0; font-weight: 600; }
 
-/* Responsive */
-@media (max-width:768px) {
-  .kpi-row { grid-template-columns:repeat(2,1fr); }
-  .chart-row, .seg-tables { grid-template-columns:1fr; }
-  .header h1 { font-size:22px; }
-}
+  /* Discussion prompts */
+  .prompts {
+    background: var(--white);
+    border: 2px solid var(--red);
+    border-radius: 12px;
+    padding: 24px 28px;
+  }
+  .prompts h2 {
+    color: var(--red);
+    border: none;
+    padding: 0;
+    margin-bottom: 16px;
+  }
+  .prompts ol {
+    padding-left: 20px;
+  }
+  .prompts li {
+    margin-bottom: 10px;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* Scatter note */
+  .scatter-note {
+    font-size: 12px;
+    color: var(--slate-light);
+    margin-top: 8px;
+    font-style: italic;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 24px 0;
+    margin-top: 32px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--slate-light);
+  }
+
+  @media (max-width: 768px) {
+    .kpi-row { grid-template-columns: repeat(2, 1fr); }
+    .chart-grid, .gap-tables { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
 <div class="container">
 
-<div class="header">
-  <div class="brand">Avizum</div>
-  <h1>Audience Pulse — Organizational Vigilance</h1>
-  <div class="subtitle">Pharma CI Europe Masterclass</div>
-  <div class="live-badge"><span class="live-dot"></span><span id="live-status">Loading...</span></div>
-</div>
-
-<div class="kpi-row">
-  <div class="kpi-card neutral"><div class="kpi-value" id="kpi-n">—</div><div class="kpi-label">Responses</div></div>
-  <div class="kpi-card"><div class="kpi-value" id="kpi-sensing">—</div><div class="kpi-label">Mean Sensing</div></div>
-  <div class="kpi-card velocity"><div class="kpi-value" id="kpi-velocity">—</div><div class="kpi-label">Mean Velocity</div></div>
-  <div class="kpi-card highlight"><div class="kpi-value" id="kpi-gap">—</div><div class="kpi-label">Sense–Act Gap</div></div>
-</div>
-
-<div class="section">
-  <h2>Audience Composition</h2>
-  <div class="section-sub">Who is in the room</div>
-  <div class="chart-row">
-    <div class="chart-box"><h3>By Role</h3><canvas id="chart-role" height="220"></canvas></div>
-    <div class="chart-box"><h3>By Company Size</h3><canvas id="chart-size" height="220"></canvas></div>
-  </div>
-</div>
-
-<div class="section">
-  <h2>Rating Distributions</h2>
-  <div class="section-sub">Sensing polls (P3–P5) in red, velocity (P6) in charcoal</div>
-  <div class="chart-row">
-    <div class="chart-box"><h3>P3 — Spotting External Opportunities</h3><canvas id="chart-p3" height="200"></canvas></div>
-    <div class="chart-box"><h3>P4 — Detecting Fundamental Shifts</h3><canvas id="chart-p4" height="200"></canvas></div>
-  </div>
-  <div style="height:20px"></div>
-  <div class="chart-row">
-    <div class="chart-box"><h3>P5 — Anticipation vs Competitors</h3><canvas id="chart-p5" height="200"></canvas></div>
-    <div class="chart-box"><h3>P6 — Signal-to-Action Velocity</h3><canvas id="chart-p6" height="200"></canvas></div>
-  </div>
-</div>
-
-<div class="section">
-  <h2>Sense vs Act</h2>
-  <div class="section-sub">Each dot is one respondent. x = average sensing (P3+P4+P5), y = velocity (P6). Quadrants split at 4.5.</div>
-  <div style="max-width:700px;margin:0 auto;"><canvas id="chart-scatter" height="400"></canvas></div>
-  <div style="max-width:700px;margin:0 auto;">
-    <div id="quadrant-counts" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px;font-size:13px;"></div>
-    <div class="scatter-note">Threshold set at 4.5 — the midpoint of the 1–7 scale, not the audience average. The imbalance is the finding, not a charting artifact.</div>
-  </div>
-</div>
-
-<div class="section">
-  <h2>Gap by Segment</h2>
-  <div class="section-sub">Sensing–velocity gap broken down by company size and role</div>
-  <div class="seg-tables">
-    <div class="seg-table-wrap">
-      <h3>By Company Size</h3>
-      <table><thead><tr><th>Segment</th><th>Sensing</th><th>Velocity</th><th>Gap</th><th>n</th></tr></thead><tbody id="table-size"></tbody></table>
-      <div class="seg-commentary" id="commentary-size"></div>
-    </div>
-    <div class="seg-table-wrap">
-      <h3>By Role</h3>
-      <table><thead><tr><th>Segment</th><th>Sensing</th><th>Velocity</th><th>Gap</th><th>n</th></tr></thead><tbody id="table-role"></tbody></table>
-      <div class="seg-commentary" id="commentary-role"></div>
+  <div class="header">
+    <div class="brand">Avizum</div>
+    <h1>Audience Pulse &mdash; Organizational Vigilance</h1>
+    <div class="subtitle">Pharma CI Europe Masterclass</div>
+    <div class="live-indicator">
+      <span class="live-dot"></span>
+      <span id="live-status">Live &middot; Loading&hellip;</span>
     </div>
   </div>
-</div>
 
-<div class="section">
-  <h2>Executive Summary</h2>
-  <div class="exec-summary" id="exec-summary"></div>
-</div>
+  <!-- KPIs -->
+  <div class="kpi-row">
+    <div class="kpi-card">
+      <div class="kpi-label">Responses</div>
+      <div class="kpi-value" id="kpi-n">—</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Mean Sensing</div>
+      <div class="kpi-value" id="kpi-sensing">—</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Mean Velocity</div>
+      <div class="kpi-value" id="kpi-velocity">—</div>
+    </div>
+    <div class="kpi-card highlight">
+      <div class="kpi-label">Sense&ndash;Act Gap</div>
+      <div class="kpi-value" id="kpi-gap">—</div>
+    </div>
+  </div>
 
-<div class="section discussion">
-  <h2>Questions This Data Raises</h2>
-  <ol id="discussion-prompts"></ol>
-</div>
+  <!-- Audience Composition -->
+  <div class="section">
+    <h2>Audience Composition</h2>
+    <div class="chart-grid">
+      <div class="chart-box">
+        <h3>By Role</h3>
+        <canvas id="chart-roles"></canvas>
+      </div>
+      <div class="chart-box">
+        <h3>By Company Size</h3>
+        <canvas id="chart-sizes"></canvas>
+      </div>
+    </div>
+  </div>
 
+  <!-- Distributions -->
+  <div class="section">
+    <h2>Score Distributions (1&ndash;7 Scale)</h2>
+    <div class="chart-grid">
+      <div class="chart-box">
+        <h3>P3: Spotting External Opportunities</h3>
+        <canvas id="chart-p3"></canvas>
+      </div>
+      <div class="chart-box">
+        <h3>P4: Detecting Fundamental Shifts</h3>
+        <canvas id="chart-p4"></canvas>
+      </div>
+      <div class="chart-box">
+        <h3>P5: Anticipation vs Competitors</h3>
+        <canvas id="chart-p5"></canvas>
+      </div>
+      <div class="chart-box">
+        <h3>P6: Signal-to-Action Velocity</h3>
+        <canvas id="chart-p6"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scatter -->
+  <div class="section">
+    <h2>Sense vs Act</h2>
+    <div class="chart-full">
+      <h3>Sensing (avg P3+P4+P5) vs Velocity (P6) — Each dot is one respondent</h3>
+      <canvas id="chart-scatter" height="400"></canvas>
+      <p class="scatter-note">Threshold set at 4.5 — the midpoint of the 1–7 scale, not the audience average. The imbalance is the finding, not a charting artifact.</p>
+    </div>
+  </div>
+
+  <!-- Gap by Segment -->
+  <div class="section">
+    <h2>Gap by Segment</h2>
+    <div class="gap-tables">
+      <div class="chart-box">
+        <h3>By Company Size</h3>
+        <table>
+          <thead><tr><th>Size</th><th>n</th><th>Sensing</th><th>Velocity</th><th>Gap</th></tr></thead>
+          <tbody id="table-size"></tbody>
+        </table>
+        <p class="table-comment" id="comment-size"></p>
+      </div>
+      <div class="chart-box">
+        <h3>By Role</h3>
+        <table>
+          <thead><tr><th>Role</th><th>n</th><th>Sensing</th><th>Velocity</th><th>Gap</th></tr></thead>
+          <tbody id="table-role"></tbody>
+        </table>
+        <p class="table-comment" id="comment-role"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Executive Summary -->
+  <div class="summary" id="exec-summary">
+    <h2>Executive Summary</h2>
+  </div>
+
+  <!-- Discussion Prompts -->
+  <div class="prompts" id="discussion-prompts">
+    <h2>Questions This Data Raises</h2>
+    <ol id="prompts-list"></ol>
+  </div>
+
+  <div class="footer">
+    Adapted from Day &amp; Schoemaker (2019), <em>See Sooner, Act Faster</em> &middot; Avizum &middot; Pharma CI Europe Masterclass 2026
+  </div>
 </div>
 
 <script>
-// ─── Embedded data (first paint) ───
-const EMBEDDED = {"responses":[{"role":"Senior Director","size":"500 \u2013 5,000","p3":7,"p4":6,"p5":7,"p6":4,"sensing":6.666666666666667,"velocity":4},{"role":"Senior Director","size":"500 \u2013 5,000","p3":6,"p4":5,"p5":7,"p6":7,"sensing":6.0,"velocity":7},{"role":"Director","size":"More than 50,000","p3":5,"p4":7,"p5":5,"p6":2,"sensing":5.666666666666667,"velocity":2},{"role":"Other","size":"5,000 \u2013 50,000","p3":6,"p4":4,"p5":5,"p6":1,"sensing":5.0,"velocity":1},{"role":"Other","size":"500 \u2013 5,000","p3":5,"p4":7,"p5":6,"p6":1,"sensing":6.0,"velocity":1},{"role":"VP or above","size":"500 \u2013 5,000","p3":5,"p4":5,"p5":6,"p6":3,"sensing":5.333333333333333,"velocity":3},{"role":"Director","size":"500 \u2013 5,000","p3":6,"p4":4,"p5":4,"p6":1,"sensing":4.666666666666667,"velocity":1},{"role":"Director","size":"500 \u2013 5,000","p3":4,"p4":5,"p5":7,"p6":2,"sensing":5.333333333333333,"velocity":2},{"role":"VP or above","size":"500 \u2013 5,000","p3":5,"p4":6,"p5":4,"p6":2,"sensing":5.0,"velocity":2},{"role":"Director","size":"5,000 \u2013 50,000","p3":4,"p4":6,"p5":6,"p6":2,"sensing":5.333333333333333,"velocity":2},{"role":"Manager / Senior Manager","size":"5,000 \u2013 50,000","p3":4,"p4":6,"p5":6,"p6":1,"sensing":5.333333333333333,"velocity":1},{"role":"Senior Director","size":"500 \u2013 5,000","p3":7,"p4":6,"p5":7,"p6":2,"sensing":6.666666666666667,"velocity":2},{"role":"VP or above","size":"More than 50,000","p3":5,"p4":6,"p5":6,"p6":1,"sensing":5.666666666666667,"velocity":1},{"role":"Senior Director","size":"Fewer than 500","p3":6,"p4":6,"p5":7,"p6":3,"sensing":6.333333333333333,"velocity":3},{"role":"Senior Director","size":"500 \u2013 5,000","p3":5,"p4":5,"p5":5,"p6":2,"sensing":5.0,"velocity":2},{"role":"Manager / Senior Manager","size":"More than 50,000","p3":6,"p4":5,"p5":7,"p6":2,"sensing":6.0,"velocity":2},{"role":"Senior Director","size":"Fewer than 500","p3":6,"p4":5,"p5":4,"p6":3,"sensing":5.0,"velocity":3},{"role":"Other","size":"500 \u2013 5,000","p3":6,"p4":7,"p5":7,"p6":3,"sensing":6.666666666666667,"velocity":3},{"role":"Manager / Senior Manager","size":"500 \u2013 5,000","p3":5,"p4":7,"p5":6,"p6":2,"sensing":6.0,"velocity":2},{"role":"Director","size":"5,000 \u2013 50,000","p3":4,"p4":5,"p5":5,"p6":1,"sensing":4.666666666666667,"velocity":1},{"role":"Director","size":"500 \u2013 5,000","p3":6,"p4":5,"p5":7,"p6":3,"sensing":6.0,"velocity":3},{"role":"Director","size":"5,000 \u2013 50,000","p3":7,"p4":4,"p5":5,"p6":2,"sensing":5.333333333333333,"velocity":2},{"role":"VP or above","size":"500 \u2013 5,000","p3":5,"p4":4,"p5":7,"p6":3,"sensing":5.333333333333333,"velocity":3},{"role":"Senior Director","size":"Fewer than 500","p3":5,"p4":5,"p5":6,"p6":3,"sensing":5.333333333333333,"velocity":3},{"role":"Manager / Senior Manager","size":"5,000 \u2013 50,000","p3":4,"p4":7,"p5":6,"p6":2,"sensing":5.666666666666667,"velocity":2},{"role":"VP or above","size":"More than 50,000","p3":5,"p4":7,"p5":4,"p6":2,"sensing":5.333333333333333,"velocity":2},{"role":"Director","size":"500 \u2013 5,000","p3":7,"p4":6,"p5":6,"p6":4,"sensing":6.333333333333333,"velocity":4},{"role":"Senior Director","size":"500 \u2013 5,000","p3":5,"p4":4,"p5":6,"p6":3,"sensing":5.0,"velocity":3},{"role":"Senior Director","size":"Fewer than 500","p3":5,"p4":5,"p5":6,"p6":3,"sensing":5.333333333333333,"velocity":3},{"role":"Manager / Senior Manager","size":"500 \u2013 5,000","p3":6,"p4":7,"p5":6,"p6":1,"sensing":6.333333333333333,"velocity":1},{"role":"Director","size":"500 \u2013 5,000","p3":4,"p4":4,"p5":7,"p6":3,"sensing":5.0,"velocity":3},{"role":"Director","size":"5,000 \u2013 50,000","p3":5,"p4":6,"p5":5,"p6":2,"sensing":5.333333333333333,"velocity":2},{"role":"Senior Director","size":"500 \u2013 5,000","p3":4,"p4":5,"p5":5,"p6":2,"sensing":4.666666666666667,"velocity":2},{"role":"Director","size":"More than 50,000","p3":6,"p4":5,"p5":7,"p6":1,"sensing":6.0,"velocity":1},{"role":"VP or above","size":"500 \u2013 5,000","p3":5,"p4":4,"p5":4,"p6":1,"sensing":4.333333333333333,"velocity":1},{"role":"Director","size":"5,000 \u2013 50,000","p3":6,"p4":5,"p5":6,"p6":3,"sensing":5.666666666666667,"velocity":3},{"role":"Senior Director","size":"Fewer than 500","p3":7,"p4":6,"p5":7,"p6":4,"sensing":6.666666666666667,"velocity":4},{"role":"Manager / Senior Manager","size":"5,000 \u2013 50,000","p3":6,"p4":5,"p5":4,"p6":3,"sensing":5.0,"velocity":3},{"role":"Senior Director","size":"5,000 \u2013 50,000","p3":5,"p4":4,"p5":5,"p6":2,"sensing":4.666666666666667,"velocity":2},{"role":"Director","size":"500 \u2013 5,000","p3":6,"p4":7,"p5":6,"p6":2,"sensing":6.333333333333333,"velocity":2},{"role":"Manager / Senior Manager","size":"500 \u2013 5,000","p3":6,"p4":4,"p5":6,"p6":3,"sensing":5.333333333333333,"velocity":3},{"role":"Senior Director","size":"500 \u2013 5,000","p3":7,"p4":7,"p5":6,"p6":2,"sensing":6.666666666666667,"velocity":2},{"role":"Director","size":"500 \u2013 5,000","p3":7,"p4":6,"p5":5,"p6":3,"sensing":6.0,"velocity":3},{"role":"VP or above","size":"More than 50,000","p3":6,"p4":7,"p5":7,"p6":3,"sensing":6.666666666666667,"velocity":3},{"role":"Senior Director","size":"5,000 \u2013 50,000","p3":6,"p4":6,"p5":5,"p6":2,"sensing":5.666666666666667,"velocity":2},{"role":"Director","size":"5,000 \u2013 50,000","p3":4,"p4":5,"p5":6,"p6":3,"sensing":5.0,"velocity":3},{"role":"VP or above","size":"5,000 \u2013 50,000","p3":6,"p4":6,"p5":6,"p6":2,"sensing":6.0,"velocity":2},{"role":"Director","size":"More than 50,000","p3":6,"p4":6,"p5":4,"p6":3,"sensing":5.333333333333333,"velocity":3},{"role":"Senior Director","size":"Fewer than 500","p3":7,"p4":7,"p5":5,"p6":2,"sensing":6.333333333333333,"velocity":2},{"role":"Manager / Senior Manager","size":"500 \u2013 5,000","p3":5,"p4":6,"p5":5,"p6":2,"sensing":5.333333333333333,"velocity":2},{"role":"Director","size":"More than 50,000","p3":5,"p4":7,"p5":6,"p6":2,"sensing":6.0,"velocity":2},{"role":"Senior Director","size":"Fewer than 500","p3":6,"p4":5,"p5":7,"p6":3,"sensing":6.0,"velocity":3},{"role":"Manager / Senior Manager","size":"5,000 \u2013 50,000","p3":6,"p4":5,"p5":7,"p6":2,"sensing":6.0,"velocity":2},{"role":"Director","size":"500 \u2013 5,000","p3":5,"p4":4,"p5":5,"p6":1,"sensing":4.666666666666667,"velocity":1},{"role":"Director","size":"5,000 \u2013 50,000","p3":4,"p4":5,"p5":4,"p6":4,"sensing":4.333333333333333,"velocity":4},{"role":"VP or above","size":"500 \u2013 5,000","p3":7,"p4":6,"p5":7,"p6":2,"sensing":6.666666666666667,"velocity":2},{"role":"Senior Director","size":"500 \u2013 5,000","p3":5,"p4":6,"p5":6,"p6":4,"sensing":5.666666666666667,"velocity":4},{"role":"Manager / Senior Manager","size":"5,000 \u2013 50,000","p3":7,"p4":5,"p5":6,"p6":4,"sensing":6.0,"velocity":4},{"role":"Director","size":"5,000 \u2013 50,000","p3":5,"p4":6,"p5":7,"p6":2,"sensing":6.0,"velocity":2},{"role":"Senior Director","size":"500 \u2013 5,000","p3":5,"p4":5,"p5":5,"p6":2,"sensing":5.0,"velocity":2},{"role":"VP or above","size":"More than 50,000","p3":6,"p4":5,"p5":7,"p6":3,"sensing":6.0,"velocity":3},{"role":"Senior Director","size":"Fewer than 500","p3":4,"p4":7,"p5":6,"p6":3,"sensing":5.666666666666667,"velocity":3},{"role":"Other","size":"5,000 \u2013 50,000","p3":5,"p4":5,"p5":6,"p6":4,"sensing":5.333333333333333,"velocity":4},{"role":"Manager / Senior Manager","size":"More than 50,000","p3":6,"p4":7,"p5":7,"p6":1,"sensing":6.666666666666667,"velocity":1},{"role":"Director","size":"500 \u2013 5,000","p3":6,"p4":5,"p5":6,"p6":2,"sensing":5.666666666666667,"velocity":2}]};
+// Embedded initial data (replaced on refresh)
+let DATA = null;
+const EMBEDDED = {"responses": [{"role": "Senior Director", "size": "500 \u2013 5,000", "p3": 7, "p4": 6, "p5": 7, "p6": 4, "sensing": 6.666666666666667, "velocity": 4}, {"role": "Senior Director", "size": "500 \u2013 5,000", "p3": 6, "p4": 5, "p5": 7, "p6": 7, "sensing": 6.0, "velocity": 7}, {"role": "Director", "size": "More than 50,000", "p3": 5, "p4": 7, "p5": 5, "p6": 2, "sensing": 5.666666666666667, "velocity": 2}, {"role": "Other", "size": "5,000 \u2013 50,000", "p3": 6, "p4": 4, "p5": 5, "p6": 1, "sensing": 5.0, "velocity": 1}, {"role": "Other", "size": "500 \u2013 5,000", "p3": 5, "p4": 7, "p5": 6, "p6": 1, "sensing": 6.0, "velocity": 1}, {"role": "VP or above", "size": "500 \u2013 5,000", "p3": 5, "p4": 5, "p5": 6, "p6": 3, "sensing": 5.333333333333333, "velocity": 3}, {"role": "Director", "size": "500 \u2013 5,000", "p3": 6, "p4": 4, "p5": 4, "p6": 1, "sensing": 4.666666666666667, "velocity": 1}, {"role": "Director", "size": "500 \u2013 5,000", "p3": 4, "p4": 5, "p5": 7, "p6": 2, "sensing": 5.333333333333333, "velocity": 2}, {"role": "VP or above", "size": "500 \u2013 5,000", "p3": 5, "p4": 6, "p5": 4, "p6": 2, "sensing": 5.0, "velocity": 2}, {"role": "Director", "size": "5,000 \u2013 50,000", "p3": 4, "p4": 6, "p5": 6, "p6": 2, "sensing": 5.333333333333333, "velocity": 2}, {"role": "Manager / Senior Manager", "size": "5,000 \u2013 50,000", "p3": 4, "p4": 6, "p5": 6, "p6": 1, "sensing": 5.333333333333333, "velocity": 1}, {"role": "Senior Director", "size": "500 \u2013 5,000", "p3": 7, "p4": 6, "p5": 7, "p6": 2, "sensing": 6.666666666666667, "velocity": 2}, {"role": "VP or above", "size": "More than 50,000", "p3": 5, "p4": 6, "p5": 6, "p6": 1, "sensing": 5.666666666666667, "velocity": 1}, {"role": "Senior Director", "size": "Fewer than 500", "p3": 6, "p4": 6, "p5": 7, "p6": 3, "sensing": 6.333333333333333, "velocity": 3}, {"role": "Senior Director", "size": "500 \u2013 5,000", "p3": 5, "p4": 5, "p5": 5, "p6": 2, "sensing": 5.0, "velocity": 2}, {"role": "Manager / Senior Manager", "size": "More than 50,000", "p3": 6, "p4": 5, "p5": 7, "p6": 2, "sensing": 6.0, "velocity": 2}, {"role": "Senior Director", "size": "Fewer than 500", "p3": 6, "p4": 5, "p5": 4, "p6": 3, "sensing": 5.0, "velocity": 3}, {"role": "Other", "size": "500 \u2013 5,000", "p3": 6, "p4": 7, "p5": 7, "p6": 3, "sensing": 6.666666666666667, "velocity": 3}, {"role": "Manager / Senior Manager", "size": "500 \u2013 5,000", "p3": 5, "p4": 7, "p5": 6, "p6": 2, "sensing": 6.0, "velocity": 2}, {"role": "Director", "size": "5,000 \u2013 50,000", "p3": 5, "p4": 4, "p5": 7, "p6": 2, "sensing": 5.333333333333333, "velocity": 2}, {"role": "VP or above", "size": "Fewer than 500", "p3": 5, "p4": 6, "p5": 6, "p6": 2, "sensing": 5.666666666666667, "velocity": 2}, {"role": "Senior Director", "size": "Fewer than 500", "p3": 7, "p4": 7, "p5": 6, "p6": 3, "sensing": 6.666666666666667, "velocity": 3}, {"role": "Senior Director", "size": "More than 50,000", "p3": 6, "p4": 4, "p5": 6, "p6": 4, "sensing": 5.333333333333333, "velocity": 4}, {"role": "Senior Director", "size": "5,000 \u2013 50,000", "p3": 7, "p4": 5, "p5": 6, "p6": 3, "sensing": 6.0, "velocity": 3}, {"role": "Director", "size": "5,000 \u2013 50,000", "p3": 4, "p4": 7, "p5": 4, "p6": 2, "sensing": 5.0, "velocity": 2}, {"role": "Director", "size": "5,000 \u2013 50,000", "p3": 6, "p4": 4, "p5": 4, "p6": 3, "sensing": 4.666666666666667, "velocity": 3}, {"role": "VP or above", "size": "5,000 \u2013 50,000", "p3": 7, "p4": 6, "p5": 5, "p6": 2, "sensing": 6.0, "velocity": 2}, {"role": "VP or above", "size": "Fewer than 500", "p3": 5, "p4": 5, "p5": 5, "p6": 1, "sensing": 5.0, "velocity": 1}, {"role": "VP or above", "size": "Fewer than 500", "p3": 4, "p4": 7, "p5": 7, "p6": 2, "sensing": 6.0, "velocity": 2}, {"role": "VP or above", "size": "500 \u2013 5,000", "p3": 6, "p4": 7, "p5": 5, "p6": 4, "sensing": 6.0, "velocity": 4}, {"role": "Director", "size": "500 \u2013 5,000", "p3": 6, "p4": 7, "p5": 7, "p6": 1, "sensing": 6.666666666666667, "velocity": 1}, {"role": "Director", "size": "5,000 \u2013 50,000", "p3": 6, "p4": 5, "p5": 5, "p6": 3, "sensing": 5.333333333333333, "velocity": 3}, {"role": "Senior Director", "size": "5,000 \u2013 50,000", "p3": 4, "p4": 6, "p5": 5, "p6": 2, "sensing": 5.0, "velocity": 2}, {"role": "Senior Director", "size": "5,000 \u2013 50,000", "p3": 6, "p4": 6, "p5": 6, "p6": 2, "sensing": 6.0, "velocity": 2}, {"role": "Senior Director", "size": "500 \u2013 5,000", "p3": 5, "p4": 5, "p5": 6, "p6": 1, "sensing": 5.333333333333333, "velocity": 1}, {"role": "Senior Director", "size": "More than 50,000", "p3": 5, "p4": 6, "p5": 6, "p6": 2, "sensing": 5.666666666666667, "velocity": 2}, {"role": "VP or above", "size": "More than 50,000", "p3": 5, "p4": 4, "p5": 6, "p6": 3, "sensing": 5.0, "velocity": 3}, {"role": "Director", "size": "500 \u2013 5,000", "p3": 6, "p4": 5, "p5": 6, "p6": 2, "sensing": 5.666666666666667, "velocity": 2}, {"role": "Director", "size": "500 \u2013 5,000", "p3": 6, "p4": 5, "p5": 5, "p6": 3, "sensing": 5.333333333333333, "velocity": 3}, {"role": "Manager / Senior Manager", "size": "500 \u2013 5,000", "p3": 6, "p4": 4, "p5": 7, "p6": 3, "sensing": 5.666666666666667, "velocity": 3}, {"role": "Senior Director", "size": "500 \u2013 5,000", "p3": 5, "p4": 4, "p5": 7, "p6": 4, "sensing": 5.333333333333333, "velocity": 4}, {"role": "Manager / Senior Manager", "size": "500 \u2013 5,000", "p3": 7, "p4": 6, "p5": 6, "p6": 2, "sensing": 6.333333333333333, "velocity": 2}, {"role": "Director", "size": "500 \u2013 5,000", "p3": 5, "p4": 5, "p5": 5, "p6": 2, "sensing": 5.0, "velocity": 2}, {"role": "Director", "size": "5,000 \u2013 50,000", "p3": 6, "p4": 6, "p5": 6, "p6": 1, "sensing": 6.0, "velocity": 1}, {"role": "Director", "size": "5,000 \u2013 50,000", "p3": 5, "p4": 4, "p5": 4, "p6": 4, "sensing": 4.333333333333333, "velocity": 4}, {"role": "Senior Director", "size": "5,000 \u2013 50,000", "p3": 5, "p4": 5, "p5": 4, "p6": 4, "sensing": 4.666666666666667, "velocity": 4}, {"role": "Manager / Senior Manager", "size": "5,000 \u2013 50,000", "p3": 5, "p4": 5, "p5": 5, "p6": 2, "sensing": 5.0, "velocity": 2}, {"role": "Manager / Senior Manager", "size": "500 \u2013 5,000", "p3": 5, "p4": 6, "p5": 6, "p6": 3, "sensing": 5.666666666666667, "velocity": 3}, {"role": "VP or above", "size": "More than 50,000", "p3": 6, "p4": 5, "p5": 7, "p6": 2, "sensing": 6.0, "velocity": 2}, {"role": "Director", "size": "Fewer than 500", "p3": 6, "p4": 6, "p5": 6, "p6": 3, "sensing": 6.0, "velocity": 3}, {"role": "Manager / Senior Manager", "size": "500 \u2013 5,000", "p3": 5, "p4": 6, "p5": 6, "p6": 1, "sensing": 5.666666666666667, "velocity": 1}, {"role": "Director", "size": "Fewer than 500", "p3": 7, "p4": 6, "p5": 6, "p6": 3, "sensing": 6.333333333333333, "velocity": 3}, {"role": "Senior Director", "size": "More than 50,000", "p3": 5, "p4": 5, "p5": 5, "p6": 1, "sensing": 5.0, "velocity": 1}, {"role": "Manager / Senior Manager", "size": "5,000 \u2013 50,000", "p3": 6, "p4": 4, "p5": 5, "p6": 3, "sensing": 5.0, "velocity": 3}, {"role": "Senior Director", "size": "More than 50,000", "p3": 7, "p4": 6, "p5": 7, "p6": 3, "sensing": 6.666666666666667, "velocity": 3}, {"role": "Manager / Senior Manager", "size": "500 \u2013 5,000", "p3": 6, "p4": 4, "p5": 4, "p6": 3, "sensing": 4.666666666666667, "velocity": 3}, {"role": "Manager / Senior Manager", "size": "5,000 \u2013 50,000", "p3": 4, "p4": 6, "p5": 7, "p6": 1, "sensing": 5.666666666666667, "velocity": 1}, {"role": "Director", "size": "500 \u2013 5,000", "p3": 7, "p4": 5, "p5": 6, "p6": 2, "sensing": 6.0, "velocity": 2}, {"role": "Director", "size": "5,000 \u2013 50,000", "p3": 6, "p4": 7, "p5": 6, "p6": 2, "sensing": 6.333333333333333, "velocity": 2}, {"role": "Senior Director", "size": "Fewer than 500", "p3": 5, "p4": 6, "p5": 6, "p6": 2, "sensing": 5.666666666666667, "velocity": 2}, {"role": "Senior Director", "size": "Fewer than 500", "p3": 4, "p4": 7, "p5": 6, "p6": 1, "sensing": 5.666666666666667, "velocity": 1}, {"role": "Other", "size": "Fewer than 500", "p3": 6, "p4": 5, "p5": 7, "p6": 4, "sensing": 6.0, "velocity": 4}, {"role": "Director", "size": "More than 50,000", "p3": 6, "p4": 6, "p5": 7, "p6": 2, "sensing": 6.333333333333333, "velocity": 2}, {"role": "Director", "size": "500 \u2013 5,000", "p3": 6, "p4": 5, "p5": 6, "p6": 2, "sensing": 5.666666666666667, "velocity": 2}]};
 
-let DATA = EMBEDDED;
-
-function avg(arr) { return arr.reduce((a,b)=>a+b,0)/arr.length; }
-function median(arr) { const s=[...arr].sort((a,b)=>a-b); const m=Math.floor(s.length/2); return s.length%2?s[m]:(s[m-1]+s[m])/2; }
-function countBy(arr,key) { const c={}; arr.forEach(d=>{c[d[key]]=(c[d[key]]||0)+1;}); return c; }
+// Chart instances for updates
+const charts = {};
 
 function render(data) {
-  const R = data.responses;
-  const n = R.length;
-  const meanP3 = avg(R.map(d=>d.p3));
-  const meanP4 = avg(R.map(d=>d.p4));
-  const meanP5 = avg(R.map(d=>d.p5));
-  const meanP6 = avg(R.map(d=>d.p6));
-  const meanSensing = (meanP3+meanP4+meanP5)/3;
-  const meanVelocity = meanP6;
-  const gap = meanSensing - meanVelocity;
+  DATA = data;
 
   // KPIs
-  document.getElementById('kpi-n').textContent = n;
-  document.getElementById('kpi-sensing').textContent = meanSensing.toFixed(1);
-  document.getElementById('kpi-velocity').textContent = meanVelocity.toFixed(1);
-  document.getElementById('kpi-gap').textContent = gap.toFixed(1);
+  document.getElementById('kpi-n').textContent = data.kpis.responses;
+  document.getElementById('kpi-sensing').textContent = data.kpis.meanSensing.toFixed(1);
+  document.getElementById('kpi-velocity').textContent = data.kpis.meanVelocity.toFixed(1);
+  document.getElementById('kpi-gap').textContent = data.kpis.gap.toFixed(1);
+  document.getElementById('live-status').textContent = `Live \u00b7 ${data.n} responses \u00b7 updated ${data.updated}`;
 
-  const now = new Date();
-  const timeStr = now.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',timeZone:'Europe/Berlin'}) + ' CEST';
-  document.getElementById('live-status').textContent = `Live \u00b7 ${n} responses \u00b7 updated ${timeStr}`;
+  // Destroy existing charts
+  Object.values(charts).forEach(c => c.destroy());
 
-  // ─── Role bar chart ───
-  const roles = countBy(R,'role');
-  const roleOrder = Object.entries(roles).sort((a,b)=>b[1]-a[1]);
-  destroyChart('chart-role');
-  window._charts = window._charts||{};
-  window._charts['chart-role'] = new Chart(document.getElementById('chart-role'),{
-    type:'bar',
-    data:{labels:roleOrder.map(r=>r[0]),datasets:[{data:roleOrder.map(r=>r[1]),backgroundColor:'#C8102E',borderRadius:6,maxBarThickness:50}]},
-    options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{stepSize:1}},y:{grid:{display:false}}}}
+  // Roles bar chart
+  const roleLabels = Object.keys(data.roles);
+  const roleValues = Object.values(data.roles);
+  charts.roles = new Chart(document.getElementById('chart-roles'), {
+    type: 'bar',
+    data: {
+      labels: roleLabels,
+      datasets: [{
+        data: roleValues,
+        backgroundColor: '#C62828',
+        borderRadius: 6,
+        barPercentage: 0.7
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { display: false }, ticks: { stepSize: 1 } },
+        y: { grid: { display: false } }
+      }
+    }
   });
 
-  // ─── Size bar chart ───
-  const sizes = countBy(R,'size');
-  const sizeLabels = ['Fewer than 500','500 \u2013 5,000','5,000 \u2013 50,000','More than 50,000'];
-  destroyChart('chart-size');
-  window._charts['chart-size'] = new Chart(document.getElementById('chart-size'),{
-    type:'bar',
-    data:{labels:sizeLabels,datasets:[{data:sizeLabels.map(s=>sizes[s]||0),backgroundColor:'#C8102E',borderRadius:6,maxBarThickness:50}]},
-    options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{stepSize:1}},y:{grid:{display:false}}}}
+  // Sizes bar chart
+  const sizeOrder = ['Fewer than 500', '500 \u2013 5,000', '5,000 \u2013 50,000', 'More than 50,000'];
+  const sizeLabels = sizeOrder.filter(s => data.sizes[s] !== undefined);
+  const sizeValues = sizeLabels.map(s => data.sizes[s] || 0);
+  charts.sizes = new Chart(document.getElementById('chart-sizes'), {
+    type: 'bar',
+    data: {
+      labels: sizeLabels.map(s => s.replace('Fewer than ', '<').replace('More than ', '>')),
+      datasets: [{
+        data: sizeValues,
+        backgroundColor: '#C62828',
+        borderRadius: 6,
+        barPercentage: 0.7
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { display: false }, ticks: { stepSize: 1 } },
+        y: { grid: { display: false } }
+      }
+    }
   });
 
-  // ─── Distribution charts (filled line/area) ───
-  function distChart(canvasId, values, color, label) {
-    const counts = [0,0,0,0,0,0,0];
-    values.forEach(v=>counts[v-1]++);
-    const pcts = counts.map(c=>((c/values.length)*100));
-    const med = median(values);
-    destroyChart(canvasId);
-    window._charts[canvasId] = new Chart(document.getElementById(canvasId),{
-      type:'line',
-      data:{
-        labels:['1','2','3','4','5','6','7'],
-        datasets:[{
-          data:pcts,
-          borderColor:color,
-          backgroundColor:color+'30',
-          fill:true,
-          tension:0.4,
-          pointRadius:4,
-          pointBackgroundColor:color,
-          borderWidth:2.5
+  // Distribution line charts (area fill)
+  function distChart(canvasId, dist, median, color, label) {
+    const labels = ['1','2','3','4','5','6','7'];
+    charts[canvasId] = new Chart(document.getElementById(canvasId), {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          data: dist,
+          borderColor: color,
+          backgroundColor: color + '30',
+          fill: true,
+          tension: 0.4,
+          pointRadius: 4,
+          pointBackgroundColor: color
         }]
       },
-      options:{
-        responsive:true,
-        plugins:{
-          legend:{display:false},
-          annotation: undefined
+      options: {
+        plugins: {
+          legend: { display: false },
+          annotation: null
         },
-        scales:{
-          x:{title:{display:true,text:'Rating (1–7)',font:{size:11}},grid:{display:false}},
-          y:{title:{display:true,text:'% of responses',font:{size:11}},grid:{color:'#EDF2F7'},beginAtZero:true}
+        scales: {
+          x: { title: { display: true, text: 'Score' }, grid: { display: false } },
+          y: { title: { display: true, text: 'Responses' }, grid: { color: '#E0E0E0' }, beginAtZero: true }
         }
       },
-      plugins:[{
-        id:'medianLine',
+      plugins: [{
+        id: 'medianLine',
         afterDraw(chart) {
+          const ctx = chart.ctx;
           const xScale = chart.scales.x;
           const yScale = chart.scales.y;
-          const ctx = chart.ctx;
-          const medIdx = med - 1;
-          const x = xScale.getPixelForValue(medIdx);
+          // median is 1-indexed, labels are 0-indexed
+          const xPos = xScale.getPixelForValue(median - 1);
           ctx.save();
-          ctx.strokeStyle = color;
+          ctx.strokeStyle = '#37474F';
           ctx.lineWidth = 2;
-          ctx.setLineDash([6,4]);
+          ctx.setLineDash([6, 4]);
           ctx.beginPath();
-          ctx.moveTo(x, yScale.top);
-          ctx.lineTo(x, yScale.bottom);
+          ctx.moveTo(xPos, yScale.top);
+          ctx.lineTo(xPos, yScale.bottom);
           ctx.stroke();
           ctx.setLineDash([]);
-          ctx.fillStyle = color;
+          ctx.fillStyle = '#37474F';
           ctx.font = 'bold 11px sans-serif';
           ctx.textAlign = 'center';
-          ctx.fillText('Median: '+med, x, yScale.top - 6);
+          ctx.fillText(`Median: ${median}`, xPos, yScale.top - 6);
           ctx.restore();
         }
       }]
     });
   }
-  distChart('chart-p3', R.map(d=>d.p3), '#C8102E', 'P3');
-  distChart('chart-p4', R.map(d=>d.p4), '#C8102E', 'P4');
-  distChart('chart-p5', R.map(d=>d.p5), '#C8102E', 'P5');
-  distChart('chart-p6', R.map(d=>d.p6), '#5A6577', 'P6');
 
-  // ─── Scatter ───
-  const threshold = 4.5;
-  const quadColors = {ll:'#A0AEC0',lr:'#718096',ul:'#E8384F',ur:'#38A169'};
-  const scatterData = R.map(d=>{
-    const s = d.sensing;
-    const v = d.velocity;
-    let color;
-    if(s>=threshold&&v>=threshold) color=quadColors.ur;
-    else if(s>=threshold&&v<threshold) color=quadColors.ul;
-    else if(s<threshold&&v>=threshold) color=quadColors.lr;
-    else color=quadColors.ll;
-    return {x:+s.toFixed(2),y:v,backgroundColor:color};
+  distChart('chart-p3', data.distributions.p3, data.medians.p3, '#C62828', 'P3');
+  distChart('chart-p4', data.distributions.p4, data.medians.p4, '#C62828', 'P4');
+  distChart('chart-p5', data.distributions.p5, data.medians.p5, '#C62828', 'P5');
+  distChart('chart-p6', data.distributions.p6, data.medians.p6, '#546E7A', 'P6');
+
+  // Scatter plot
+  const quadColors = {
+    leader: 'rgba(46,125,50,0.7)',
+    stuck: 'rgba(198,40,40,0.7)',
+    reactive: 'rgba(245,124,0,0.7)',
+    laggard: 'rgba(84,110,122,0.7)'
+  };
+  const scatterSets = { leader: [], stuck: [], reactive: [], laggard: [] };
+  data.scatter.forEach(pt => {
+    if (pt.x >= 4.5 && pt.y >= 4.5) scatterSets.leader.push(pt);
+    else if (pt.x >= 4.5 && pt.y < 4.5) scatterSets.stuck.push(pt);
+    else if (pt.x < 4.5 && pt.y >= 4.5) scatterSets.reactive.push(pt);
+    else scatterSets.laggard.push(pt);
   });
 
-  destroyChart('chart-scatter');
-  window._charts['chart-scatter'] = new Chart(document.getElementById('chart-scatter'),{
-    type:'scatter',
-    data:{datasets:[{
-      data:scatterData,
-      pointBackgroundColor:scatterData.map(d=>d.backgroundColor),
-      pointBorderColor:scatterData.map(d=>d.backgroundColor),
-      pointRadius:6,
-      pointHoverRadius:8
-    }]},
-    options:{
-      responsive:true,
-      plugins:{legend:{display:false}},
-      scales:{
-        x:{title:{display:true,text:'Average Sensing (P3+P4+P5)',font:{size:12}},min:1,max:7,grid:{color:'#EDF2F7'}},
-        y:{title:{display:true,text:'Velocity (P6)',font:{size:12}},min:1,max:7,grid:{color:'#EDF2F7'}}
+  charts.scatter = new Chart(document.getElementById('chart-scatter'), {
+    type: 'scatter',
+    data: {
+      datasets: [
+        { label: `Leaders (${data.quadrants.leaders})`, data: scatterSets.leader, backgroundColor: quadColors.leader, pointRadius: 7 },
+        { label: `Stuck at Sensing (${data.quadrants.stuck})`, data: scatterSets.stuck, backgroundColor: quadColors.stuck, pointRadius: 7 },
+        { label: `Reactive (${data.quadrants.reactive})`, data: scatterSets.reactive, backgroundColor: quadColors.reactive, pointRadius: 7 },
+        { label: `Laggards (${data.quadrants.laggards})`, data: scatterSets.laggard, backgroundColor: quadColors.laggard, pointRadius: 7 }
+      ]
+    },
+    options: {
+      scales: {
+        x: { min: 1, max: 7, title: { display: true, text: 'Mean Sensing (P3+P4+P5)' }, grid: { color: '#E0E0E0' } },
+        y: { min: 1, max: 7, title: { display: true, text: 'Velocity (P6)' }, grid: { color: '#E0E0E0' } }
+      },
+      plugins: {
+        legend: { position: 'bottom', labels: { usePointStyle: true, padding: 16 } }
       }
     },
-    plugins:[{
-      id:'quadrants',
+    plugins: [{
+      id: 'quadrantLines',
       beforeDraw(chart) {
-        const {ctx}=chart;
-        const xScale=chart.scales.x;
-        const yScale=chart.scales.y;
-        const xMid=xScale.getPixelForValue(threshold);
-        const yMid=yScale.getPixelForValue(threshold);
-        // Quadrant backgrounds
+        const ctx = chart.ctx;
+        const xScale = chart.scales.x;
+        const yScale = chart.scales.y;
+        const xMid = xScale.getPixelForValue(4.5);
+        const yMid = yScale.getPixelForValue(4.5);
         ctx.save();
-        ctx.globalAlpha=0.06;
-        // Top-right (Leaders)
-        ctx.fillStyle='#38A169';
-        ctx.fillRect(xMid,yScale.top,xScale.right-xMid,yMid-yScale.top);
-        // Top-left (Reactive)
-        ctx.fillStyle='#718096';
-        ctx.fillRect(xScale.left,yScale.top,xMid-xScale.left,yMid-yScale.top);
-        // Bottom-right (Stuck at Sensing)
-        ctx.fillStyle='#E8384F';
-        ctx.fillRect(xMid,yMid,xScale.right-xMid,yScale.bottom-yMid);
-        // Bottom-left (Laggards)
-        ctx.fillStyle='#A0AEC0';
-        ctx.fillRect(xScale.left,yMid,xMid-xScale.left,yScale.bottom-yMid);
-        ctx.globalAlpha=1;
-        // Labels
-        ctx.font='bold 12px sans-serif';
-        ctx.fillStyle='#38A169'; ctx.textAlign='right'; ctx.fillText('Leaders',xScale.right-8,yScale.top+18);
-        ctx.fillStyle='#718096'; ctx.textAlign='left'; ctx.fillText('Reactive',xScale.left+8,yScale.top+18);
-        ctx.fillStyle='#E8384F'; ctx.textAlign='right'; ctx.fillText('Stuck at Sensing',xScale.right-8,yScale.bottom-8);
-        ctx.fillStyle='#A0AEC0'; ctx.textAlign='left'; ctx.fillText('Laggards',xScale.left+8,yScale.bottom-8);
-        // Threshold lines
-        ctx.strokeStyle='#CBD5E0'; ctx.lineWidth=1; ctx.setLineDash([4,4]);
-        ctx.beginPath(); ctx.moveTo(xMid,yScale.top); ctx.lineTo(xMid,yScale.bottom); ctx.stroke();
-        ctx.beginPath(); ctx.moveTo(xScale.left,yMid); ctx.lineTo(xScale.right,yMid); ctx.stroke();
+        ctx.strokeStyle = '#BDBDBD';
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([8, 4]);
+        ctx.beginPath();
+        ctx.moveTo(xMid, yScale.top);
+        ctx.lineTo(xMid, yScale.bottom);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(xScale.left, yMid);
+        ctx.lineTo(xScale.right, yMid);
+        ctx.stroke();
         ctx.setLineDash([]);
+        // Quadrant labels
+        ctx.font = '11px sans-serif';
+        ctx.fillStyle = '#9E9E9E';
+        ctx.textAlign = 'center';
+        ctx.fillText('LEADERS', (xMid + xScale.right) / 2, yScale.top + 16);
+        ctx.fillText('STUCK AT SENSING', (xMid + xScale.right) / 2, yScale.bottom - 8);
+        ctx.fillText('REACTIVE', (xScale.left + xMid) / 2, yScale.top + 16);
+        ctx.fillText('LAGGARDS', (xScale.left + xMid) / 2, yScale.bottom - 8);
         ctx.restore();
       }
     }]
   });
 
-  // Quadrant counts
-  let quads={Leaders:0,'Stuck at Sensing':0,Reactive:0,Laggards:0};
-  R.forEach(d=>{
-    const s=d.sensing,v=d.velocity;
-    if(s>=threshold&&v>=threshold) quads.Leaders++;
-    else if(s>=threshold&&v<threshold) quads['Stuck at Sensing']++;
-    else if(s<threshold&&v>=threshold) quads.Reactive++;
-    else quads.Laggards++;
+  // Gap tables
+  const sizeTableBody = document.getElementById('table-size');
+  sizeTableBody.innerHTML = '';
+  const sizeGapOrder = ['Fewer than 500', '500 \u2013 5,000', '5,000 \u2013 50,000', 'More than 50,000'];
+  // Map keys flexibly
+  const sizeGapKeys = Object.keys(data.sizeGaps);
+  const sizeMapping = {};
+  sizeGapKeys.forEach(k => {
+    if (k.includes('500') && k.includes('5,000') && !k.includes('50,000')) sizeMapping['500 \u2013 5,000'] = k;
+    else if (k.includes('5,000') && k.includes('50,000')) sizeMapping['5,000 \u2013 50,000'] = k;
+    else if (k.includes('50,000') && k.includes('More')) sizeMapping['More than 50,000'] = k;
+    else if (k.includes('500') || k.includes('Fewer')) sizeMapping['Fewer than 500'] = k;
+    else sizeMapping[k] = k;
   });
-  const qColors={Leaders:'#38A169','Stuck at Sensing':'#E8384F',Reactive:'#718096',Laggards:'#A0AEC0'};
-  document.getElementById('quadrant-counts').innerHTML = Object.entries(quads).map(([k,v])=>
-    `<div style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;border-radius:50%;background:${qColors[k]};display:inline-block;"></span><strong>${k}:</strong> ${v} (${(100*v/n).toFixed(0)}%)</div>`
-  ).join('');
+  sizeGapOrder.forEach(display => {
+    const key = sizeMapping[display];
+    if (!key || !data.sizeGaps[key]) return;
+    const d = data.sizeGaps[key];
+    sizeTableBody.innerHTML += `<tr><td>${display}</td><td>${d.n}</td><td>${d.sensing.toFixed(1)}</td><td>${d.velocity.toFixed(1)}</td><td><strong>${d.gap.toFixed(1)}</strong></td></tr>`;
+  });
 
-  // ─── Segment tables ───
-  function segTable(tbodyId, commentId, key, labelOrder) {
-    const segments = {};
-    R.forEach(d=>{
-      if(!segments[d[key]]) segments[d[key]]=[];
-      segments[d[key]].push(d);
-    });
-    const rows = labelOrder.map(label=>{
-      const seg = segments[label]||[];
-      if(!seg.length) return null;
-      const s = avg(seg.map(d=>d.sensing));
-      const v = avg(seg.map(d=>d.velocity));
-      return {label,sensing:s,velocity:v,gap:s-v,n:seg.length};
-    }).filter(Boolean);
-    document.getElementById(tbodyId).innerHTML = rows.map(r=>
-      `<tr><td>${r.label}</td><td>${r.sensing.toFixed(2)}</td><td>${r.velocity.toFixed(2)}</td><td class="gap-val">${r.gap.toFixed(2)}</td><td>${r.n}</td></tr>`
-    ).join('');
-    return rows;
-  }
-  const sizeRows = segTable('table-size','commentary-size','size',['Fewer than 500','500 \u2013 5,000','5,000 \u2013 50,000','More than 50,000']);
-  const roleRows = segTable('table-role','commentary-role','role',['Manager / Senior Manager','Director','Senior Director','VP or above','Other']);
-
-  // Size commentary
-  const sizeGaps = sizeRows.map(r=>r.gap);
-  const sizeSpread = Math.max(...sizeGaps)-Math.min(...sizeGaps);
-  const maxSizeGap = sizeRows.reduce((a,b)=>a.gap>b.gap?a:b);
-  const minSizeGap = sizeRows.reduce((a,b)=>a.gap<b.gap?a:b);
-  if(sizeSpread<0.6) {
-    document.getElementById('commentary-size').textContent = `Company size does not save you. The gap ranges from ${minSizeGap.gap.toFixed(1)} (${minSizeGap.label}) to ${maxSizeGap.gap.toFixed(1)} (${maxSizeGap.label}) \u2014 a spread of just ${sizeSpread.toFixed(1)} points. More resources did not produce faster action. This is not a scale problem.`;
+  // Size gap commentary
+  const sizeGapVals = Object.values(data.sizeGaps).map(v => v.gap);
+  const sizeGapRange = Math.max(...sizeGapVals) - Math.min(...sizeGapVals);
+  if (sizeGapRange < 0.6) {
+    document.getElementById('comment-size').textContent = `Company size doesn\u2019t save you. The gap ranges just ${sizeGapRange.toFixed(1)} points across size bands. More resources did not produce faster action.`;
   } else {
-    document.getElementById('commentary-size').textContent = `The gap is widest at ${maxSizeGap.label} (${maxSizeGap.gap.toFixed(1)}) and narrowest at ${minSizeGap.label} (${minSizeGap.gap.toFixed(1)}). A spread of ${sizeSpread.toFixed(1)} points suggests size does influence how quickly signals become decisions.`;
+    const maxSeg = Object.entries(data.sizeGaps).reduce((a, b) => b[1].gap > a[1].gap ? b : a);
+    document.getElementById('comment-size').textContent = `${maxSeg[0]} companies show the widest gap at ${maxSeg[1].gap.toFixed(1)}. Size matters here \u2014 but not in the direction most would expect.`;
   }
 
-  // Role commentary
-  const roleGaps = roleRows.filter(r=>r.label!=='Other').map(r=>r.gap);
-  const roleSpread = Math.max(...roleGaps)-Math.min(...roleGaps);
-  const maxRoleGap = roleRows.filter(r=>r.label!=='Other').reduce((a,b)=>a.gap>b.gap?a:b);
-  const minRoleGap = roleRows.filter(r=>r.label!=='Other').reduce((a,b)=>a.gap<b.gap?a:b);
-  if(roleSpread<0.6) {
-    document.getElementById('commentary-role').textContent = `Seniority does not save you either. From ${minRoleGap.label} to ${maxRoleGap.label}, the gap barely moves (${roleSpread.toFixed(1)} points). Authority alone is not what is missing.`;
+  const roleTableBody = document.getElementById('table-role');
+  roleTableBody.innerHTML = '';
+  const roleGapSorted = Object.entries(data.roleGaps).sort((a, b) => b[1].gap - a[1].gap);
+  roleGapSorted.forEach(([role, d]) => {
+    roleTableBody.innerHTML += `<tr><td>${role}</td><td>${d.n}</td><td>${d.sensing.toFixed(1)}</td><td>${d.velocity.toFixed(1)}</td><td><strong>${d.gap.toFixed(1)}</strong></td></tr>`;
+  });
+
+  // Role gap commentary
+  const roleGapVals = Object.values(data.roleGaps).map(v => v.gap);
+  const roleGapRange = Math.max(...roleGapVals) - Math.min(...roleGapVals);
+  if (roleGapRange < 0.8) {
+    document.getElementById('comment-role').textContent = `Seniority doesn\u2019t save you either. VPs and managers report essentially the same gap. Authority alone is not what\u2019s missing.`;
   } else {
-    document.getElementById('commentary-role').textContent = `${minRoleGap.label}s report the smallest gap (${minRoleGap.gap.toFixed(1)}), while ${maxRoleGap.label}s report the widest (${maxRoleGap.gap.toFixed(1)}). The ${roleSpread.toFixed(1)}-point spread suggests seniority does shift the picture \u2014 ${minRoleGap.label}s either have more agency to act on what they see, or they are closer to the decisions that close the loop.`;
+    const minRole = Object.entries(data.roleGaps).reduce((a, b) => b[1].gap < a[1].gap ? b : a);
+    document.getElementById('comment-role').textContent = `${minRole[0]}s narrow the gap to ${minRole[1].gap.toFixed(1)} \u2014 notably tighter than peers. What structural advantage does this level have?`;
   }
 
-  // ─── Executive summary ───
-  const stuckPct = (100*quads['Stuck at Sensing']/n).toFixed(0);
-  let summary = '';
-  summary += `<p>Sixty-four people in this room just told us the same thing. You are good at watching. You score ${meanSensing.toFixed(1)} out of 7 on sensing \u2014 spotting opportunities, reading shifts, benchmarking against competitors. That is well above the midpoint. The radar is on.</p>`;
-  summary += `<p>But it is not connected to the cockpit. Your velocity score is ${meanVelocity.toFixed(1)}. The gap between seeing a signal and acting on it is ${gap.toFixed(1)} points \u2014 nearly half the entire scale. ${stuckPct} per cent of you sit in the "Stuck at Sensing" quadrant: high awareness, low action. One person in this room qualifies as a Leader. One.</p>`;
-  summary += `<p>Day and Schoemaker found the same pattern in their 118-executive study: organisations invest heavily in scanning but under-invest in the decision architecture that converts scanning into movement. Their research showed leadership posture and foresight investments were the strongest predictors of vigilance. Company size amplified the effect but did not create it. This room confirms that finding. The gap is ${minSizeGap.gap.toFixed(1)} at ${minSizeGap.label} companies and ${maxSizeGap.gap.toFixed(1)} at ${maxSizeGap.label}. Scale does not fix this.</p>`;
-  if(roleSpread >= 0.6) {
-    summary += `<p>One segment breaks the pattern. ${minRoleGap.label}s report a gap of ${minRoleGap.gap.toFixed(1)} \u2014 meaningfully tighter than ${maxRoleGap.label}s at ${maxRoleGap.gap.toFixed(1)}. That suggests the people closest to strategic decisions can shorten the loop. The bottleneck is not intelligence quality. It is the distance between the people who see and the people who decide \u2014 or the layers between them.</p>`;
-  } else {
-    summary += `<p>Seniority does not rescue you. The gap barely moves from managers to VPs. Authority alone is not what closes this loop. The bottleneck is structural, not hierarchical.</p>`;
-  }
-  summary += `<p>The median velocity score is ${median(R.map(d=>d.velocity))}. Half this room rates their signal-to-action speed at ${median(R.map(d=>d.velocity))} or below on a 7-point scale. That is not sluggishness. That is paralysis. The intelligence function in most of your organisations has become a spectator sport \u2014 excellent at commentary, disconnected from the play.</p>`;
-  summary += `<p class="rec">The fix is not more intelligence. It is a shorter distance from signal to decision. That is what we are here to work on.</p>`;
-  document.getElementById('exec-summary').innerHTML = summary;
+  // Executive summary
+  const summaryDiv = document.getElementById('exec-summary');
+  summaryDiv.innerHTML = '<h2>Executive Summary</h2>';
+  data.summary.forEach(p => {
+    const el = document.createElement('p');
+    el.textContent = p;
+    summaryDiv.appendChild(el);
+  });
 
-  // ─── Discussion prompts ───
-  const prompts = [
-    `Who in this room scores above 4.5 on velocity? What is structurally different about your organisation \u2014 fewer approval layers, embedded CI in the leadership team, something else?`,
-    `The gap is nearly uniform across company size and seniority. Is this a pharma-industry problem \u2014 regulatory caution baked into the culture \u2014 or a CI-function problem, where intelligence never reaches the people who can act on it?`,
-    `What would shorten your decision loop by 50 per cent? Not more data, not better dashboards \u2014 what organisational change would cut the time between seeing a signal and making a call?`,
-    `Name one specific signal your organisation saw early but did not act on. What got in the way?`
-  ];
-  document.getElementById('discussion-prompts').innerHTML = prompts.map(p=>`<li>${p}</li>`).join('');
+  // Discussion prompts
+  const promptsList = document.getElementById('prompts-list');
+  promptsList.innerHTML = '';
+  data.prompts.forEach(p => {
+    const li = document.createElement('li');
+    li.textContent = p;
+    promptsList.appendChild(li);
+  });
 }
 
-function destroyChart(id) {
-  if(window._charts && window._charts[id]) { window._charts[id].destroy(); delete window._charts[id]; }
-}
+// Initial render with embedded data
+render(EMBEDDED);
 
-// Initial render
-render(DATA);
-
-// Auto-refresh from data.json
-setInterval(async ()=>{
+// Auto-refresh from data.json every 45s
+setInterval(async () => {
   try {
-    const resp = await fetch('data.json?t='+Date.now());
-    if(resp.ok) { DATA = await resp.json(); render(DATA); }
-  } catch(e) {}
+    const resp = await fetch('data.json?t=' + Date.now());
+    if (resp.ok) {
+      const fresh = await resp.json();
+      render(fresh);
+    }
+  } catch(e) { /* keep displaying last good data */ }
 }, 45000);
 </script>
 </body>
