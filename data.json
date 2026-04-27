@@ -1,1 +1,403 @@
-{"responses": [{"role": "Senior Director", "size": "500 \u2013 5,000", "p3": 7, "p4": 6, "p5": 7, "p6": 4, "sensing": 6.666666666666667, "velocity": 4}, {"role": "Senior Director", "size": "500 \u2013 5,000", "p3": 6, "p4": 5, "p5": 7, "p6": 7, "sensing": 6.0, "velocity": 7}, {"role": "Director", "size": "More than 50,000", "p3": 5, "p4": 7, "p5": 5, "p6": 2, "sensing": 5.666666666666667, "velocity": 2}, {"role": "Other", "size": "5,000 \u2013 50,000", "p3": 6, "p4": 4, "p5": 5, "p6": 1, "sensing": 5.0, "velocity": 1}, {"role": "Other", "size": "500 \u2013 5,000", "p3": 5, "p4": 7, "p5": 6, "p6": 1, "sensing": 6.0, "velocity": 1}, {"role": "VP or above", "size": "500 \u2013 5,000", "p3": 5, "p4": 5, "p5": 6, "p6": 3, "sensing": 5.333333333333333, "velocity": 3}, {"role": "Director", "size": "500 \u2013 5,000", "p3": 6, "p4": 4, "p5": 4, "p6": 1, "sensing": 4.666666666666667, "velocity": 1}, {"role": "Director", "size": "500 \u2013 5,000", "p3": 4, "p4": 5, "p5": 7, "p6": 2, "sensing": 5.333333333333333, "velocity": 2}, {"role": "VP or above", "size": "500 \u2013 5,000", "p3": 5, "p4": 6, "p5": 4, "p6": 2, "sensing": 5.0, "velocity": 2}, {"role": "Director", "size": "5,000 \u2013 50,000", "p3": 4, "p4": 6, "p5": 6, "p6": 2, "sensing": 5.333333333333333, "velocity": 2}, {"role": "Manager / Senior Manager", "size": "5,000 \u2013 50,000", "p3": 4, "p4": 6, "p5": 6, "p6": 1, "sensing": 5.333333333333333, "velocity": 1}, {"role": "Senior Director", "size": "500 \u2013 5,000", "p3": 7, "p4": 6, "p5": 7, "p6": 2, "sensing": 6.666666666666667, "velocity": 2}, {"role": "VP or above", "size": "More than 50,000", "p3": 5, "p4": 6, "p5": 6, "p6": 1, "sensing": 5.666666666666667, "velocity": 1}, {"role": "Senior Director", "size": "Fewer than 500", "p3": 6, "p4": 6, "p5": 7, "p6": 3, "sensing": 6.333333333333333, "velocity": 3}, {"role": "Senior Director", "size": "500 \u2013 5,000", "p3": 5, "p4": 5, "p5": 5, "p6": 2, "sensing": 5.0, "velocity": 2}, {"role": "Manager / Senior Manager", "size": "More than 50,000", "p3": 6, "p4": 5, "p5": 7, "p6": 2, "sensing": 6.0, "velocity": 2}, {"role": "Senior Director", "size": "Fewer than 500", "p3": 6, "p4": 5, "p5": 4, "p6": 3, "sensing": 5.0, "velocity": 3}, {"role": "Other", "size": "500 \u2013 5,000", "p3": 6, "p4": 7, "p5": 7, "p6": 3, "sensing": 6.666666666666667, "velocity": 3}, {"role": "Manager / Senior Manager", "size": "500 \u2013 5,000", "p3": 5, "p4": 7, "p5": 6, "p6": 2, "sensing": 6.0, "velocity": 2}, {"role": "Director", "size": "5,000 \u2013 50,000", "p3": 5, "p4": 4, "p5": 7, "p6": 2, "sensing": 5.333333333333333, "velocity": 2}, {"role": "VP or above", "size": "Fewer than 500", "p3": 5, "p4": 6, "p5": 6, "p6": 2, "sensing": 5.666666666666667, "velocity": 2}, {"role": "Senior Director", "size": "Fewer than 500", "p3": 7, "p4": 7, "p5": 6, "p6": 3, "sensing": 6.666666666666667, "velocity": 3}, {"role": "Senior Director", "size": "More than 50,000", "p3": 6, "p4": 4, "p5": 6, "p6": 4, "sensing": 5.333333333333333, "velocity": 4}, {"role": "Senior Director", "size": "5,000 \u2013 50,000", "p3": 7, "p4": 5, "p5": 6, "p6": 3, "sensing": 6.0, "velocity": 3}, {"role": "Director", "size": "5,000 \u2013 50,000", "p3": 4, "p4": 7, "p5": 4, "p6": 2, "sensing": 5.0, "velocity": 2}, {"role": "Director", "size": "5,000 \u2013 50,000", "p3": 6, "p4": 4, "p5": 4, "p6": 3, "sensing": 4.666666666666667, "velocity": 3}, {"role": "VP or above", "size": "5,000 \u2013 50,000", "p3": 7, "p4": 6, "p5": 5, "p6": 2, "sensing": 6.0, "velocity": 2}, {"role": "VP or above", "size": "Fewer than 500", "p3": 5, "p4": 5, "p5": 5, "p6": 1, "sensing": 5.0, "velocity": 1}, {"role": "VP or above", "size": "Fewer than 500", "p3": 4, "p4": 7, "p5": 7, "p6": 2, "sensing": 6.0, "velocity": 2}, {"role": "VP or above", "size": "500 \u2013 5,000", "p3": 6, "p4": 7, "p5": 5, "p6": 4, "sensing": 6.0, "velocity": 4}, {"role": "Director", "size": "500 \u2013 5,000", "p3": 6, "p4": 7, "p5": 7, "p6": 1, "sensing": 6.666666666666667, "velocity": 1}, {"role": "Director", "size": "5,000 \u2013 50,000", "p3": 6, "p4": 5, "p5": 5, "p6": 3, "sensing": 5.333333333333333, "velocity": 3}, {"role": "Senior Director", "size": "5,000 \u2013 50,000", "p3": 4, "p4": 6, "p5": 5, "p6": 2, "sensing": 5.0, "velocity": 2}, {"role": "Senior Director", "size": "5,000 \u2013 50,000", "p3": 6, "p4": 6, "p5": 6, "p6": 2, "sensing": 6.0, "velocity": 2}, {"role": "Senior Director", "size": "500 \u2013 5,000", "p3": 5, "p4": 5, "p5": 6, "p6": 1, "sensing": 5.333333333333333, "velocity": 1}, {"role": "Senior Director", "size": "More than 50,000", "p3": 5, "p4": 6, "p5": 6, "p6": 2, "sensing": 5.666666666666667, "velocity": 2}, {"role": "VP or above", "size": "More than 50,000", "p3": 5, "p4": 4, "p5": 6, "p6": 3, "sensing": 5.0, "velocity": 3}, {"role": "Director", "size": "500 \u2013 5,000", "p3": 6, "p4": 5, "p5": 6, "p6": 2, "sensing": 5.666666666666667, "velocity": 2}, {"role": "Director", "size": "500 \u2013 5,000", "p3": 6, "p4": 5, "p5": 5, "p6": 3, "sensing": 5.333333333333333, "velocity": 3}, {"role": "Manager / Senior Manager", "size": "500 \u2013 5,000", "p3": 6, "p4": 4, "p5": 7, "p6": 3, "sensing": 5.666666666666667, "velocity": 3}, {"role": "Senior Director", "size": "500 \u2013 5,000", "p3": 5, "p4": 4, "p5": 7, "p6": 4, "sensing": 5.333333333333333, "velocity": 4}, {"role": "Manager / Senior Manager", "size": "500 \u2013 5,000", "p3": 7, "p4": 6, "p5": 6, "p6": 2, "sensing": 6.333333333333333, "velocity": 2}, {"role": "Director", "size": "500 \u2013 5,000", "p3": 5, "p4": 5, "p5": 5, "p6": 2, "sensing": 5.0, "velocity": 2}, {"role": "Director", "size": "5,000 \u2013 50,000", "p3": 6, "p4": 6, "p5": 6, "p6": 1, "sensing": 6.0, "velocity": 1}, {"role": "Director", "size": "5,000 \u2013 50,000", "p3": 5, "p4": 4, "p5": 4, "p6": 4, "sensing": 4.333333333333333, "velocity": 4}, {"role": "Senior Director", "size": "5,000 \u2013 50,000", "p3": 5, "p4": 5, "p5": 4, "p6": 4, "sensing": 4.666666666666667, "velocity": 4}, {"role": "Manager / Senior Manager", "size": "5,000 \u2013 50,000", "p3": 5, "p4": 5, "p5": 5, "p6": 2, "sensing": 5.0, "velocity": 2}, {"role": "Manager / Senior Manager", "size": "500 \u2013 5,000", "p3": 5, "p4": 6, "p5": 6, "p6": 3, "sensing": 5.666666666666667, "velocity": 3}, {"role": "VP or above", "size": "More than 50,000", "p3": 6, "p4": 5, "p5": 7, "p6": 2, "sensing": 6.0, "velocity": 2}, {"role": "Director", "size": "Fewer than 500", "p3": 6, "p4": 6, "p5": 6, "p6": 3, "sensing": 6.0, "velocity": 3}, {"role": "Manager / Senior Manager", "size": "500 \u2013 5,000", "p3": 5, "p4": 6, "p5": 6, "p6": 1, "sensing": 5.666666666666667, "velocity": 1}, {"role": "Director", "size": "Fewer than 500", "p3": 7, "p4": 6, "p5": 6, "p6": 3, "sensing": 6.333333333333333, "velocity": 3}, {"role": "Senior Director", "size": "More than 50,000", "p3": 5, "p4": 5, "p5": 5, "p6": 1, "sensing": 5.0, "velocity": 1}, {"role": "Manager / Senior Manager", "size": "5,000 \u2013 50,000", "p3": 6, "p4": 4, "p5": 5, "p6": 3, "sensing": 5.0, "velocity": 3}, {"role": "Senior Director", "size": "More than 50,000", "p3": 7, "p4": 6, "p5": 7, "p6": 3, "sensing": 6.666666666666667, "velocity": 3}, {"role": "Manager / Senior Manager", "size": "500 \u2013 5,000", "p3": 6, "p4": 4, "p5": 4, "p6": 3, "sensing": 4.666666666666667, "velocity": 3}, {"role": "Manager / Senior Manager", "size": "5,000 \u2013 50,000", "p3": 4, "p4": 6, "p5": 7, "p6": 1, "sensing": 5.666666666666667, "velocity": 1}, {"role": "Director", "size": "500 \u2013 5,000", "p3": 7, "p4": 5, "p5": 6, "p6": 2, "sensing": 6.0, "velocity": 2}, {"role": "Director", "size": "5,000 \u2013 50,000", "p3": 6, "p4": 7, "p5": 6, "p6": 2, "sensing": 6.333333333333333, "velocity": 2}, {"role": "Senior Director", "size": "Fewer than 500", "p3": 5, "p4": 6, "p5": 6, "p6": 2, "sensing": 5.666666666666667, "velocity": 2}, {"role": "Senior Director", "size": "Fewer than 500", "p3": 4, "p4": 7, "p5": 6, "p6": 1, "sensing": 5.666666666666667, "velocity": 1}, {"role": "Other", "size": "Fewer than 500", "p3": 6, "p4": 5, "p5": 7, "p6": 4, "sensing": 6.0, "velocity": 4}, {"role": "Director", "size": "More than 50,000", "p3": 6, "p4": 6, "p5": 7, "p6": 2, "sensing": 6.333333333333333, "velocity": 2}, {"role": "Director", "size": "500 \u2013 5,000", "p3": 6, "p4": 5, "p5": 6, "p6": 2, "sensing": 5.666666666666667, "velocity": 2}]}
+{
+  "updated": "23:28 CEST",
+  "n": 64,
+  "kpis": {
+    "responses": 64,
+    "meanSensing": 5.62,
+    "meanVelocity": 2.36,
+    "gap": 3.27
+  },
+  "roles": {
+    "Director": 20,
+    "Senior Director": 19,
+    "Manager / Senior Manager": 11,
+    "VP or above": 10,
+    "Other": 4
+  },
+  "sizes": {
+    "500 \u2013 5,000": 25,
+    "More than 50,000": 10,
+    "5,000 \u2013 50,000": 18,
+    "Fewer than 500": 11
+  },
+  "distributions": {
+    "p3": [
+      0,
+      0,
+      0,
+      8,
+      22,
+      25,
+      9
+    ],
+    "p4": [
+      0,
+      0,
+      0,
+      11,
+      20,
+      22,
+      11
+    ],
+    "p5": [
+      0,
+      0,
+      0,
+      8,
+      13,
+      26,
+      17
+    ],
+    "p6": [
+      13,
+      26,
+      17,
+      7,
+      0,
+      0,
+      1
+    ]
+  },
+  "medians": {
+    "p3": 6.0,
+    "p4": 6.0,
+    "p5": 6.0,
+    "p6": 2.0
+  },
+  "scatter": [
+    {
+      "x": 6.67,
+      "y": 4
+    },
+    {
+      "x": 6.0,
+      "y": 7
+    },
+    {
+      "x": 5.67,
+      "y": 2
+    },
+    {
+      "x": 5.0,
+      "y": 1
+    },
+    {
+      "x": 6.0,
+      "y": 1
+    },
+    {
+      "x": 5.33,
+      "y": 3
+    },
+    {
+      "x": 4.67,
+      "y": 1
+    },
+    {
+      "x": 5.33,
+      "y": 2
+    },
+    {
+      "x": 5.0,
+      "y": 2
+    },
+    {
+      "x": 5.33,
+      "y": 2
+    },
+    {
+      "x": 5.33,
+      "y": 1
+    },
+    {
+      "x": 6.67,
+      "y": 2
+    },
+    {
+      "x": 5.67,
+      "y": 1
+    },
+    {
+      "x": 6.33,
+      "y": 3
+    },
+    {
+      "x": 5.0,
+      "y": 2
+    },
+    {
+      "x": 6.0,
+      "y": 2
+    },
+    {
+      "x": 5.0,
+      "y": 3
+    },
+    {
+      "x": 6.67,
+      "y": 3
+    },
+    {
+      "x": 6.0,
+      "y": 2
+    },
+    {
+      "x": 5.33,
+      "y": 2
+    },
+    {
+      "x": 5.67,
+      "y": 2
+    },
+    {
+      "x": 6.67,
+      "y": 3
+    },
+    {
+      "x": 5.33,
+      "y": 4
+    },
+    {
+      "x": 6.0,
+      "y": 3
+    },
+    {
+      "x": 5.0,
+      "y": 2
+    },
+    {
+      "x": 4.67,
+      "y": 3
+    },
+    {
+      "x": 6.0,
+      "y": 2
+    },
+    {
+      "x": 5.0,
+      "y": 1
+    },
+    {
+      "x": 6.0,
+      "y": 2
+    },
+    {
+      "x": 6.0,
+      "y": 4
+    },
+    {
+      "x": 6.67,
+      "y": 1
+    },
+    {
+      "x": 5.33,
+      "y": 3
+    },
+    {
+      "x": 5.0,
+      "y": 2
+    },
+    {
+      "x": 6.0,
+      "y": 2
+    },
+    {
+      "x": 5.33,
+      "y": 1
+    },
+    {
+      "x": 5.67,
+      "y": 2
+    },
+    {
+      "x": 5.0,
+      "y": 3
+    },
+    {
+      "x": 5.67,
+      "y": 2
+    },
+    {
+      "x": 5.33,
+      "y": 3
+    },
+    {
+      "x": 5.67,
+      "y": 3
+    },
+    {
+      "x": 5.33,
+      "y": 4
+    },
+    {
+      "x": 6.33,
+      "y": 2
+    },
+    {
+      "x": 5.0,
+      "y": 2
+    },
+    {
+      "x": 6.0,
+      "y": 1
+    },
+    {
+      "x": 4.33,
+      "y": 4
+    },
+    {
+      "x": 4.67,
+      "y": 4
+    },
+    {
+      "x": 5.0,
+      "y": 2
+    },
+    {
+      "x": 5.67,
+      "y": 3
+    },
+    {
+      "x": 6.0,
+      "y": 2
+    },
+    {
+      "x": 6.0,
+      "y": 3
+    },
+    {
+      "x": 5.67,
+      "y": 1
+    },
+    {
+      "x": 6.33,
+      "y": 3
+    },
+    {
+      "x": 5.0,
+      "y": 1
+    },
+    {
+      "x": 5.0,
+      "y": 3
+    },
+    {
+      "x": 6.67,
+      "y": 3
+    },
+    {
+      "x": 4.67,
+      "y": 3
+    },
+    {
+      "x": 5.67,
+      "y": 1
+    },
+    {
+      "x": 6.0,
+      "y": 2
+    },
+    {
+      "x": 6.33,
+      "y": 2
+    },
+    {
+      "x": 5.67,
+      "y": 2
+    },
+    {
+      "x": 5.67,
+      "y": 1
+    },
+    {
+      "x": 6.0,
+      "y": 4
+    },
+    {
+      "x": 6.33,
+      "y": 2
+    },
+    {
+      "x": 5.67,
+      "y": 2
+    }
+  ],
+  "quadrants": {
+    "leaders": 1,
+    "stuck": 62,
+    "reactive": 0,
+    "laggards": 1
+  },
+  "pctStuck": 96.9,
+  "roleGaps": {
+    "Other": {
+      "sensing": 5.92,
+      "velocity": 2.25,
+      "gap": 3.67,
+      "n": 4
+    },
+    "Manager / Senior Manager": {
+      "sensing": 5.55,
+      "velocity": 2.09,
+      "gap": 3.45,
+      "n": 11
+    },
+    "VP or above": {
+      "sensing": 5.57,
+      "velocity": 2.2,
+      "gap": 3.37,
+      "n": 10
+    },
+    "Director": {
+      "sensing": 5.55,
+      "velocity": 2.2,
+      "gap": 3.35,
+      "n": 20
+    },
+    "Senior Director": {
+      "sensing": 5.72,
+      "velocity": 2.79,
+      "gap": 2.93,
+      "n": 19
+    }
+  },
+  "sizeGaps": {
+    "500 \u2013 5,000": {
+      "sensing": 5.69,
+      "velocity": 2.48,
+      "gap": 3.21,
+      "n": 25
+    },
+    "More than 50,000": {
+      "sensing": 5.73,
+      "velocity": 2.2,
+      "gap": 3.53,
+      "n": 10
+    },
+    "5,000 \u2013 50,000": {
+      "sensing": 5.33,
+      "velocity": 2.22,
+      "gap": 3.11,
+      "n": 18
+    },
+    "Fewer than 500": {
+      "sensing": 5.85,
+      "velocity": 2.45,
+      "gap": 3.39,
+      "n": 11
+    }
+  },
+  "summary": [
+    "This room knows more than it acts on. Across 64 responses, the average sensing score sits at 5.6 out of 7 \u2014 a confident read of the competitive landscape. But signal-to-action velocity lands at 2.4. That is a gap of 3.3 points. The radar is on. It is not connected to the cockpit.",
+    "Spotting external opportunities averages 5.5. Detecting fundamental shifts averages 5.5. Competitive anticipation averages 5.8. These are not low scores. This room rates its sensing capability with real confidence.",
+    "Then velocity drops the floor out. At 2.4, Poll 6 is the lowest-scoring item by a wide margin. 62 out of 64 respondents (97%) land in the Stuck-at-Sensing quadrant \u2014 high awareness, low action. Only 1 qualify as Leaders who both sense and act above the midpoint. This is not a detection problem. It is a conversion problem.",
+    "The gap is remarkably consistent across segments. Company size does not save you \u2014 the spread across size bands is just 0.4 points. More resources did not produce faster action. Seniority does not save you either \u2014 VPs and managers report essentially the same bottleneck. Whatever is blocking the path from signal to decision, it is structural, not hierarchical.",
+    "The fix is not more intelligence. It is a shorter distance from signal to decision. Every organisation in this room has built the sensing muscle. The masterclass question is whether you will build the acting muscle to match it."
+  ],
+  "prompts": [
+    "Who are the 1 respondents in the Leaders quadrant? What is structurally different about your organisation's decision-making?",
+    "The gap is uniform across company size and seniority. Is this a pharma-industry problem \u2014 or a CI-function problem?",
+    "What would shorten your signal-to-decision loop by 50 per cent? Name one specific change.",
+    "Think of a specific signal your organisation detected early but did not act on. What got in the way?"
+  ]
+}
