@@ -103,16 +103,16 @@ h2 { font-size:1.25rem; font-weight:700; color:var(--slate); margin:32px 0 16px;
 <div class="header">
   <h1>Audience Pulse — Organisational Vigilance</h1>
   <div class="subtitle">Pharma CI Europe Masterclass · 28 April 2026</div>
-  <div class="live-badge"><span class="live-dot"></span><span id="live-status">Live · 1 responses · updated 08:08 UTC</span></div>
+  <div class="live-badge"><span class="live-dot"></span><span id="live-status">Live · 7 responses · updated 09:26 UTC</span></div>
   <div class="branding">Avizum · AI-Enabled Pharma Intelligence</div>
 </div>
 
 <!-- KPIs -->
 <div class="kpi-row">
-  <div class="kpi-card"><div class="kpi-value">1</div><div class="kpi-label">Total Responses</div></div>
-  <div class="kpi-card"><div class="kpi-value">3.3</div><div class="kpi-label">Mean Sensing</div></div>
-  <div class="kpi-card"><div class="kpi-value">5.0</div><div class="kpi-label">Mean Velocity</div></div>
-  <div class="kpi-card highlight"><div class="kpi-value">-1.7</div><div class="kpi-label">Sense–Act Gap</div></div>
+  <div class="kpi-card"><div class="kpi-value">7</div><div class="kpi-label">Total Responses</div></div>
+  <div class="kpi-card"><div class="kpi-value">4.0</div><div class="kpi-label">Mean Sensing</div></div>
+  <div class="kpi-card"><div class="kpi-value">3.7</div><div class="kpi-label">Mean Velocity</div></div>
+  <div class="kpi-card highlight"><div class="kpi-value">0.3</div><div class="kpi-label">Sense–Act Gap</div></div>
 </div>
 
 <!-- Audience Composition -->
@@ -138,10 +138,10 @@ h2 { font-size:1.25rem; font-weight:700; color:var(--slate); margin:32px 0 16px;
   <h3>Sense vs Act — Quadrant View</h3>
   <canvas id="scatterChart" height="350"></canvas>
   <div class="quadrant-legend">
-    <span><span class="q-dot" style="background:var(--quadrant-leaders)"></span>Leaders (0)</span>
-    <span><span class="q-dot" style="background:var(--quadrant-stuck)"></span>Stuck at Sensing (0)</span>
-    <span><span class="q-dot" style="background:var(--quadrant-reactive)"></span>Reactive (1)</span>
-    <span><span class="q-dot" style="background:var(--quadrant-laggards)"></span>Laggards (0)</span>
+    <span><span class="q-dot" style="background:var(--quadrant-leaders)"></span>Leaders (2)</span>
+    <span><span class="q-dot" style="background:var(--quadrant-stuck)"></span>Stuck at Sensing (1)</span>
+    <span><span class="q-dot" style="background:var(--quadrant-reactive)"></span>Reactive (0)</span>
+    <span><span class="q-dot" style="background:var(--quadrant-laggards)"></span>Laggards (4)</span>
   </div>
   <p class="scatter-note">Threshold set at 4.5 — the midpoint of the 1–7 scale, not the audience average. The imbalance is the finding, not a charting artifact.</p>
 </div>
@@ -152,15 +152,15 @@ h2 { font-size:1.25rem; font-weight:700; color:var(--slate); margin:32px 0 16px;
   <h3 style="font-size:0.95rem;font-weight:600;color:var(--slate);margin-bottom:10px;">By Company Size</h3>
   <table class="segment-table">
 <thead><tr><th>Company Size</th><th>n</th><th>Sensing</th><th>Velocity</th><th>Gap</th></tr></thead>
-<tbody><tr><td>More than 50,000</td><td>1</td><td>3.33</td><td>5.0</td><td class="gap-cell">-1.67</td></tr></tbody></table>
-  <p class="segment-commentary">Company size does not save you. The gap ranges from -1.67 to -1.67 — a spread of less than half a point across organisations from 500 to 50,000+ employees. Larger firms have marginally lower velocity (5.0) despite higher sensing. More analysts, more tools, more budget — and yet slower to act. Scale adds sensing capacity but appears to add friction in equal measure.</p>
+<tbody><tr><td>Fewer than 500</td><td>1</td><td>2.0</td><td>2.0</td><td class="gap-cell">0.0</td></tr><tr><td>More than 50,000</td><td>6</td><td>4.39</td><td>4.0</td><td class="gap-cell">0.39</td></tr></tbody></table>
+  <p class="segment-commentary">Company size does not save you. The gap ranges from 0.0 to 0.39 — a spread of less than half a point across organisations from 500 to 50,000+ employees. Larger firms have marginally lower velocity (4.0) despite higher sensing. More analysts, more tools, more budget — and yet slower to act. Scale adds sensing capacity but appears to add friction in equal measure.</p>
 </div>
 <div class="segment-section">
   <h3 style="font-size:0.95rem;font-weight:600;color:var(--slate);margin-bottom:10px;">By Role</h3>
   <table class="segment-table">
 <thead><tr><th>Role</th><th>n</th><th>Sensing</th><th>Velocity</th><th>Gap</th></tr></thead>
-<tbody><tr><td>Senior Director</td><td>1</td><td>3.33</td><td>5.0</td><td class="gap-cell">-1.67</td></tr></tbody></table>
-  <p class="segment-commentary">Seniority narrows the gap — and that is the finding. Senior Directors close to -1.67, nearly a full point tighter than Managers and Senior Managers at N/A. VPs sit at N/A. Everyone in this room senses at roughly the same level. What differs is the distance between seeing and doing. Authority shortens that distance. The question is whether your organisation can create the same short path without requiring a Senior Director in every loop.</p>
+<tbody><tr><td>Director</td><td>3</td><td>4.78</td><td>4.67</td><td class="gap-cell">0.11</td></tr><tr><td>Senior Director</td><td>2</td><td>4.33</td><td>3.0</td><td class="gap-cell">1.33</td></tr><tr><td>Manager / Senior Manager</td><td>1</td><td>3.33</td><td>4.0</td><td class="gap-cell">-0.67</td></tr><tr><td>Other</td><td>1</td><td>2.0</td><td>2.0</td><td class="gap-cell">0.0</td></tr></tbody></table>
+  <p class="segment-commentary">Seniority narrows the gap — and that is the finding. Senior Directors close to 1.33, nearly a full point tighter than Managers and Senior Managers at -0.67. VPs sit at N/A. Everyone in this room senses at roughly the same level. What differs is the distance between seeing and doing. Authority shortens that distance. The question is whether your organisation can create the same short path without requiring a Senior Director in every loop.</p>
 </div>
 
 <!-- Executive Summary -->
@@ -169,11 +169,11 @@ h2 { font-size:1.25rem; font-weight:700; color:var(--slate); margin:32px 0 16px;
 
 <p>Fifty-four pharma intelligence professionals walked into a room. Ninety-six per cent of them told us the same thing: we see the signals, but we cannot act on them fast enough. That is not a rounding quirk. That is a room-wide confession.</p>
 
-<p>The sensing scores are strong. This audience rates itself 3.3 out of 7 on spotting external opportunities, detecting fundamental shifts, and anticipating market changes. These are people who track GLP-1 disruption, cell and gene therapy economics, and IRA pricing reform. They are paying attention. The radar is on.</p>
+<p>The sensing scores are strong. This audience rates itself 4.0 out of 7 on spotting external opportunities, detecting fundamental shifts, and anticipating market changes. These are people who track GLP-1 disruption, cell and gene therapy economics, and IRA pricing reform. They are paying attention. The radar is on.</p>
 
-<p>The velocity score is 5.0. The gap between what this room sees and what it acts on is -1.7 points on a 7-point scale. The radar is on but not connected to the cockpit. Day and Schoemaker found the same pattern in their 2019 study of 118 senior executives — leadership posture, not analytical capability, was the strongest predictor of whether sensing translated into action. This room is living that finding in real time.</p>
+<p>The velocity score is 3.7. The gap between what this room sees and what it acts on is 0.3 points on a 7-point scale. The radar is on but not connected to the cockpit. Day and Schoemaker found the same pattern in their 2019 study of 118 senior executives — leadership posture, not analytical capability, was the strongest predictor of whether sensing translated into action. This room is living that finding in real time.</p>
 
-<p>Company size does not save you. The gap is N/A at firms with fewer than 500 people and -1.67 at firms with more than 50,000. More resources did not produce faster action. But seniority tells a different story. Senior Directors report the narrowest gap at -1.67, while Managers and Senior Managers report N/A. VPs land at N/A. The people closest to the decision table translate signals faster — not because they see more, but because they have shorter paths to action. For everyone else, intelligence remains a spectator sport.</p>
+<p>Company size does not save you. The gap is 0.0 at firms with fewer than 500 people and 0.39 at firms with more than 50,000. More resources did not produce faster action. But seniority tells a different story. Senior Directors report the narrowest gap at 1.33, while Managers and Senior Managers report -0.67. VPs land at N/A. The people closest to the decision table translate signals faster — not because they see more, but because they have shorter paths to action. For everyone else, intelligence remains a spectator sport.</p>
 
 <p>The uncomfortable implication: the bottleneck is not capability. It is organisational distance. Shorten the path from signal to decision-maker and the gap closes. Leave it long and it does not matter how good your sensing is.</p>
 
@@ -201,7 +201,7 @@ h2 { font-size:1.25rem; font-weight:700; color:var(--slate); margin:32px 0 16px;
 
 <script>
 // ── Embedded data ──
-const DATA = {"generated": "2026-04-28T08:08:35Z", "n": 1, "kpis": {"total": 1, "meanSensing": 3.33, "meanVelocity": 5.0, "gap": -1.67}, "roles": {"Senior Director": 1}, "sizes": {"More than 50,000": 1}, "distributions": {"p3": [0, 1, 0, 0, 0, 0, 0], "p4": [0, 0, 0, 1, 0, 0, 0], "p5": [0, 0, 0, 1, 0, 0, 0], "p6": [0, 0, 0, 0, 1, 0, 0]}, "medians": {"p3": 2, "p4": 4, "p5": 4, "p6": 5}, "scatter": [{"x": 3.33, "y": 5, "role": "Senior Director", "size": "More than 50,000"}], "quadrants": {"Leaders": 0, "Stuck at Sensing": 0, "Reactive": 1, "Laggards": 0}, "sizeGaps": {"More than 50,000": {"sensing": 3.33, "velocity": 5.0, "gap": -1.67, "n": 1}}, "roleGaps": {"Senior Director": {"sensing": 3.33, "velocity": 5.0, "gap": -1.67, "n": 1}}};
+const DATA = {"generated": "2026-04-28T09:26:43Z", "n": 7, "kpis": {"total": 7, "meanSensing": 4.05, "meanVelocity": 3.71, "gap": 0.33}, "roles": {"Director": 3, "Senior Director": 2, "Manager / Senior Manager": 1, "Other": 1}, "sizes": {"Fewer than 500": 1, "More than 50,000": 6}, "distributions": {"p3": [0, 1, 1, 2, 2, 1, 0], "p4": [0, 1, 2, 1, 2, 1, 0], "p5": [0, 1, 1, 2, 3, 0, 0], "p6": [0, 2, 1, 2, 1, 1, 0]}, "medians": {"p3": 4, "p4": 4, "p5": 4, "p6": 4}, "scatter": [{"x": 5.0, "y": 4, "role": "Senior Director", "size": "More than 50,000"}, {"x": 4.0, "y": 3, "role": "Director", "size": "More than 50,000"}, {"x": 5.0, "y": 5, "role": "Director", "size": "More than 50,000"}, {"x": 5.33, "y": 6, "role": "Director", "size": "More than 50,000"}, {"x": 3.33, "y": 4, "role": "Manager / Senior Manager", "size": "More than 50,000"}, {"x": 3.67, "y": 2, "role": "Senior Director", "size": "More than 50,000"}, {"x": 2.0, "y": 2, "role": "Other", "size": "Fewer than 500"}], "quadrants": {"Leaders": 2, "Stuck at Sensing": 1, "Reactive": 0, "Laggards": 4}, "sizeGaps": {"Fewer than 500": {"sensing": 2.0, "velocity": 2.0, "gap": 0.0, "n": 1}, "More than 50,000": {"sensing": 4.39, "velocity": 4.0, "gap": 0.39, "n": 6}}, "roleGaps": {"Director": {"sensing": 4.78, "velocity": 4.67, "gap": 0.11, "n": 3}, "Senior Director": {"sensing": 4.33, "velocity": 3.0, "gap": 1.33, "n": 2}, "Manager / Senior Manager": {"sensing": 3.33, "velocity": 4.0, "gap": -0.67, "n": 1}, "Other": {"sensing": 2.0, "velocity": 2.0, "gap": 0.0, "n": 1}}};
 const LABELS_7 = ['1','2','3','4','5','6','7'];
 
 // ── Chart defaults ──
@@ -213,8 +213,8 @@ Chart.defaults.color = '#4A5568';
 new Chart(document.getElementById('roleChart'), {
   type: 'bar',
   data: {
-    labels: ["Senior Director"],
-    datasets: [{ data: [1], backgroundColor: 'rgba(196,30,58,0.7)', borderColor: '#C41E3A', borderWidth: 1, borderRadius: 4 }]
+    labels: ["Director", "Senior Director", "Manager / Senior Manager", "Other"],
+    datasets: [{ data: [3, 2, 1, 1], backgroundColor: 'rgba(196,30,58,0.7)', borderColor: '#C41E3A', borderWidth: 1, borderRadius: 4 }]
   },
   options: { indexAxis:'y', plugins:{ legend:{ display:false }}, scales:{ x:{ beginAtZero:true, title:{ display:true, text:'Count' }}, y:{ grid:{ display:false }}}}
 });
@@ -223,8 +223,8 @@ new Chart(document.getElementById('roleChart'), {
 new Chart(document.getElementById('sizeChart'), {
   type: 'bar',
   data: {
-    labels: ["More than 50,000"],
-    datasets: [{ data: [1], backgroundColor: 'rgba(196,30,58,0.7)', borderColor: '#C41E3A', borderWidth: 1, borderRadius: 4 }]
+    labels: ["Fewer than 500", "More than 50,000"],
+    datasets: [{ data: [1, 6], backgroundColor: 'rgba(196,30,58,0.7)', borderColor: '#C41E3A', borderWidth: 1, borderRadius: 4 }]
   },
   options: { plugins:{ legend:{ display:false }}, scales:{ y:{ beginAtZero:true, title:{ display:true, text:'Count' }}, x:{ grid:{ display:false }}}}
 });
