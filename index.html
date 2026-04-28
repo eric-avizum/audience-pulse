@@ -3,965 +3,377 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Audience Pulse — Organizational Vigilance</title>
+<title>Audience Pulse — Organisational Vigilance</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <style>
-  :root {
-    --red-primary: #C8102E;
-    --red-light: #E8354A;
-    --red-lighter: #F2D1D6;
-    --red-bg: #FFF5F6;
-    --slate: #2D3748;
-    --slate-light: #4A5568;
-    --grey-text: #718096;
-    --grey-bg: #F7FAFC;
-    --grey-border: #E2E8F0;
-    --white: #FFFFFF;
-    --velocity-color: #4A5568;
-    --leader-color: #38A169;
-    --stuck-color: #C8102E;
-    --reactive-color: #D69E2E;
-    --laggard-color: #A0AEC0;
-  }
+:root {
+  --red: #C41E3A;
+  --red-light: #E8304A;
+  --red-pale: rgba(196,30,58,0.12);
+  --red-fill: rgba(196,30,58,0.25);
+  --slate: #2D3748;
+  --slate-light: #4A5568;
+  --slate-fill: rgba(45,55,72,0.18);
+  --bg: #FAFAFA;
+  --card-bg: #FFFFFF;
+  --border: #E2E8F0;
+  --text: #1A202C;
+  --text-muted: #718096;
+  --green-pulse: #48BB78;
+  --quadrant-leaders: rgba(72,187,120,0.55);
+  --quadrant-stuck: rgba(196,30,58,0.45);
+  --quadrant-reactive: rgba(237,137,54,0.45);
+  --quadrant-laggards: rgba(160,174,192,0.45);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background:var(--bg); color:var(--text); line-height:1.6; }
+.container { max-width:1200px; margin:0 auto; padding:24px 20px; }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+/* Header */
+.header { text-align:center; margin-bottom:32px; padding-bottom:24px; border-bottom:2px solid var(--red); }
+.header h1 { font-size:1.7rem; font-weight:700; color:var(--slate); letter-spacing:-0.02em; }
+.header .subtitle { font-size:0.95rem; color:var(--text-muted); margin-top:4px; }
+.live-badge { display:inline-flex; align-items:center; gap:6px; font-size:0.82rem; color:var(--text-muted); margin-top:10px; }
+.live-dot { width:8px; height:8px; border-radius:50%; background:var(--green-pulse); animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
+.branding { font-size:0.75rem; color:var(--text-muted); margin-top:6px; letter-spacing:0.05em; text-transform:uppercase; }
 
-  body {
-    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: var(--grey-bg);
-    color: var(--slate);
-    line-height: 1.6;
-  }
+/* KPI cards */
+.kpi-row { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:32px; }
+.kpi-card { background:var(--card-bg); border:1px solid var(--border); border-radius:10px; padding:20px; text-align:center; }
+.kpi-card.highlight { border-color:var(--red); background:var(--red-pale); }
+.kpi-value { font-size:2.2rem; font-weight:800; color:var(--slate); }
+.kpi-card.highlight .kpi-value { color:var(--red); }
+.kpi-label { font-size:0.78rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.06em; margin-top:4px; }
 
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem 1.5rem;
-  }
+/* Section headings */
+h2 { font-size:1.25rem; font-weight:700; color:var(--slate); margin:32px 0 16px; padding-bottom:8px; border-bottom:1px solid var(--border); }
 
-  /* Header */
-  .header {
-    text-align: center;
-    margin-bottom: 2.5rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 2px solid var(--grey-border);
-  }
+/* Chart grids */
+.chart-row { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:24px; }
+.chart-box { background:var(--card-bg); border:1px solid var(--border); border-radius:10px; padding:20px; }
+.chart-box h3 { font-size:0.92rem; font-weight:600; color:var(--slate); margin-bottom:12px; }
+.chart-box canvas { width:100% !important; }
 
-  .header .brand {
-    font-size: 0.85rem;
-    font-weight: 600;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--red-primary);
-    margin-bottom: 0.5rem;
-  }
+/* Scatter */
+.scatter-wrap { background:var(--card-bg); border:1px solid var(--border); border-radius:10px; padding:20px; margin-bottom:24px; }
+.scatter-wrap h3 { font-size:0.92rem; font-weight:600; color:var(--slate); margin-bottom:12px; }
+.scatter-note { font-size:0.78rem; color:var(--text-muted); margin-top:10px; font-style:italic; }
+.quadrant-legend { display:flex; gap:16px; flex-wrap:wrap; margin-top:10px; font-size:0.8rem; color:var(--text-muted); }
+.q-dot { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:4px; vertical-align:middle; }
 
-  .header h1 {
-    font-size: 1.75rem;
-    font-weight: 700;
-    color: var(--slate);
-    margin-bottom: 0.75rem;
-    line-height: 1.3;
-  }
+/* Segment tables */
+.segment-section { margin-bottom:28px; }
+.segment-table { width:100%; border-collapse:collapse; font-size:0.88rem; background:var(--card-bg); border:1px solid var(--border); border-radius:10px; overflow:hidden; }
+.segment-table th { background:var(--slate); color:#fff; padding:10px 14px; text-align:left; font-weight:600; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.04em; }
+.segment-table td { padding:10px 14px; border-bottom:1px solid var(--border); }
+.segment-table tr:last-child td { border-bottom:none; }
+.gap-cell { font-weight:700; color:var(--red); }
+.segment-commentary { font-size:0.88rem; color:var(--slate-light); margin-top:10px; line-height:1.7; }
 
-  .live-indicator {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.85rem;
-    color: var(--grey-text);
-  }
+/* Executive summary */
+.exec-summary { background:var(--card-bg); border:1px solid var(--border); border-radius:10px; padding:28px; margin-bottom:28px; }
+.exec-summary h2 { border-bottom:none; margin-top:0; }
+.exec-summary p { margin-bottom:14px; font-size:0.92rem; line-height:1.75; color:var(--slate); }
+.exec-summary p:last-child { margin-bottom:0; }
 
-  .live-dot {
-    width: 10px;
-    height: 10px;
-    background: #38A169;
-    border-radius: 50%;
-    animation: pulse 2s ease-in-out infinite;
-  }
+/* Discussion prompts */
+.discussion-prompts { margin-bottom:40px; }
+.prompt-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.prompt-card { background:var(--card-bg); border:1px solid var(--border); border-radius:10px; padding:20px; display:flex; gap:14px; align-items:flex-start; }
+.prompt-num { display:flex; align-items:center; justify-content:center; min-width:28px; height:28px; border-radius:50%; background:var(--red); color:#fff; font-weight:700; font-size:0.82rem; }
+.prompt-card p { font-size:0.88rem; line-height:1.65; color:var(--slate); }
 
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(0.85); }
-  }
+/* Footer */
+.footer { text-align:center; padding:20px 0; font-size:0.75rem; color:var(--text-muted); border-top:1px solid var(--border); }
 
-  /* KPI Cards */
-  .kpi-row {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-    margin-bottom: 2.5rem;
-  }
-
-  .kpi-card {
-    background: var(--white);
-    border-radius: 12px;
-    padding: 1.25rem 1rem;
-    text-align: center;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-    border: 1px solid var(--grey-border);
-  }
-
-  .kpi-card.highlight {
-    border: 2px solid var(--red-primary);
-    background: var(--red-bg);
-  }
-
-  .kpi-label {
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--grey-text);
-    margin-bottom: 0.25rem;
-  }
-
-  .kpi-value {
-    font-size: 2.25rem;
-    font-weight: 700;
-    color: var(--slate);
-    line-height: 1.2;
-  }
-
-  .kpi-card.highlight .kpi-value {
-    color: var(--red-primary);
-  }
-
-  .kpi-sub {
-    font-size: 0.75rem;
-    color: var(--grey-text);
-    margin-top: 0.15rem;
-  }
-
-  /* Section */
-  .section {
-    margin-bottom: 2.5rem;
-  }
-
-  .section-title {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--slate);
-    margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 2px solid var(--red-primary);
-    display: inline-block;
-  }
-
-  /* Chart containers */
-  .chart-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .chart-box {
-    background: var(--white);
-    border-radius: 12px;
-    padding: 1.25rem;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-    border: 1px solid var(--grey-border);
-    position: relative;
-  }
-
-  .chart-wrap {
-    position: relative;
-    width: 100%;
-    height: 220px;
-  }
-
-  .chart-wrap-tall {
-    position: relative;
-    width: 100%;
-    height: 350px;
-  }
-
-  .chart-box h3 {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--slate);
-    margin-bottom: 0.75rem;
-  }
-
-  .chart-box canvas {
-    width: 100% !important;
-  }
-
-  .chart-box-full {
-    background: var(--white);
-    border-radius: 12px;
-    padding: 1.5rem;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-    border: 1px solid var(--grey-border);
-    margin-bottom: 1.5rem;
-    position: relative;
-  }
-
-  .chart-box-full h3 {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--slate);
-    margin-bottom: 0.75rem;
-  }
-
-  /* Scatter note */
-  .scatter-note {
-    font-size: 0.8rem;
-    color: var(--grey-text);
-    font-style: italic;
-    margin-top: 0.75rem;
-    padding: 0.75rem;
-    background: var(--grey-bg);
-    border-radius: 8px;
-    border-left: 3px solid var(--grey-text);
-  }
-
-  /* Segment tables */
-  .segment-tables {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    margin-bottom: 1rem;
-  }
-
-  .segment-card {
-    background: var(--white);
-    border-radius: 12px;
-    padding: 1.25rem;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-    border: 1px solid var(--grey-border);
-  }
-
-  .segment-card h3 {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--slate);
-    margin-bottom: 0.75rem;
-  }
-
-  .seg-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.85rem;
-  }
-
-  .seg-table th {
-    text-align: left;
-    padding: 0.5rem 0.5rem;
-    border-bottom: 2px solid var(--grey-border);
-    color: var(--grey-text);
-    font-weight: 600;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .seg-table td {
-    padding: 0.5rem 0.5rem;
-    border-bottom: 1px solid var(--grey-border);
-  }
-
-  .seg-table .gap-val {
-    font-weight: 700;
-    color: var(--red-primary);
-  }
-
-  .commentary {
-    margin-top: 0.75rem;
-    padding: 0.75rem;
-    background: var(--red-bg);
-    border-left: 3px solid var(--red-primary);
-    border-radius: 0 8px 8px 0;
-    font-size: 0.85rem;
-    color: var(--slate);
-    line-height: 1.5;
-  }
-
-  /* Executive summary */
-  .exec-summary {
-    background: var(--white);
-    border-radius: 12px;
-    padding: 2rem;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-    border: 1px solid var(--grey-border);
-    margin-bottom: 2rem;
-  }
-
-  .exec-summary h2 {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--red-primary);
-    margin-bottom: 1rem;
-  }
-
-  .exec-summary p {
-    margin-bottom: 1rem;
-    font-size: 0.95rem;
-    line-height: 1.7;
-    color: var(--slate-light);
-  }
-
-  .exec-summary p:last-child {
-    margin-bottom: 0;
-  }
-
-  .exec-summary .recommendation {
-    margin-top: 1rem;
-    padding: 1rem;
-    background: var(--red-bg);
-    border-left: 4px solid var(--red-primary);
-    border-radius: 0 8px 8px 0;
-    font-weight: 600;
-    color: var(--slate);
-    font-size: 0.95rem;
-  }
-
-  /* Discussion */
-  .discussion {
-    background: var(--white);
-    border-radius: 12px;
-    padding: 2rem;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-    border: 1px solid var(--grey-border);
-  }
-
-  .discussion h2 {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--slate);
-    margin-bottom: 1rem;
-  }
-
-  .discussion ol {
-    padding-left: 1.25rem;
-  }
-
-  .discussion li {
-    margin-bottom: 0.75rem;
-    font-size: 0.95rem;
-    line-height: 1.6;
-    color: var(--slate-light);
-  }
-
-  /* Footer */
-  .footer {
-    text-align: center;
-    margin-top: 2.5rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--grey-border);
-    font-size: 0.8rem;
-    color: var(--grey-text);
-  }
-
-  .footer a {
-    color: var(--red-primary);
-    text-decoration: none;
-  }
-
-  /* Responsive */
-  @media (max-width: 768px) {
-    .kpi-row { grid-template-columns: repeat(2, 1fr); }
-    .chart-row { grid-template-columns: 1fr; }
-    .segment-tables { grid-template-columns: 1fr; }
-    .header h1 { font-size: 1.35rem; }
-    .kpi-value { font-size: 1.75rem; }
-  }
+/* Responsive */
+@media (max-width:768px) {
+  .kpi-row { grid-template-columns:repeat(2,1fr); }
+  .chart-row { grid-template-columns:1fr; }
+  .prompt-grid { grid-template-columns:1fr; }
+  .header h1 { font-size:1.3rem; }
+}
 </style>
 </head>
 <body>
-
 <div class="container">
 
-  <!-- Header -->
-  <div class="header">
-    <div class="brand">Avizum</div>
-    <h1>Audience Pulse — Organizational Vigilance<br><span style="font-size: 0.85rem; font-weight: 400; color: var(--grey-text);">Pharma CI Europe Masterclass</span></h1>
-    <div class="live-indicator">
-      <span class="live-dot"></span>
-      <span id="live-status">Live &middot; <span id="resp-count">--</span> responses &middot; updated <span id="last-updated">--:--</span> CEST</span>
-    </div>
-  </div>
+<!-- Header -->
+<div class="header">
+  <h1>Audience Pulse — Organisational Vigilance</h1>
+  <div class="subtitle">Pharma CI Europe Masterclass · 28 April 2026</div>
+  <div class="live-badge"><span class="live-dot"></span><span id="live-status">Live · 54 responses · updated 07:57 UTC</span></div>
+  <div class="branding">Avizum · AI-Enabled Pharma Intelligence</div>
+</div>
 
-  <!-- KPIs -->
-  <div class="kpi-row">
-    <div class="kpi-card">
-      <div class="kpi-label">Total Responses</div>
-      <div class="kpi-value" id="kpi-total">--</div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-label">Mean Sensing</div>
-      <div class="kpi-value" id="kpi-sensing">--</div>
-      <div class="kpi-sub">Avg of P3, P4, P5</div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-label">Mean Velocity</div>
-      <div class="kpi-value" id="kpi-velocity">--</div>
-      <div class="kpi-sub">P6 average</div>
-    </div>
-    <div class="kpi-card highlight">
-      <div class="kpi-label">Sense–Act Gap</div>
-      <div class="kpi-value" id="kpi-gap">--</div>
-      <div class="kpi-sub">The headline number</div>
-    </div>
-  </div>
+<!-- KPIs -->
+<div class="kpi-row">
+  <div class="kpi-card"><div class="kpi-value">54</div><div class="kpi-label">Total Responses</div></div>
+  <div class="kpi-card"><div class="kpi-value">5.6</div><div class="kpi-label">Mean Sensing</div></div>
+  <div class="kpi-card"><div class="kpi-value">2.4</div><div class="kpi-label">Mean Velocity</div></div>
+  <div class="kpi-card highlight"><div class="kpi-value">3.2</div><div class="kpi-label">Sense–Act Gap</div></div>
+</div>
 
-  <!-- Audience Composition -->
-  <div class="section">
-    <div class="section-title">Audience Composition</div>
-    <div class="chart-row">
-      <div class="chart-box">
-        <h3>By Role</h3>
-        <div class="chart-wrap"><canvas id="chartRole"></canvas></div>
-      </div>
-      <div class="chart-box">
-        <h3>By Company Size</h3>
-        <div class="chart-wrap"><canvas id="chartSize"></canvas></div>
-      </div>
-    </div>
-  </div>
+<!-- Audience Composition -->
+<h2>Audience Composition</h2>
+<div class="chart-row">
+  <div class="chart-box"><h3>Role Distribution</h3><canvas id="roleChart" height="220"></canvas></div>
+  <div class="chart-box"><h3>Company Size</h3><canvas id="sizeChart" height="220"></canvas></div>
+</div>
 
-  <!-- Distribution Charts -->
-  <div class="section">
-    <div class="section-title">Response Distributions</div>
-    <div class="chart-row">
-      <div class="chart-box">
-        <h3>P3 — Spotting External Opportunities</h3>
-        <div class="chart-wrap"><canvas id="chartP3"></canvas></div>
-      </div>
-      <div class="chart-box">
-        <h3>P4 — Detecting Fundamental Shifts</h3>
-        <div class="chart-wrap"><canvas id="chartP4"></canvas></div>
-      </div>
-    </div>
-    <div class="chart-row">
-      <div class="chart-box">
-        <h3>P5 — Anticipation vs Competitors</h3>
-        <div class="chart-wrap"><canvas id="chartP5"></canvas></div>
-      </div>
-      <div class="chart-box">
-        <h3>P6 — Signal-to-Action Velocity</h3>
-        <div class="chart-wrap"><canvas id="chartP6"></canvas></div>
-      </div>
-    </div>
-  </div>
+<!-- Distribution Charts -->
+<h2>Rating Distributions (Polls 3–6)</h2>
+<div class="chart-row">
+  <div class="chart-box"><h3>P3 · Spotting External Opportunities</h3><canvas id="p3Chart" height="200"></canvas></div>
+  <div class="chart-box"><h3>P4 · Detecting Fundamental Shifts</h3><canvas id="p4Chart" height="200"></canvas></div>
+</div>
+<div class="chart-row">
+  <div class="chart-box"><h3>P5 · Anticipation vs Competitors</h3><canvas id="p5Chart" height="200"></canvas></div>
+  <div class="chart-box"><h3>P6 · Signal-to-Action Velocity</h3><canvas id="p6Chart" height="200"></canvas></div>
+</div>
 
-  <!-- Scatter -->
-  <div class="section">
-    <div class="section-title">Sense vs Act</div>
-    <div class="chart-box-full">
-      <h3>Each dot is one respondent — sensing (x) vs velocity (y)</h3>
-      <div class="chart-wrap-tall"><canvas id="chartScatter"></canvas></div>
-      <div class="scatter-note">
-        Threshold set at 4.5 — the midpoint of the 1–7 scale, not the audience average. The imbalance is the finding, not a charting artefact.
-      </div>
-    </div>
+<!-- Scatter -->
+<div class="scatter-wrap">
+  <h3>Sense vs Act — Quadrant View</h3>
+  <canvas id="scatterChart" height="350"></canvas>
+  <div class="quadrant-legend">
+    <span><span class="q-dot" style="background:var(--quadrant-leaders)"></span>Leaders (1)</span>
+    <span><span class="q-dot" style="background:var(--quadrant-stuck)"></span>Stuck at Sensing (52)</span>
+    <span><span class="q-dot" style="background:var(--quadrant-reactive)"></span>Reactive (0)</span>
+    <span><span class="q-dot" style="background:var(--quadrant-laggards)"></span>Laggards (1)</span>
   </div>
+  <p class="scatter-note">Threshold set at 4.5 — the midpoint of the 1–7 scale, not the audience average. The imbalance is the finding, not a charting artifact.</p>
+</div>
 
-  <!-- Gap by Segment -->
-  <div class="section">
-    <div class="section-title">Gap by Segment</div>
-    <div class="segment-tables">
-      <div class="segment-card">
-        <h3>By Company Size</h3>
-        <table class="seg-table">
-          <thead><tr><th>Segment</th><th>n</th><th>Sensing</th><th>Velocity</th><th>Gap</th></tr></thead>
-          <tbody id="seg-size"></tbody>
-        </table>
-        <div class="commentary" id="commentary-size"></div>
-      </div>
-      <div class="segment-card">
-        <h3>By Role</h3>
-        <table class="seg-table">
-          <thead><tr><th>Segment</th><th>n</th><th>Sensing</th><th>Velocity</th><th>Gap</th></tr></thead>
-          <tbody id="seg-role"></tbody>
-        </table>
-        <div class="commentary" id="commentary-role"></div>
-      </div>
-    </div>
-  </div>
+<!-- Segment Tables -->
+<h2>Gap by Segment</h2>
+<div class="segment-section">
+  <h3 style="font-size:0.95rem;font-weight:600;color:var(--slate);margin-bottom:10px;">By Company Size</h3>
+  <table class="segment-table">
+<thead><tr><th>Company Size</th><th>n</th><th>Sensing</th><th>Velocity</th><th>Gap</th></tr></thead>
+<tbody><tr><td>Fewer than 500</td><td>8</td><td>5.88</td><td>2.5</td><td class="gap-cell">3.38</td></tr><tr><td>500 – 5,000</td><td>22</td><td>5.73</td><td>2.5</td><td class="gap-cell">3.23</td></tr><tr><td>5,000 – 50,000</td><td>16</td><td>5.25</td><td>2.31</td><td class="gap-cell">2.94</td></tr><tr><td>More than 50,000</td><td>8</td><td>5.54</td><td>2.12</td><td class="gap-cell">3.42</td></tr></tbody></table>
+  <p class="segment-commentary">Company size does not save you. The gap ranges from 2.94 to 3.42 — a spread of less than half a point across organisations from 500 to 50,000+ employees. Larger firms have marginally lower velocity (2.12) despite higher sensing. More analysts, more tools, more budget — and yet slower to act. Scale adds sensing capacity but appears to add friction in equal measure.</p>
+</div>
+<div class="segment-section">
+  <h3 style="font-size:0.95rem;font-weight:600;color:var(--slate);margin-bottom:10px;">By Role</h3>
+  <table class="segment-table">
+<thead><tr><th>Role</th><th>n</th><th>Sensing</th><th>Velocity</th><th>Gap</th></tr></thead>
+<tbody><tr><td>Senior Director</td><td>16</td><td>5.67</td><td>2.94</td><td class="gap-cell">2.73</td></tr><tr><td>Director</td><td>16</td><td>5.42</td><td>2.25</td><td class="gap-cell">3.17</td></tr><tr><td>VP or above</td><td>10</td><td>5.57</td><td>2.2</td><td class="gap-cell">3.37</td></tr><tr><td>Manager / Senior Manager</td><td>9</td><td>5.63</td><td>2.11</td><td class="gap-cell">3.52</td></tr><tr><td>Other</td><td>3</td><td>5.89</td><td>1.67</td><td class="gap-cell">4.22</td></tr></tbody></table>
+  <p class="segment-commentary">Seniority narrows the gap — and that is the finding. Senior Directors close to 2.73, nearly a full point tighter than Managers and Senior Managers at 3.52. VPs sit at 3.37. Everyone in this room senses at roughly the same level. What differs is the distance between seeing and doing. Authority shortens that distance. The question is whether your organisation can create the same short path without requiring a Senior Director in every loop.</p>
+</div>
 
-  <!-- Executive Summary -->
-  <div class="exec-summary" id="exec-summary">
-    <h2>Executive Summary</h2>
-    <div id="exec-content"></div>
-  </div>
+<!-- Executive Summary -->
+<div class="exec-summary">
+<h2>Executive Summary</h2>
 
-  <!-- Discussion -->
-  <div class="discussion">
-    <h2>Questions This Data Raises</h2>
-    <ol id="discussion-list"></ol>
-  </div>
+<p>Fifty-four pharma intelligence professionals walked into a room. Ninety-six per cent of them told us the same thing: we see the signals, but we cannot act on them fast enough. That is not a rounding quirk. That is a room-wide confession.</p>
 
-  <div class="footer">
-    Pharma CI Europe Masterclass &middot; April 2026 &middot; Powered by <a href="https://avizum.ai">Avizum</a> — the first AI-native competitive intelligence firm
-  </div>
+<p>The sensing scores are strong. This audience rates itself 5.6 out of 7 on spotting external opportunities, detecting fundamental shifts, and anticipating market changes. These are people who track GLP-1 disruption, cell and gene therapy economics, and IRA pricing reform. They are paying attention. The radar is on.</p>
+
+<p>The velocity score is 2.4. The gap between what this room sees and what it acts on is 3.2 points on a 7-point scale. The radar is on but not connected to the cockpit. Day and Schoemaker found the same pattern in their 2019 study of 118 senior executives — leadership posture, not analytical capability, was the strongest predictor of whether sensing translated into action. This room is living that finding in real time.</p>
+
+<p>Company size does not save you. The gap is 3.38 at firms with fewer than 500 people and 3.42 at firms with more than 50,000. More resources did not produce faster action. But seniority tells a different story. Senior Directors report the narrowest gap at 2.73, while Managers and Senior Managers report 3.52. VPs land at 3.37. The people closest to the decision table translate signals faster — not because they see more, but because they have shorter paths to action. For everyone else, intelligence remains a spectator sport.</p>
+
+<p>The uncomfortable implication: the bottleneck is not capability. It is organisational distance. Shorten the path from signal to decision-maker and the gap closes. Leave it long and it does not matter how good your sensing is.</p>
+
+<p>One recommendation for this room: stop asking whether your organisation detects signals well enough. It does. Start asking who has the authority to act on them within 48 hours — and whether that person is in the room where the signal first appears.</p>
+</div>
+
+<!-- Discussion Prompts -->
+<div class="discussion-prompts">
+<h2>Questions This Data Raises</h2>
+<div class="prompt-grid">
+<div class="prompt-card"><span class="prompt-num">1</span><p>Senior Directors report a gap of 2.7 while Managers report 3.5. Is that because seniority grants authority to act — or because distance from execution creates optimism?</p></div>
+<div class="prompt-card"><span class="prompt-num">2</span><p>Company size makes almost no difference. If more resources do not shorten the decision loop, what would?</p></div>
+<div class="prompt-card"><span class="prompt-num">3</span><p>Name one specific signal your organisation saw early in the last 12 months but did not act on. What got in the way?</p></div>
+<div class="prompt-card"><span class="prompt-num">4</span><p>If you could redesign the path from competitive signal to strategic decision, what would you remove first?</p></div>
+</div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  Built by Eric Sak · Avizum AI · Data: Audience poll responses, 28 April 2026<br>
+  Adapted from Day &amp; Schoemaker (2019), <em>See Sooner, Act Faster</em>
+</div>
 
 </div>
 
 <script>
-// ── Embedded data (first paint) ──
-const EMBEDDED_DATA = {"responses": [{"role": "Senior Director", "size": "500 \u2013 5,000", "p3": 7, "p4": 6, "p5": 7, "p6": 4, "sensing": 6.67}, {"role": "Senior Director", "size": "500 \u2013 5,000", "p3": 6, "p4": 5, "p5": 7, "p6": 7, "sensing": 6.0}, {"role": "Director", "size": "More than 50,000", "p3": 5, "p4": 7, "p5": 5, "p6": 2, "sensing": 5.67}, {"role": "Other", "size": "5,000 \u2013 50,000", "p3": 6, "p4": 4, "p5": 5, "p6": 1, "sensing": 5.0}, {"role": "Other", "size": "500 \u2013 5,000", "p3": 5, "p4": 7, "p5": 6, "p6": 1, "sensing": 6.0}, {"role": "VP or above", "size": "500 \u2013 5,000", "p3": 5, "p4": 5, "p5": 6, "p6": 3, "sensing": 5.33}, {"role": "Director", "size": "500 \u2013 5,000", "p3": 6, "p4": 4, "p5": 4, "p6": 1, "sensing": 4.67}, {"role": "Director", "size": "500 \u2013 5,000", "p3": 4, "p4": 5, "p5": 7, "p6": 2, "sensing": 5.33}, {"role": "VP or above", "size": "500 \u2013 5,000", "p3": 5, "p4": 6, "p5": 4, "p6": 2, "sensing": 5.0}, {"role": "Director", "size": "5,000 \u2013 50,000", "p3": 4, "p4": 6, "p5": 6, "p6": 2, "sensing": 5.33}, {"role": "Manager / Senior Manager", "size": "5,000 \u2013 50,000", "p3": 4, "p4": 6, "p5": 6, "p6": 1, "sensing": 5.33}, {"role": "Senior Director", "size": "500 \u2013 5,000", "p3": 7, "p4": 6, "p5": 7, "p6": 2, "sensing": 6.67}, {"role": "VP or above", "size": "More than 50,000", "p3": 5, "p4": 6, "p5": 6, "p6": 1, "sensing": 5.67}, {"role": "Senior Director", "size": "Fewer than 500", "p3": 6, "p4": 6, "p5": 7, "p6": 3, "sensing": 6.33}]};
+// ── Embedded data ──
+const DATA = {"generated": "2026-04-28T07:55:45Z", "n": 54, "kpis": {"total": 54, "meanSensing": 5.58, "meanVelocity": 2.39, "gap": 3.19}, "roles": {"Senior Director": 16, "Director": 16, "VP or above": 10, "Manager / Senior Manager": 9, "Other": 3}, "sizes": {"Fewer than 500": 8, "500 \u2013 5,000": 22, "5,000 \u2013 50,000": 16, "More than 50,000": 8}, "distributions": {"p3": [0, 0, 0, 6, 21, 20, 7], "p4": [0, 0, 0, 10, 17, 18, 9], "p5": [0, 0, 0, 7, 13, 21, 13], "p6": [11, 21, 15, 6, 0, 0, 1]}, "medians": {"p3": 5.5, "p4": 5.5, "p5": 6.0, "p6": 2.0}, "scatter": [{"x": 6.67, "y": 4, "role": "Senior Director", "size": "500 \u2013 5,000"}, {"x": 6.0, "y": 7, "role": "Senior Director", "size": "500 \u2013 5,000"}, {"x": 5.67, "y": 2, "role": "Director", "size": "More than 50,000"}, {"x": 5.0, "y": 1, "role": "Other", "size": "5,000 \u2013 50,000"}, {"x": 6.0, "y": 1, "role": "Other", "size": "500 \u2013 5,000"}, {"x": 5.33, "y": 3, "role": "VP or above", "size": "500 \u2013 5,000"}, {"x": 4.67, "y": 1, "role": "Director", "size": "500 \u2013 5,000"}, {"x": 5.33, "y": 2, "role": "Director", "size": "500 \u2013 5,000"}, {"x": 5.0, "y": 2, "role": "VP or above", "size": "500 \u2013 5,000"}, {"x": 5.33, "y": 2, "role": "Director", "size": "5,000 \u2013 50,000"}, {"x": 5.33, "y": 1, "role": "Manager / Senior Manager", "size": "5,000 \u2013 50,000"}, {"x": 6.67, "y": 2, "role": "Senior Director", "size": "500 \u2013 5,000"}, {"x": 5.67, "y": 1, "role": "VP or above", "size": "More than 50,000"}, {"x": 6.33, "y": 3, "role": "Senior Director", "size": "Fewer than 500"}, {"x": 5.0, "y": 2, "role": "Senior Director", "size": "500 \u2013 5,000"}, {"x": 6.0, "y": 2, "role": "Manager / Senior Manager", "size": "More than 50,000"}, {"x": 5.0, "y": 3, "role": "Senior Director", "size": "Fewer than 500"}, {"x": 6.67, "y": 3, "role": "Other", "size": "500 \u2013 5,000"}, {"x": 6.0, "y": 2, "role": "Manager / Senior Manager", "size": "500 \u2013 5,000"}, {"x": 5.33, "y": 2, "role": "Director", "size": "5,000 \u2013 50,000"}, {"x": 5.67, "y": 2, "role": "VP or above", "size": "Fewer than 500"}, {"x": 6.67, "y": 3, "role": "Senior Director", "size": "Fewer than 500"}, {"x": 5.33, "y": 4, "role": "Senior Director", "size": "More than 50,000"}, {"x": 6.0, "y": 3, "role": "Senior Director", "size": "5,000 \u2013 50,000"}, {"x": 5.0, "y": 2, "role": "Director", "size": "5,000 \u2013 50,000"}, {"x": 4.67, "y": 3, "role": "Director", "size": "5,000 \u2013 50,000"}, {"x": 6.0, "y": 2, "role": "VP or above", "size": "5,000 \u2013 50,000"}, {"x": 5.0, "y": 1, "role": "VP or above", "size": "Fewer than 500"}, {"x": 6.0, "y": 2, "role": "VP or above", "size": "Fewer than 500"}, {"x": 6.0, "y": 4, "role": "VP or above", "size": "500 \u2013 5,000"}, {"x": 6.67, "y": 1, "role": "Director", "size": "500 \u2013 5,000"}, {"x": 5.33, "y": 3, "role": "Director", "size": "5,000 \u2013 50,000"}, {"x": 5.0, "y": 2, "role": "Senior Director", "size": "5,000 \u2013 50,000"}, {"x": 6.0, "y": 2, "role": "Senior Director", "size": "5,000 \u2013 50,000"}, {"x": 5.33, "y": 1, "role": "Senior Director", "size": "500 \u2013 5,000"}, {"x": 5.67, "y": 2, "role": "Senior Director", "size": "More than 50,000"}, {"x": 5.0, "y": 3, "role": "VP or above", "size": "More than 50,000"}, {"x": 5.67, "y": 2, "role": "Director", "size": "500 \u2013 5,000"}, {"x": 5.33, "y": 3, "role": "Director", "size": "500 \u2013 5,000"}, {"x": 5.67, "y": 3, "role": "Manager / Senior Manager", "size": "500 \u2013 5,000"}, {"x": 5.33, "y": 4, "role": "Senior Director", "size": "500 \u2013 5,000"}, {"x": 6.33, "y": 2, "role": "Manager / Senior Manager", "size": "500 \u2013 5,000"}, {"x": 5.0, "y": 2, "role": "Director", "size": "500 \u2013 5,000"}, {"x": 6.0, "y": 1, "role": "Director", "size": "5,000 \u2013 50,000"}, {"x": 4.33, "y": 4, "role": "Director", "size": "5,000 \u2013 50,000"}, {"x": 4.67, "y": 4, "role": "Senior Director", "size": "5,000 \u2013 50,000"}, {"x": 5.0, "y": 2, "role": "Manager / Senior Manager", "size": "5,000 \u2013 50,000"}, {"x": 5.67, "y": 3, "role": "Manager / Senior Manager", "size": "500 \u2013 5,000"}, {"x": 6.0, "y": 2, "role": "VP or above", "size": "More than 50,000"}, {"x": 6.0, "y": 3, "role": "Director", "size": "Fewer than 500"}, {"x": 5.67, "y": 1, "role": "Manager / Senior Manager", "size": "500 \u2013 5,000"}, {"x": 6.33, "y": 3, "role": "Director", "size": "Fewer than 500"}, {"x": 5.0, "y": 1, "role": "Senior Director", "size": "More than 50,000"}, {"x": 5.0, "y": 3, "role": "Manager / Senior Manager", "size": "5,000 \u2013 50,000"}], "quadrants": {"Leaders": 1, "Stuck at Sensing": 52, "Reactive": 0, "Laggards": 1}, "sizeGaps": {"Fewer than 500": {"sensing": 5.88, "velocity": 2.5, "gap": 3.38, "n": 8}, "500 \u2013 5,000": {"sensing": 5.73, "velocity": 2.5, "gap": 3.23, "n": 22}, "5,000 \u2013 50,000": {"sensing": 5.25, "velocity": 2.31, "gap": 2.94, "n": 16}, "More than 50,000": {"sensing": 5.54, "velocity": 2.12, "gap": 3.42, "n": 8}}, "roleGaps": {"Senior Director": {"sensing": 5.67, "velocity": 2.94, "gap": 2.73, "n": 16}, "Director": {"sensing": 5.42, "velocity": 2.25, "gap": 3.17, "n": 16}, "VP or above": {"sensing": 5.57, "velocity": 2.2, "gap": 3.37, "n": 10}, "Manager / Senior Manager": {"sensing": 5.63, "velocity": 2.11, "gap": 3.52, "n": 9}, "Other": {"sensing": 5.89, "velocity": 1.67, "gap": 4.22, "n": 3}}};
+const LABELS_7 = ['1','2','3','4','5','6','7'];
 
-// ── Globals ──
-let chartInstances = {};
-const COLORS = {
-  red: '#C8102E',
-  redLight: 'rgba(200, 16, 46, 0.15)',
-  redMid: 'rgba(200, 16, 46, 0.5)',
-  velocity: '#4A5568',
-  velocityLight: 'rgba(74, 85, 104, 0.15)',
-  velocityMid: 'rgba(74, 85, 104, 0.5)',
-  leader: '#38A169',
-  stuck: '#C8102E',
-  reactive: '#D69E2E',
-  laggard: '#A0AEC0'
-};
+// ── Chart defaults ──
+Chart.defaults.font.family = "'Inter', -apple-system, sans-serif";
+Chart.defaults.font.size = 12;
+Chart.defaults.color = '#4A5568';
 
-function parseData(raw) {
-  const rows = raw.responses || raw;
-  const total = rows.length;
-  const p3s = rows.map(r => r.p3);
-  const p4s = rows.map(r => r.p4);
-  const p5s = rows.map(r => r.p5);
-  const p6s = rows.map(r => r.p6);
+// ── Role bar chart ──
+new Chart(document.getElementById('roleChart'), {
+  type: 'bar',
+  data: {
+    labels: ["Senior Director", "Director", "VP or above", "Manager / Senior Manager", "Other"],
+    datasets: [{ data: [16, 16, 10, 9, 3], backgroundColor: 'rgba(196,30,58,0.7)', borderColor: '#C41E3A', borderWidth: 1, borderRadius: 4 }]
+  },
+  options: { indexAxis:'y', plugins:{ legend:{ display:false }}, scales:{ x:{ beginAtZero:true, title:{ display:true, text:'Count' }}, y:{ grid:{ display:false }}}}
+});
 
-  const avg = arr => arr.reduce((a,b) => a+b, 0) / arr.length;
-  const p3Avg = avg(p3s), p4Avg = avg(p4s), p5Avg = avg(p5s), p6Avg = avg(p6s);
-  const meanSensing = (p3Avg + p4Avg + p5Avg) / 3;
-  const gap = meanSensing - p6Avg;
+// ── Size bar chart ──
+new Chart(document.getElementById('sizeChart'), {
+  type: 'bar',
+  data: {
+    labels: ["Fewer than 500", "500 \u2013 5,000", "5,000 \u2013 50,000", "More than 50,000"],
+    datasets: [{ data: [8, 22, 16, 8], backgroundColor: 'rgba(196,30,58,0.7)', borderColor: '#C41E3A', borderWidth: 1, borderRadius: 4 }]
+  },
+  options: { plugins:{ legend:{ display:false }}, scales:{ y:{ beginAtZero:true, title:{ display:true, text:'Count' }}, x:{ grid:{ display:false }}}}
+});
 
-  // Roles count sorted by count desc
-  const roleCounts = {};
-  rows.forEach(r => { roleCounts[r.role] = (roleCounts[r.role]||0) + 1; });
-  const roleSorted = Object.entries(roleCounts).sort((a,b) => b[1] - a[1]);
-
-  // Size count in order
-  const sizeOrder = ['Fewer than 500', '500 \u2013 5,000', '5,000 \u2013 50,000', 'More than 50,000'];
-  const sizeCounts = {};
-  rows.forEach(r => { sizeCounts[r.size] = (sizeCounts[r.size]||0) + 1; });
-  const sizeSorted = sizeOrder.map(s => [s, sizeCounts[s] || 0]);
-
-  // Distributions P3-P6
-  function dist(arr) {
-    const d = [0,0,0,0,0,0,0]; // index 0-6 for values 1-7
-    arr.forEach(v => { d[v-1]++; });
-    return d;
-  }
-
-  // Median
-  function median(arr) {
-    const s = [...arr].sort((a,b) => a-b);
-    const mid = Math.floor(s.length / 2);
-    return s.length % 2 ? s[mid] : (s[mid-1] + s[mid]) / 2;
-  }
-
-  // Quadrants
-  const quadrants = { leaders: 0, stuck: 0, reactive: 0, laggard: 0 };
-  const scatterPts = rows.map(r => {
-    const sens = (r.p3 + r.p4 + r.p5) / 3;
-    const hs = sens >= 4.5, ha = r.p6 >= 4.5;
-    if (hs && ha) quadrants.leaders++;
-    else if (hs && !ha) quadrants.stuck++;
-    else if (!hs && ha) quadrants.reactive++;
-    else quadrants.laggard++;
-    return { x: Math.round(sens * 100) / 100, y: r.p6, hs, ha };
-  });
-
-  // Gap by size
-  const gapBySize = sizeOrder.map(s => {
-    const sub = rows.filter(r => r.size === s);
-    if (!sub.length) return { segment: s, n: 0, sensing: 0, velocity: 0, gap: 0 };
-    const sens = avg(sub.map(r => (r.p3+r.p4+r.p5)/3));
-    const vel = avg(sub.map(r => r.p6));
-    return { segment: s, n: sub.length, sensing: sens, velocity: vel, gap: sens - vel };
-  }).filter(x => x.n > 0);
-
-  // Gap by role
-  const roleOrder = ['VP or above', 'Senior Director', 'Director', 'Manager / Senior Manager', 'Other'];
-  const gapByRole = roleOrder.map(rl => {
-    const sub = rows.filter(r => r.role === rl);
-    if (!sub.length) return null;
-    const sens = avg(sub.map(r => (r.p3+r.p4+r.p5)/3));
-    const vel = avg(sub.map(r => r.p6));
-    return { segment: rl, n: sub.length, sensing: sens, velocity: vel, gap: sens - vel };
-  }).filter(Boolean);
-
-  return {
-    total, p3Avg, p4Avg, p5Avg, p6Avg, meanSensing, gap,
-    roleSorted, sizeSorted,
-    distP3: dist(p3s), distP4: dist(p4s), distP5: dist(p5s), distP6: dist(p6s),
-    medP3: median(p3s), medP4: median(p4s), medP5: median(p5s), medP6: median(p6s),
-    scatterPts, quadrants, gapBySize, gapByRole
-  };
-}
-
-function render(d) {
-  // KPIs
-  document.getElementById('kpi-total').textContent = d.total;
-  document.getElementById('kpi-sensing').textContent = d.meanSensing.toFixed(1);
-  document.getElementById('kpi-velocity').textContent = d.p6Avg.toFixed(1);
-  document.getElementById('kpi-gap').textContent = d.gap.toFixed(1);
-  document.getElementById('resp-count').textContent = d.total;
-
-  const now = new Date();
-  const cest = new Date(now.getTime() + (2 * 60 * 60 * 1000) - (now.getTimezoneOffset() * 60 * 1000));
-  document.getElementById('last-updated').textContent =
-    cest.getUTCHours().toString().padStart(2,'0') + ':' + cest.getUTCMinutes().toString().padStart(2,'0');
-
-  // Role bar chart
-  renderBar('chartRole', d.roleSorted.map(r => r[0]), d.roleSorted.map(r => r[1]), COLORS.red);
-
-  // Size bar chart
-  renderBar('chartSize', d.sizeSorted.map(r => r[0]), d.sizeSorted.map(r => r[1]), COLORS.red);
-
-  // Distribution charts
-  renderDist('chartP3', d.distP3, d.medP3, COLORS.red, COLORS.redLight, COLORS.redMid);
-  renderDist('chartP4', d.distP4, d.medP4, COLORS.red, COLORS.redLight, COLORS.redMid);
-  renderDist('chartP5', d.distP5, d.medP5, COLORS.red, COLORS.redLight, COLORS.redMid);
-  renderDist('chartP6', d.distP6, d.medP6, COLORS.velocity, COLORS.velocityLight, COLORS.velocityMid);
-
-  // Scatter
-  renderScatter(d.scatterPts, d.quadrants);
-
-  // Segment tables
-  renderSegTable('seg-size', d.gapBySize);
-  renderSegTable('seg-role', d.gapByRole);
-
-  // Commentaries
-  renderCommentaries(d);
-
-  // Executive summary
-  renderExecSummary(d);
-
-  // Discussion prompts
-  renderDiscussion(d);
-}
-
-function renderBar(id, labels, values, color) {
-  if (chartInstances[id]) chartInstances[id].destroy();
-  const ctx = document.getElementById(id).getContext('2d');
-  chartInstances[id] = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels,
-      datasets: [{
-        data: values,
-        backgroundColor: color,
-        borderRadius: 6,
-        barThickness: 28,
-      }]
-    },
-    options: {
-      indexAxis: 'y',
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: { display: false },
-        tooltip: { enabled: true }
-      },
-      scales: {
-        x: {
-          beginAtZero: true,
-          ticks: { stepSize: 1, font: { size: 12 }, color: '#718096' },
-          grid: { color: '#E2E8F0' }
-        },
-        y: {
-          ticks: { font: { size: 12 }, color: '#2D3748' },
-          grid: { display: false }
-        }
-      }
-    }
-  });
-}
-
-function renderDist(id, dist, med, lineColor, fillColor, medColor) {
-  if (chartInstances[id]) chartInstances[id].destroy();
-  const ctx = document.getElementById(id).getContext('2d');
-  const labels = [1,2,3,4,5,6,7];
-
-  // Median line plugin
-  const medianPlugin = {
-    id: 'medianLine_' + id,
-    afterDraw(chart) {
-      const xScale = chart.scales.x;
-      const yScale = chart.scales.y;
-      const medX = xScale.getPixelForValue(med - 1); // 0-indexed
-      const ctx2 = chart.ctx;
-      ctx2.save();
-      ctx2.beginPath();
-      ctx2.setLineDash([6, 4]);
-      ctx2.strokeStyle = medColor;
-      ctx2.lineWidth = 2;
-      ctx2.moveTo(medX, yScale.top);
-      ctx2.lineTo(medX, yScale.bottom);
-      ctx2.stroke();
-      ctx2.setLineDash([]);
-      // Label
-      ctx2.font = '600 12px Segoe UI, sans-serif';
-      ctx2.fillStyle = medColor;
-      ctx2.textAlign = 'center';
-      const labelY = yScale.top + 16;
-      ctx2.fillText('Median: ' + med.toFixed(1), medX, labelY);
-      ctx2.restore();
-    }
-  };
-
-  chartInstances[id] = new Chart(ctx, {
+// ── Distribution line charts ──
+function makeDistChart(canvasId, distData, medianVal, color, fillColor) {
+  const ctx = document.getElementById(canvasId);
+  new Chart(ctx, {
     type: 'line',
     data: {
-      labels,
+      labels: LABELS_7,
       datasets: [{
-        data: dist,
-        borderColor: lineColor,
+        data: distData,
+        borderColor: color,
         backgroundColor: fillColor,
         fill: true,
         tension: 0.4,
         pointRadius: 4,
-        pointBackgroundColor: lineColor,
+        pointBackgroundColor: color,
         borderWidth: 2.5,
       }]
     },
     options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      layout: { padding: { top: 28 } },
-      plugins: { legend: { display: false } },
-      scales: {
-        x: {
-          title: { display: true, text: 'Score (1–7)', font: { size: 11 }, color: '#718096' },
-          ticks: { font: { size: 12 }, color: '#718096' },
-          grid: { color: '#E2E8F0' }
-        },
-        y: {
-          beginAtZero: true,
-          title: { display: true, text: 'Responses', font: { size: 11 }, color: '#718096' },
-          ticks: { stepSize: 1, font: { size: 12 }, color: '#718096' },
-          grid: { color: '#E2E8F0' }
-        }
-      }
-    },
-    plugins: [medianPlugin]
-  });
-}
-
-function renderScatter(pts, quads) {
-  if (chartInstances['scatter']) chartInstances['scatter'].destroy();
-  const ctx = document.getElementById('chartScatter').getContext('2d');
-
-  const datasets = [
-    { label: 'Leaders (' + quads.leaders + ')', data: pts.filter(p => p.hs && p.ha).map(p => ({x:p.x,y:p.y})), backgroundColor: COLORS.leader, pointRadius: 8 },
-    { label: 'Stuck at Sensing (' + quads.stuck + ')', data: pts.filter(p => p.hs && !p.ha).map(p => ({x:p.x,y:p.y})), backgroundColor: COLORS.stuck, pointRadius: 8 },
-    { label: 'Reactive (' + quads.reactive + ')', data: pts.filter(p => !p.hs && p.ha).map(p => ({x:p.x,y:p.y})), backgroundColor: COLORS.reactive, pointRadius: 8 },
-    { label: 'Laggards (' + quads.laggard + ')', data: pts.filter(p => !p.hs && !p.ha).map(p => ({x:p.x,y:p.y})), backgroundColor: COLORS.laggard, pointRadius: 8 },
-  ];
-
-  // Quadrant background plugin
-  const quadPlugin = {
-    id: 'quadBg',
-    beforeDraw(chart) {
-      const { ctx: c, scales: { x, y } } = chart;
-      const mx = x.getPixelForValue(4.5);
-      const my = y.getPixelForValue(4.5);
-      const left = x.left, right = x.right, top = y.top, bottom = y.bottom;
-      c.save();
-      // Leaders (top-right)
-      c.fillStyle = 'rgba(56, 161, 105, 0.06)';
-      c.fillRect(mx, top, right - mx, my - top);
-      // Stuck (bottom-right)
-      c.fillStyle = 'rgba(200, 16, 46, 0.06)';
-      c.fillRect(mx, my, right - mx, bottom - my);
-      // Reactive (top-left)
-      c.fillStyle = 'rgba(214, 158, 46, 0.06)';
-      c.fillRect(left, top, mx - left, my - top);
-      // Laggards (bottom-left)
-      c.fillStyle = 'rgba(160, 174, 192, 0.06)';
-      c.fillRect(left, my, mx - left, bottom - my);
-
-      // Threshold lines
-      c.setLineDash([6, 4]);
-      c.strokeStyle = '#CBD5E0';
-      c.lineWidth = 1.5;
-      c.beginPath(); c.moveTo(mx, top); c.lineTo(mx, bottom); c.stroke();
-      c.beginPath(); c.moveTo(left, my); c.lineTo(right, my); c.stroke();
-      c.setLineDash([]);
-
-      // Quadrant labels
-      c.font = '600 11px Segoe UI, sans-serif';
-      c.globalAlpha = 0.5;
-      c.fillStyle = COLORS.leader; c.textAlign = 'right'; c.fillText('Leaders', right - 8, top + 18);
-      c.fillStyle = COLORS.stuck; c.textAlign = 'right'; c.fillText('Stuck at Sensing', right - 8, bottom - 8);
-      c.fillStyle = COLORS.reactive; c.textAlign = 'left'; c.fillText('Reactive', left + 8, top + 18);
-      c.fillStyle = COLORS.laggard; c.textAlign = 'left'; c.fillText('Laggards', left + 8, bottom - 8);
-      c.globalAlpha = 1;
-      c.restore();
-    }
-  };
-
-  chartInstances['scatter'] = new Chart(ctx, {
-    type: 'scatter',
-    data: { datasets },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
       plugins: {
-        legend: {
-          position: 'top',
-          labels: { usePointStyle: true, pointStyle: 'circle', font: { size: 12 } }
-        }
+        legend: { display: false },
+        annotation: undefined,
       },
       scales: {
-        x: {
-          min: 1, max: 7,
-          title: { display: true, text: 'Sensing Score (avg P3+P4+P5)', font: { size: 12 }, color: '#718096' },
-          ticks: { stepSize: 1, font: { size: 12 }, color: '#718096' },
-          grid: { color: '#E2E8F0' }
-        },
-        y: {
-          min: 1, max: 7,
-          title: { display: true, text: 'Velocity Score (P6)', font: { size: 12 }, color: '#718096' },
-          ticks: { stepSize: 1, font: { size: 12 }, color: '#718096' },
-          grid: { color: '#E2E8F0' }
-        }
+        y: { beginAtZero: true, title: { display: true, text: 'Responses' } },
+        x: { title: { display: true, text: 'Rating (1–7)' }, grid: { display: false } }
       }
     },
-    plugins: [quadPlugin]
+    plugins: [{
+      afterDraw(chart) {
+        const xScale = chart.scales.x;
+        const yScale = chart.scales.y;
+        const medianIdx = medianVal - 1;
+        const x = xScale.getPixelForValue(medianIdx);
+        const ctx = chart.ctx;
+        ctx.save();
+        ctx.setLineDash([6, 4]);
+        ctx.strokeStyle = '#2D3748';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(x, yScale.top);
+        ctx.lineTo(x, yScale.bottom);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillStyle = '#2D3748';
+        ctx.font = 'bold 11px Inter, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('Median: ' + medianVal, x, yScale.top - 6);
+        ctx.restore();
+      }
+    }]
   });
 }
 
-function renderSegTable(id, segments) {
-  const tbody = document.getElementById(id);
-  tbody.innerHTML = segments.map(s =>
-    '<tr><td>' + s.segment + '</td><td>' + s.n + '</td><td>' + s.sensing.toFixed(1) +
-    '</td><td>' + s.velocity.toFixed(1) + '</td><td class="gap-val">' + s.gap.toFixed(1) + '</td></tr>'
-  ).join('');
-}
+makeDistChart('p3Chart', DATA.distributions.p3, DATA.medians.p3, '#C41E3A', 'rgba(196,30,58,0.18)');
+makeDistChart('p4Chart', DATA.distributions.p4, DATA.medians.p4, '#E8304A', 'rgba(232,48,74,0.18)');
+makeDistChart('p5Chart', DATA.distributions.p5, DATA.medians.p5, '#C41E3A', 'rgba(196,30,58,0.18)');
+makeDistChart('p6Chart', DATA.distributions.p6, DATA.medians.p6, '#4A5568', 'rgba(45,55,72,0.18)');
 
-function renderCommentaries(d) {
-  // Size commentary
-  const sizeGaps = d.gapBySize.map(s => s.gap);
-  const sizeSpread = Math.max(...sizeGaps) - Math.min(...sizeGaps);
-  const largest = d.gapBySize.reduce((a,b) => a.gap > b.gap ? a : b);
-  const smallest = d.gapBySize.reduce((a,b) => a.gap < b.gap ? a : b);
+// ── Scatter plot ──
+const scatterData = DATA.scatter.map(p => {
+  let color;
+  if (p.x >= 4.5 && p.y >= 4.5) color = 'rgba(72,187,120,0.7)';
+  else if (p.x >= 4.5 && p.y < 4.5) color = 'rgba(196,30,58,0.6)';
+  else if (p.x < 4.5 && p.y >= 4.5) color = 'rgba(237,137,54,0.6)';
+  else color = 'rgba(160,174,192,0.6)';
+  return { x: p.x, y: p.y, backgroundColor: color };
+});
 
-  let sizeComment;
-  if (sizeSpread < 0.6) {
-    sizeComment = "Company size doesn't save you. The gap is the same at 500 employees as at 50,000. More resources did not produce faster action.";
-  } else {
-    sizeComment = "Size makes it worse, not better. The largest companies (" + largest.segment + ") carry a gap of " +
-      largest.gap.toFixed(1) + " — wider than the " + smallest.gap.toFixed(1) + " at " + smallest.segment +
-      " companies. More layers, more approvals, more friction between signal and decision.";
-  }
-  document.getElementById('commentary-size').textContent = sizeComment;
-
-  // Role commentary
-  const roleGaps = d.gapByRole.map(s => s.gap);
-  const roleSpread = Math.max(...roleGaps) - Math.min(...roleGaps);
-  const rLargest = d.gapByRole.reduce((a,b) => a.gap > b.gap ? a : b);
-  const rSmallest = d.gapByRole.reduce((a,b) => a.gap < b.gap ? a : b);
-
-  let roleComment;
-  if (roleSpread < 0.6) {
-    roleComment = "Seniority doesn't save you either. VPs and managers report the same gap. Authority alone is not what's missing.";
-  } else {
-    roleComment = rSmallest.segment + "s report the narrowest gap (" + rSmallest.gap.toFixed(1) +
-      ") — not because they sense less, but because their velocity is highest at " + rSmallest.velocity.toFixed(1) +
-      ". " + rLargest.segment + " carries the widest gap at " + rLargest.gap.toFixed(1) +
-      ". The data suggests something happens at the " + rSmallest.segment +
-      " level that does not transfer up or down the ladder.";
-  }
-  document.getElementById('commentary-role').textContent = roleComment;
-}
-
-function renderExecSummary(d) {
-  const pct = ((d.quadrants.stuck / d.total) * 100).toFixed(0);
-
-  let paragraphs = [];
-
-  paragraphs.push(
-    "This room scores its sensing capabilities at " + d.meanSensing.toFixed(1) + " out of 7. " +
-    "That is not the problem. The problem is velocity: " + d.p6Avg.toFixed(1) + " out of 7. " +
-    "A gap of " + d.gap.toFixed(1) + " points separates what this audience detects from what it acts on. " +
-    "The radar is on. It is not connected to the cockpit."
-  );
-
-  paragraphs.push(
-    pct + "% of respondents land in the Stuck at Sensing quadrant — high awareness, low action. " +
-    "Only " + d.quadrants.leaders + " respondent crosses into Leaders territory. " +
-    "Nobody in this room reports low sensing. The intelligence function is working. " +
-    "What is failing is the handoff: the distance from a validated signal to a decision that moves resources."
-  );
-
-  // P6 distribution insight
-  const lowVel = d.distP6[0] + d.distP6[1]; // scores 1-2
-  const lowVelPct = ((lowVel / d.total) * 100).toFixed(0);
-  paragraphs.push(
-    "Look at the velocity distribution. " + lowVelPct + "% of the room scored themselves a 1 or 2 on signal-to-action speed. " +
-    "The median is " + d.medP6.toFixed(1) + ". That is not a perception of slowness — it is an admission of paralysis. " +
-    "Day and Schoemaker found the same pattern in their 2019 executive study: leadership posture, not analytical capability, " +
-    "was the strongest predictor of organisational vigilance. The sensing tools exist. The decision architecture does not."
-  );
-
-  // Segment finding
-  const sizeGaps = d.gapBySize.map(s => s.gap);
-  const sizeSpread = Math.max(...sizeGaps) - Math.min(...sizeGaps);
-  const roleGaps = d.gapByRole.map(s => s.gap);
-  const rSmallest = d.gapByRole.reduce((a,b) => a.gap < b.gap ? a : b);
-
-  if (sizeSpread >= 0.6) {
-    const largest = d.gapBySize.reduce((a,b) => a.gap > b.gap ? a : b);
-    paragraphs.push(
-      "The segment data challenges the assumption that scale is an advantage. " +
-      "Companies with " + largest.segment.toLowerCase() + " employees report the widest gap at " + largest.gap.toFixed(1) +
-      ". Meanwhile, " + rSmallest.segment + "s carry the narrowest gap — not because they sense differently, " +
-      "but because they report the highest velocity. Something about that level of authority translates into shorter decision loops. " +
-      "That is the finding worth investigating: what do " + rSmallest.segment + "s have access to that others do not?"
-    );
-  }
-
-  paragraphs.push(
-    "This is not a data problem. Nobody in this room lacks intelligence. " +
-    "It is an organisational-design problem — too many layers between insight and action, " +
-    "too much consensus required before resources move. Competitive intelligence has become a spectator sport: " +
-    "everyone watches the signal, nobody owns the response."
-  );
-
-  const recText = "Pick one signal your team identified in the last six months that did not reach a decision-maker within two weeks. " +
-    "Trace the path it was supposed to take. Fix that path before you invest in better sensing.";
-
-  const html = paragraphs.map(p => '<p>' + p + '</p>').join('') +
-    '<div class="recommendation">' + recText + '</div>';
-  document.getElementById('exec-content').innerHTML = html;
-}
-
-function renderDiscussion(d) {
-  const rSmallest = d.gapByRole.reduce((a,b) => a.gap < b.gap ? a : b);
-  const prompts = [
-    "The one respondent in the Leaders quadrant — what is different about your organisation's decision architecture?",
-    rSmallest.segment + "s report the highest velocity in this room. Is that about authority, proximity to the market, or something else entirely?",
-    "If the gap is " + d.gap.toFixed(1) + " points, what would closing it by half require — fewer approval layers, faster escalation paths, or a different relationship between CI and the C-suite?",
-    "Name one specific signal your organisation detected early but did not act on in the last twelve months. What stopped it?"
-  ];
-
-  document.getElementById('discussion-list').innerHTML = prompts.map(p => '<li>' + p + '</li>').join('');
-}
-
-// ── Init with embedded data ──
-const initialData = parseData(EMBEDDED_DATA);
-render(initialData);
-
-// ── Auto-refresh from data.json ──
-setInterval(async () => {
-  try {
-    const res = await fetch('data.json?t=' + Date.now());
-    if (res.ok) {
-      const fresh = await res.json();
-      const d = parseData(fresh);
-      render(d);
+new Chart(document.getElementById('scatterChart'), {
+  type: 'scatter',
+  data: {
+    datasets: [{
+      data: scatterData,
+      pointBackgroundColor: scatterData.map(d => d.backgroundColor),
+      pointBorderColor: scatterData.map(d => d.backgroundColor),
+      pointRadius: 7,
+      pointHoverRadius: 9,
+    }]
+  },
+  options: {
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { min: 1, max: 7, title: { display: true, text: 'Sensing (avg P3+P4+P5)' }, grid: { color: 'rgba(0,0,0,0.05)' } },
+      y: { min: 1, max: 7, title: { display: true, text: 'Velocity (P6)' }, grid: { color: 'rgba(0,0,0,0.05)' } }
     }
-  } catch(e) { /* keep displaying last successful data */ }
-}, 45000);
-</script>
+  },
+  plugins: [{
+    beforeDraw(chart) {
+      const ctx = chart.ctx;
+      const xScale = chart.scales.x;
+      const yScale = chart.scales.y;
+      const midX = xScale.getPixelForValue(4.5);
+      const midY = yScale.getPixelForValue(4.5);
+      // Quadrant backgrounds
+      // Top-left: Reactive
+      ctx.fillStyle = 'rgba(237,137,54,0.06)';
+      ctx.fillRect(xScale.left, yScale.top, midX - xScale.left, midY - yScale.top);
+      // Top-right: Leaders
+      ctx.fillStyle = 'rgba(72,187,120,0.06)';
+      ctx.fillRect(midX, yScale.top, xScale.right - midX, midY - yScale.top);
+      // Bottom-left: Laggards
+      ctx.fillStyle = 'rgba(160,174,192,0.06)';
+      ctx.fillRect(xScale.left, midY, midX - xScale.left, yScale.bottom - midY);
+      // Bottom-right: Stuck at Sensing
+      ctx.fillStyle = 'rgba(196,30,58,0.06)';
+      ctx.fillRect(midX, midY, xScale.right - midX, yScale.bottom - midY);
+      // Threshold lines
+      ctx.save();
+      ctx.setLineDash([6,4]);
+      ctx.strokeStyle = '#A0AEC0';
+      ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(midX, yScale.top); ctx.lineTo(midX, yScale.bottom); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(xScale.left, midY); ctx.lineTo(xScale.right, midY); ctx.stroke();
+      ctx.setLineDash([]);
+      // Quadrant labels
+      ctx.font = '11px Inter, sans-serif';
+      ctx.fillStyle = '#A0AEC0';
+      ctx.textAlign = 'center';
+      ctx.fillText('Reactive', (xScale.left + midX)/2, yScale.top + 16);
+      ctx.fillText('Leaders', (midX + xScale.right)/2, yScale.top + 16);
+      ctx.fillText('Laggards', (xScale.left + midX)/2, yScale.bottom - 8);
+      ctx.fillText('Stuck at Sensing', (midX + xScale.right)/2, yScale.bottom - 8);
+      ctx.restore();
+    }
+  }]
+});
 
+// ── Auto-refresh ──
+let lastData = DATA;
+async function refreshData() {
+  try {
+    const resp = await fetch('data.json?t=' + Date.now());
+    if (resp.ok) {
+      const newData = await resp.json();
+      if (newData.n !== lastData.n) {
+        lastData = newData;
+        location.reload();
+      }
+      const el = document.getElementById('live-status');
+      if (el) el.textContent = 'Live · ' + newData.n + ' responses · updated ' + new Date(newData.generated).toLocaleTimeString('en-GB', {hour:'2-digit',minute:'2-digit'}) + ' UTC';
+    }
+  } catch(e) {}
+}
+setInterval(refreshData, 45000);
+</script>
 </body>
 </html>

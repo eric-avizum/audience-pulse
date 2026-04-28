@@ -1,1 +1,457 @@
-{"responses": [{"role": "Senior Director", "size": "500 \u2013 5,000", "p3": 7, "p4": 6, "p5": 7, "p6": 4, "sensing": 6.67}, {"role": "Senior Director", "size": "500 \u2013 5,000", "p3": 6, "p4": 5, "p5": 7, "p6": 7, "sensing": 6.0}, {"role": "Director", "size": "More than 50,000", "p3": 5, "p4": 7, "p5": 5, "p6": 2, "sensing": 5.67}, {"role": "Other", "size": "5,000 \u2013 50,000", "p3": 6, "p4": 4, "p5": 5, "p6": 1, "sensing": 5.0}, {"role": "Other", "size": "500 \u2013 5,000", "p3": 5, "p4": 7, "p5": 6, "p6": 1, "sensing": 6.0}, {"role": "VP or above", "size": "500 \u2013 5,000", "p3": 5, "p4": 5, "p5": 6, "p6": 3, "sensing": 5.33}, {"role": "Director", "size": "500 \u2013 5,000", "p3": 6, "p4": 4, "p5": 4, "p6": 1, "sensing": 4.67}, {"role": "Director", "size": "500 \u2013 5,000", "p3": 4, "p4": 5, "p5": 7, "p6": 2, "sensing": 5.33}, {"role": "VP or above", "size": "500 \u2013 5,000", "p3": 5, "p4": 6, "p5": 4, "p6": 2, "sensing": 5.0}]}
+{
+  "generated": "2026-04-28T07:55:45Z",
+  "n": 54,
+  "kpis": {
+    "total": 54,
+    "meanSensing": 5.58,
+    "meanVelocity": 2.39,
+    "gap": 3.19
+  },
+  "roles": {
+    "Senior Director": 16,
+    "Director": 16,
+    "VP or above": 10,
+    "Manager / Senior Manager": 9,
+    "Other": 3
+  },
+  "sizes": {
+    "Fewer than 500": 8,
+    "500 \u2013 5,000": 22,
+    "5,000 \u2013 50,000": 16,
+    "More than 50,000": 8
+  },
+  "distributions": {
+    "p3": [
+      0,
+      0,
+      0,
+      6,
+      21,
+      20,
+      7
+    ],
+    "p4": [
+      0,
+      0,
+      0,
+      10,
+      17,
+      18,
+      9
+    ],
+    "p5": [
+      0,
+      0,
+      0,
+      7,
+      13,
+      21,
+      13
+    ],
+    "p6": [
+      11,
+      21,
+      15,
+      6,
+      0,
+      0,
+      1
+    ]
+  },
+  "medians": {
+    "p3": 5.5,
+    "p4": 5.5,
+    "p5": 6.0,
+    "p6": 2.0
+  },
+  "scatter": [
+    {
+      "x": 6.67,
+      "y": 4,
+      "role": "Senior Director",
+      "size": "500 \u2013 5,000"
+    },
+    {
+      "x": 6.0,
+      "y": 7,
+      "role": "Senior Director",
+      "size": "500 \u2013 5,000"
+    },
+    {
+      "x": 5.67,
+      "y": 2,
+      "role": "Director",
+      "size": "More than 50,000"
+    },
+    {
+      "x": 5.0,
+      "y": 1,
+      "role": "Other",
+      "size": "5,000 \u2013 50,000"
+    },
+    {
+      "x": 6.0,
+      "y": 1,
+      "role": "Other",
+      "size": "500 \u2013 5,000"
+    },
+    {
+      "x": 5.33,
+      "y": 3,
+      "role": "VP or above",
+      "size": "500 \u2013 5,000"
+    },
+    {
+      "x": 4.67,
+      "y": 1,
+      "role": "Director",
+      "size": "500 \u2013 5,000"
+    },
+    {
+      "x": 5.33,
+      "y": 2,
+      "role": "Director",
+      "size": "500 \u2013 5,000"
+    },
+    {
+      "x": 5.0,
+      "y": 2,
+      "role": "VP or above",
+      "size": "500 \u2013 5,000"
+    },
+    {
+      "x": 5.33,
+      "y": 2,
+      "role": "Director",
+      "size": "5,000 \u2013 50,000"
+    },
+    {
+      "x": 5.33,
+      "y": 1,
+      "role": "Manager / Senior Manager",
+      "size": "5,000 \u2013 50,000"
+    },
+    {
+      "x": 6.67,
+      "y": 2,
+      "role": "Senior Director",
+      "size": "500 \u2013 5,000"
+    },
+    {
+      "x": 5.67,
+      "y": 1,
+      "role": "VP or above",
+      "size": "More than 50,000"
+    },
+    {
+      "x": 6.33,
+      "y": 3,
+      "role": "Senior Director",
+      "size": "Fewer than 500"
+    },
+    {
+      "x": 5.0,
+      "y": 2,
+      "role": "Senior Director",
+      "size": "500 \u2013 5,000"
+    },
+    {
+      "x": 6.0,
+      "y": 2,
+      "role": "Manager / Senior Manager",
+      "size": "More than 50,000"
+    },
+    {
+      "x": 5.0,
+      "y": 3,
+      "role": "Senior Director",
+      "size": "Fewer than 500"
+    },
+    {
+      "x": 6.67,
+      "y": 3,
+      "role": "Other",
+      "size": "500 \u2013 5,000"
+    },
+    {
+      "x": 6.0,
+      "y": 2,
+      "role": "Manager / Senior Manager",
+      "size": "500 \u2013 5,000"
+    },
+    {
+      "x": 5.33,
+      "y": 2,
+      "role": "Director",
+      "size": "5,000 \u2013 50,000"
+    },
+    {
+      "x": 5.67,
+      "y": 2,
+      "role": "VP or above",
+      "size": "Fewer than 500"
+    },
+    {
+      "x": 6.67,
+      "y": 3,
+      "role": "Senior Director",
+      "size": "Fewer than 500"
+    },
+    {
+      "x": 5.33,
+      "y": 4,
+      "role": "Senior Director",
+      "size": "More than 50,000"
+    },
+    {
+      "x": 6.0,
+      "y": 3,
+      "role": "Senior Director",
+      "size": "5,000 \u2013 50,000"
+    },
+    {
+      "x": 5.0,
+      "y": 2,
+      "role": "Director",
+      "size": "5,000 \u2013 50,000"
+    },
+    {
+      "x": 4.67,
+      "y": 3,
+      "role": "Director",
+      "size": "5,000 \u2013 50,000"
+    },
+    {
+      "x": 6.0,
+      "y": 2,
+      "role": "VP or above",
+      "size": "5,000 \u2013 50,000"
+    },
+    {
+      "x": 5.0,
+      "y": 1,
+      "role": "VP or above",
+      "size": "Fewer than 500"
+    },
+    {
+      "x": 6.0,
+      "y": 2,
+      "role": "VP or above",
+      "size": "Fewer than 500"
+    },
+    {
+      "x": 6.0,
+      "y": 4,
+      "role": "VP or above",
+      "size": "500 \u2013 5,000"
+    },
+    {
+      "x": 6.67,
+      "y": 1,
+      "role": "Director",
+      "size": "500 \u2013 5,000"
+    },
+    {
+      "x": 5.33,
+      "y": 3,
+      "role": "Director",
+      "size": "5,000 \u2013 50,000"
+    },
+    {
+      "x": 5.0,
+      "y": 2,
+      "role": "Senior Director",
+      "size": "5,000 \u2013 50,000"
+    },
+    {
+      "x": 6.0,
+      "y": 2,
+      "role": "Senior Director",
+      "size": "5,000 \u2013 50,000"
+    },
+    {
+      "x": 5.33,
+      "y": 1,
+      "role": "Senior Director",
+      "size": "500 \u2013 5,000"
+    },
+    {
+      "x": 5.67,
+      "y": 2,
+      "role": "Senior Director",
+      "size": "More than 50,000"
+    },
+    {
+      "x": 5.0,
+      "y": 3,
+      "role": "VP or above",
+      "size": "More than 50,000"
+    },
+    {
+      "x": 5.67,
+      "y": 2,
+      "role": "Director",
+      "size": "500 \u2013 5,000"
+    },
+    {
+      "x": 5.33,
+      "y": 3,
+      "role": "Director",
+      "size": "500 \u2013 5,000"
+    },
+    {
+      "x": 5.67,
+      "y": 3,
+      "role": "Manager / Senior Manager",
+      "size": "500 \u2013 5,000"
+    },
+    {
+      "x": 5.33,
+      "y": 4,
+      "role": "Senior Director",
+      "size": "500 \u2013 5,000"
+    },
+    {
+      "x": 6.33,
+      "y": 2,
+      "role": "Manager / Senior Manager",
+      "size": "500 \u2013 5,000"
+    },
+    {
+      "x": 5.0,
+      "y": 2,
+      "role": "Director",
+      "size": "500 \u2013 5,000"
+    },
+    {
+      "x": 6.0,
+      "y": 1,
+      "role": "Director",
+      "size": "5,000 \u2013 50,000"
+    },
+    {
+      "x": 4.33,
+      "y": 4,
+      "role": "Director",
+      "size": "5,000 \u2013 50,000"
+    },
+    {
+      "x": 4.67,
+      "y": 4,
+      "role": "Senior Director",
+      "size": "5,000 \u2013 50,000"
+    },
+    {
+      "x": 5.0,
+      "y": 2,
+      "role": "Manager / Senior Manager",
+      "size": "5,000 \u2013 50,000"
+    },
+    {
+      "x": 5.67,
+      "y": 3,
+      "role": "Manager / Senior Manager",
+      "size": "500 \u2013 5,000"
+    },
+    {
+      "x": 6.0,
+      "y": 2,
+      "role": "VP or above",
+      "size": "More than 50,000"
+    },
+    {
+      "x": 6.0,
+      "y": 3,
+      "role": "Director",
+      "size": "Fewer than 500"
+    },
+    {
+      "x": 5.67,
+      "y": 1,
+      "role": "Manager / Senior Manager",
+      "size": "500 \u2013 5,000"
+    },
+    {
+      "x": 6.33,
+      "y": 3,
+      "role": "Director",
+      "size": "Fewer than 500"
+    },
+    {
+      "x": 5.0,
+      "y": 1,
+      "role": "Senior Director",
+      "size": "More than 50,000"
+    },
+    {
+      "x": 5.0,
+      "y": 3,
+      "role": "Manager / Senior Manager",
+      "size": "5,000 \u2013 50,000"
+    }
+  ],
+  "quadrants": {
+    "Leaders": 1,
+    "Stuck at Sensing": 52,
+    "Reactive": 0,
+    "Laggards": 1
+  },
+  "sizeGaps": {
+    "Fewer than 500": {
+      "sensing": 5.88,
+      "velocity": 2.5,
+      "gap": 3.38,
+      "n": 8
+    },
+    "500 \u2013 5,000": {
+      "sensing": 5.73,
+      "velocity": 2.5,
+      "gap": 3.23,
+      "n": 22
+    },
+    "5,000 \u2013 50,000": {
+      "sensing": 5.25,
+      "velocity": 2.31,
+      "gap": 2.94,
+      "n": 16
+    },
+    "More than 50,000": {
+      "sensing": 5.54,
+      "velocity": 2.12,
+      "gap": 3.42,
+      "n": 8
+    }
+  },
+  "roleGaps": {
+    "Senior Director": {
+      "sensing": 5.67,
+      "velocity": 2.94,
+      "gap": 2.73,
+      "n": 16
+    },
+    "Director": {
+      "sensing": 5.42,
+      "velocity": 2.25,
+      "gap": 3.17,
+      "n": 16
+    },
+    "VP or above": {
+      "sensing": 5.57,
+      "velocity": 2.2,
+      "gap": 3.37,
+      "n": 10
+    },
+    "Manager / Senior Manager": {
+      "sensing": 5.63,
+      "velocity": 2.11,
+      "gap": 3.52,
+      "n": 9
+    },
+    "Other": {
+      "sensing": 5.89,
+      "velocity": 1.67,
+      "gap": 4.22,
+      "n": 3
+    }
+  }
+}
