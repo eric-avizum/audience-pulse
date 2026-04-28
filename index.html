@@ -162,6 +162,19 @@
     padding: 1.25rem;
     box-shadow: 0 1px 3px rgba(0,0,0,0.06);
     border: 1px solid var(--grey-border);
+    position: relative;
+  }
+
+  .chart-wrap {
+    position: relative;
+    width: 100%;
+    height: 220px;
+  }
+
+  .chart-wrap-tall {
+    position: relative;
+    width: 100%;
+    height: 350px;
   }
 
   .chart-box h3 {
@@ -182,6 +195,7 @@
     box-shadow: 0 1px 3px rgba(0,0,0,0.06);
     border: 1px solid var(--grey-border);
     margin-bottom: 1.5rem;
+    position: relative;
   }
 
   .chart-box-full h3 {
@@ -398,11 +412,11 @@
     <div class="chart-row">
       <div class="chart-box">
         <h3>By Role</h3>
-        <canvas id="chartRole" height="220"></canvas>
+        <div class="chart-wrap"><canvas id="chartRole"></canvas></div>
       </div>
       <div class="chart-box">
         <h3>By Company Size</h3>
-        <canvas id="chartSize" height="220"></canvas>
+        <div class="chart-wrap"><canvas id="chartSize"></canvas></div>
       </div>
     </div>
   </div>
@@ -413,21 +427,21 @@
     <div class="chart-row">
       <div class="chart-box">
         <h3>P3 — Spotting External Opportunities</h3>
-        <canvas id="chartP3" height="200"></canvas>
+        <div class="chart-wrap"><canvas id="chartP3"></canvas></div>
       </div>
       <div class="chart-box">
         <h3>P4 — Detecting Fundamental Shifts</h3>
-        <canvas id="chartP4" height="200"></canvas>
+        <div class="chart-wrap"><canvas id="chartP4"></canvas></div>
       </div>
     </div>
     <div class="chart-row">
       <div class="chart-box">
         <h3>P5 — Anticipation vs Competitors</h3>
-        <canvas id="chartP5" height="200"></canvas>
+        <div class="chart-wrap"><canvas id="chartP5"></canvas></div>
       </div>
       <div class="chart-box">
         <h3>P6 — Signal-to-Action Velocity</h3>
-        <canvas id="chartP6" height="200"></canvas>
+        <div class="chart-wrap"><canvas id="chartP6"></canvas></div>
       </div>
     </div>
   </div>
@@ -437,7 +451,7 @@
     <div class="section-title">Sense vs Act</div>
     <div class="chart-box-full">
       <h3>Each dot is one respondent — sensing (x) vs velocity (y)</h3>
-      <canvas id="chartScatter" height="350"></canvas>
+      <div class="chart-wrap-tall"><canvas id="chartScatter"></canvas></div>
       <div class="scatter-note">
         Threshold set at 4.5 — the midpoint of the 1–7 scale, not the audience average. The imbalance is the finding, not a charting artefact.
       </div>
